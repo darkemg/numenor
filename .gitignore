@@ -4,6 +4,7 @@ vendor
 tmp
 # Untracked files
 .buildpath
+.project
 composer.lock
 custom_log
 dump.txt
