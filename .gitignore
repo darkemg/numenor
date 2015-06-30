@@ -1,0 +1,11 @@
+# Untracked directories
+.settings
+vendor
+tmp
+# Untracked files
+.buildpath
+composer.lock
+custom_log
+dump.txt
+error_log
+rascunho.php

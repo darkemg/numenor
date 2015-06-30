@@ -1,0 +1,14 @@
+{
+	"repositories": [
+	    {
+	        "type": "composer",
+	        "url": "https://packages.zendframework.com/"
+	    }
+	],
+    "require": {
+    	"ircmaxell/password-compat": "dev-master",
+        "zendframework/zend-cache": "2.*",
+        "zendframework/zend-i18n": "2.*",
+        "zendframework/zend-loader": "2.*"
+    }
+}
