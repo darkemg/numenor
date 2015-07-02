@@ -8,7 +8,7 @@
  * As exceções da biblioteca foram classificadas a partir do conceito de hierarquia de exceções de
  * Krzysztof Cwalina (http://blogs.msdn.com/b/kcwalina/archive/2007/01/30/exceptionhierarchies.aspx)
  * 
- * @author Darke M. Goulart <darke.goulart@gmail.com>
+ * @author Darke M. Goulart <darkemg@users.noreply.github.com>
  * @package Numenor/Excecao
  */
 namespace Numenor\Excecao;

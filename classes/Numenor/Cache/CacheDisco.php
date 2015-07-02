@@ -8,7 +8,7 @@
  * (leitura/escrita em disco) podem ser demoradas em caso de demanda simultânea muito 
  * grande.
  * 
- *  @author Darke M. Goulart <darke.goulart@gmail.com>
+ *  @author Darke M. Goulart <darkemg@users.noreply.github.com>
  *  @package Numenor/Cache
  */
 namespace Numenor\Cache;

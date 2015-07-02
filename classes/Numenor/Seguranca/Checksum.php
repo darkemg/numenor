@@ -20,7 +20,7 @@
  *  menos previsível do que uniqid(), rand(), microtime() e outros métodos usuais de geração de
  *  salt.
  *  
- *  @author Darke M. Goulart <darke.goulart@gmail.com>
+ *  @author Darke M. Goulart <darkemg@users.noreply.github.com>
  *  @package Numenor/Seguranca
  */
 namespace Numenor\Seguranca;

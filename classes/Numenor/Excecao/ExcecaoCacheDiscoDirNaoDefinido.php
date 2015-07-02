@@ -4,7 +4,7 @@
  * de cache não foi definido (seja pelo bootstrap da aplicação, seja pelo parâmetro $diretorio no construtor do
  * adaptador de cache)
  * 
- * @author Darke M. Goulart <darke.goulart@gmail.com>
+ * @author Darke M. Goulart <darkemg@users.noreply.github.com>
  * @package Numenor/Excecao
  */
 namespace Numenor\Excecao;

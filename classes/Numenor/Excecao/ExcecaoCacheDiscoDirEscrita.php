@@ -3,7 +3,7 @@
  * Exceção levantada pelo sistema quando o adaptador de cache da classe CacheDisco é criado, mas o diretório
  * de cache informado não possui permissão de escrita
  *
- * @author Darke M. Goulart <darke.goulart@gmail.com>
+ * @author Darke M. Goulart <darkemg@users.noreply.github.com>
  * @package Numenor/Excecao
  */
 namespace Numenor\Excecao;

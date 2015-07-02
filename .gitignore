@@ -7,7 +7,9 @@ tmp
 .buildpath
 .project
 composer.lock
+custom-log
 custom_log
 dump.txt
+error-log
 error_log
 rascunho.php
