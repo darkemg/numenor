@@ -14,8 +14,9 @@ class ExcecaoCacheDiscoDirNaoDefinido extends ExcecaoErroUso {
 	 * Método construtor da classe
 	 * 
 	 * @access public
+	 * @param \Exception $previous Exceção anterior (se a exceção atual tiver sido encadeada)
 	 */
-	public function __construct() {
+	public function __construct(\Exception $previous = null) {
 		parent::__construct('O diretório de cache para este adaptador não foi definido (nem no boostrap, nem na instanciação).', self::CODE_CACHE_DISCO_DIR_NAO_DEFINIDO, $previous);
 	}
 }

@@ -5,6 +5,9 @@
 	        "url": "https://packages.zendframework.com/"
 	    }
 	],
+	"require-dev": {
+		"phpdocumentor/phpdocumentor": "2.*"
+	},
     "require": {
     	"ircmaxell/password-compat": "dev-master",
         "zendframework/zend-cache": "2.*",

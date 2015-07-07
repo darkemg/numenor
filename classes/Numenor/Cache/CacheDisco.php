@@ -84,9 +84,9 @@ class CacheDisco {
 	 * (1 = não há subdivisão)
 	 * @param string $modo Modo de acesso do cache ('r' = somente leitura, 'w' = somente escrita, 'rw' = 
 	 * leitura e escrita) 
-	 * @throws Numenor\Excecao\ExcecaoCacheDiscoDirNaoDefinido se tanto o parâmetro $diretorio quanto a propriedade 
+	 * @throws \Numenor\Excecao\ExcecaoCacheDiscoDirNaoDefinido se tanto o parâmetro $diretorio quanto a propriedade 
 	 * estática self::$diretorioPadrao não estiverem definidos
-	 * @throws Numenor\Excecao\ExcecaoCacheDiscoDirEscrita se o diretório de cache informado não existir ou não 
+	 * @throws \Numenor\Excecao\ExcecaoCacheDiscoDirEscrita se o diretório de cache informado não existir ou não 
 	 * tiver permissão de escrita
 	 */
 	public function __construct($namespace, $duracao, $diretorio = null, $nivel = 1, $modo = 'rw') {
@@ -154,7 +154,7 @@ class CacheDisco {
 	 * @access public
 	 * @static
 	 * @param string $diretorioPadrao Diretório de armazenamento do cache em disco
-	 * @throws Numenor\Excecao\ExcecaoCacheDiscoDirEscrita se o diretório padrão informado
+	 * @throws \Numenor\Excecao\ExcecaoCacheDiscoDirEscrita se o diretório padrão informado
 	 * não existir ou não tiver permissão de escrita 
 	 */
 	public static function setDiretorioPadrao($diretorioPadrao) {
