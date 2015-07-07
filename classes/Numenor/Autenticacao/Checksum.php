@@ -21,9 +21,9 @@
  *  salt.
  *  
  *  @author Darke M. Goulart <darkemg@users.noreply.github.com>
- *  @package Numenor/Seguranca
+ *  @package Numenor/Autenticacao
  */
-namespace Numenor\Seguranca;
+namespace Numenor\Autenticacao;
 use Numenor\Excecao\ExcecaoAlgoritmoHashInvalido;
 use Numenor\Excecao\ExcecaoChecksumChaveInvalida;
 use Numenor\Excecao\ExcecaoChecksumSemChave;
@@ -62,25 +62,38 @@ class Checksum {
 	 * checksum.
 	 * 
 	 * @access protected
-	 * @static
 	 * @var string
 	 */
-	protected static $chave;
+	protected $chave;
+	/**
+	 * Chave padrão utilizada na aplicação para geração e validação dos checksums.
+	 * Este valor pode ser sobrescrito individualmente em cada instância da classe, mas permite que a 
+	 * mesma chave seja utilizada em toda a aplicação, caso isso seja mais conveniente.
+	 *
+	 * @access protected
+	 * @var string
+	 */
+	protected static $chavePadrao;
 	
 	/**
 	 * Método construtor da classe
 	 * 
 	 * @access public
+	 * @param string $chave Chave utilizada na geração do checksum. Caso não seja informado, a chave
+	 * padrão definida será utilizada.
 	 * @param number $algoritmo Identificador do algoritmo usado para gerar o checksum.
 	 * @throws \Numenor\Excecao\ExcecaoAlgoritmoHashInvalido se o algoritmo de hash 
 	 * informado é inválido ou não está instalado no servidor.
 	 */
-	public function __construct($algoritmo = 'sha512') {
+	public function __construct($chave = null, $algoritmo = 'sha512') {
 		// Determina se o algortimo informado está disponível
 		$listaAlgoritmos = hash_algos();
 		if (array_search($algoritmo, $listaAlgoritmos) === false) {
 			throw new ExcecaoAlgoritmoHashInvalido();
 		}
+		$this->chave = !empty($chave)
+				? $chave
+				: static::$chavePadrao;
 		$this->algoritmo = $algoritmo;
 		$this->tamanhoSalt = 24;
 		$this->cryptoStrong = true;
@@ -97,11 +110,11 @@ class Checksum {
 	 * chave vazia.
 	 * @throws \Numenor\Excecao\ExcecaoChecksumChaveInvalida se a chave informada é nula.
 	 */
-	public static function setChave($chave) {
+	public static function setChavePadrao($chave) {
 		if (!$chave) {
 			throw new ExcecaoChecksumChaveInvalida();
 		}
-		static::$chave = $chave;
+		static::$chavePadrao = $chave;
 	}
 
 	/**
@@ -116,11 +129,11 @@ class Checksum {
 	 * na geração de checksums não foi definida.
 	 */
 	public function gerarChecksum($valor, $encoded = false) {
-		if (!static::$chave) {
+		if (!$this->chave) {
 			throw new ExcecaoChecksumSemChave();
 		}
 		$salt = bin2hex(openssl_random_pseudo_bytes($this->tamanhoSalt, $this->cryptoStrong));
-		$hash = $salt . static::SEPARADOR_SALT_HASH . hash($this->algoritmo, $salt . static::$chave . $valor);
+		$hash = $salt . static::SEPARADOR_SALT_HASH . hash($this->algoritmo, $salt . $this->chave . $valor);
 		return $encoded
 				? base64_encode($hash)
 				: $hash;
@@ -153,13 +166,18 @@ class Checksum {
 	 * @param mixed $valor Valor a ser conferido.
 	 * @param string $checksum Checksum informado para o valor.
 	 * @return boolean O checksum é válido para o valor informado?
+	 * @throws \Numenor\Excecao\ExcecaoChecksumSemChave se a chave definida para utilização
+	 * na geração de checksums não foi definida.
 	 */
 	public function validarChecksum($valor, $checksum) {
+		if (!$this->chave) {
+			throw new ExcecaoChecksumSemChave();
+		}
 		// array resultante: 
 		// [0] = salt
 		// [1] = hash
 		$array = explode(static::SEPARADOR_SALT_HASH, $checksum);
-		$hash = hash($this->algoritmo, $array[0] . static::$chave . $valor);
+		$hash = hash($this->algoritmo, $array[0] . $this->chave . $valor);
 		return $hash === $array[1]; 
 	}
 }

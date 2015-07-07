@@ -5,8 +5,8 @@
  * Expõe publicamente apenas o método estático de inicialização dos demais componentes da biblioteca.
  */
 namespace Numenor\Bootstrap;
+use Numenor\Autenticacao\Checksum;
 use Numenor\Cache\CacheDisco;
-use Numenor\Seguranca\Checksum;
 
 class Main {
 		
@@ -143,7 +143,7 @@ class Main {
 		}
 		// Inicializa a classe de geração de checksums com a chave da aplicação
 		if (isset($dados->chaveChecksum)) {
-			Checksum::setChave($dados->chaveChecksum);
+			Checksum::setChavePadrao($dados->chaveChecksum);
 		}
 		//
 		if (isset($dados->cache->geral->configuracao->dir)) {
