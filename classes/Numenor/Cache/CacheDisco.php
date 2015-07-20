@@ -188,27 +188,27 @@ class CacheDisco {
 	}
 	
 	/**
+	 * Armazena um item no cache, identificado por uma chave
+	 *
+	 * @access public
+	 * @param string $key Chave de identificação do item do cache
+	 * @param mixed $value Valor armazenado
+	 * @return boolean O item foi armazenado no cache com sucesso?
+	 */
+	public function setItem($key, $value) {
+		return $this->adapter->setItem($key, $value);
+	}
+	
+	/**
 	 * Verifica se um item existe e está ativo no cache, identificado pela chave.
 	 * 
 	 * @access public
 	 * @param string $key Chave de identificação do item do cache
 	 * @return boolean O item existe e está ativo no cache?
 	 */
-	public function hasItem($key) {
+	public function verificarItem($key) {
 		return $this->adapter->hasItem($key);
-	}
-	
-	/**
-	 * Armazena um item no cache, identificado por uma chave
-	 * 
-	 * @access public
-	 * @param string $key Chave de identificação do item do cache 
-	 * @param mixed $value Valor armazenado
-	 * @return boolean O item foi armazenado no cache com sucesso? 
-	 */
-	public function setItem($key, $value) {
-		return $this->adapter->setItem($key, $value);
-	}
+	}	
 	
 	/**
 	 * Renova a validade do item do cache, identificado por uma chave.
@@ -217,7 +217,7 @@ class CacheDisco {
 	 * @param string $key Chave de identificação do item do cache
 	 * @return boolean O item deve sua validade renovada com sucesso?
 	 */
-	public function touchItem($key) {
+	public function renovarItem($key) {
 		return $this->adapter->touchItem($key);
 	}
 }

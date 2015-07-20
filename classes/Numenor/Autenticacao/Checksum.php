@@ -33,6 +33,15 @@ class Checksum {
 	const SEPARADOR_SALT_HASH = ':';
 	
 	/**
+	 * Chave padrão utilizada na aplicação para geração e validação dos checksums.
+	 * Este valor pode ser sobrescrito individualmente em cada instância da classe, mas permite que a
+	 * mesma chave seja utilizada em toda a aplicação, caso isso seja mais conveniente.
+	 *
+	 * @access protected
+	 * @var string
+	 */
+	protected static $chavePadrao;
+	/**
 	 * Identificador do algoritmo de hash utilizado para gerar os checksums da classe. Deve ser um dos
 	 * valores aceitos pela função hash(), e retornados pela função hash_algos().
 	 *  
@@ -65,15 +74,6 @@ class Checksum {
 	 * @var string
 	 */
 	protected $chave;
-	/**
-	 * Chave padrão utilizada na aplicação para geração e validação dos checksums.
-	 * Este valor pode ser sobrescrito individualmente em cada instância da classe, mas permite que a 
-	 * mesma chave seja utilizada em toda a aplicação, caso isso seja mais conveniente.
-	 *
-	 * @access protected
-	 * @var string
-	 */
-	protected static $chavePadrao;
 	
 	/**
 	 * Método construtor da classe
