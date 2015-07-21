@@ -1,5 +1,5 @@
 {
-	"name": "numenor",
+	"name": "darkemg/numenor",
 	"repositories": [
 	    {
 	        "type": "composer",
