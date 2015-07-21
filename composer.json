@@ -10,7 +10,7 @@
 		"phpdocumentor/phpdocumentor": "2.*"
 	},
     "require": {
-    	"ircmaxell/password-compat": "master",
+    	"ircmaxell/password-compat": "dev-master",
         "zendframework/zend-cache": "2.*",
         "zendframework/zend-i18n": "2.*",
         "zendframework/zend-loader": "2.*"
