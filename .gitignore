@@ -2,11 +2,10 @@
 .settings
 external-tools
 vendor
-tmp
+temp
 # Untracked files
 .buildpath
 .project
-composer.lock
 custom-log
 custom_log
 dump.txt

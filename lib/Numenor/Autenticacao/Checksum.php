@@ -5,23 +5,23 @@
  * Um checksum ("soma de verificação") é um código gerado para testar a integridade dos dados
  * transmitidos por um canal qualquer de comunicação.
  * 
- *  Na web, é especialmente importante que valores enviados e recebidos através do browser
- *  pelos métodos GET, POST, COOKIE, etc. sejam corretamente validados pelo servidor antes de
- *  serem operados, tendo em vista que os mesmos podem facilmente ser manipulados e informações
- *  vazadas para terceiros que não deveriam ter acesso a essas informações (por exemplo, um
- *  usuário ser capaz de visualizar os dados relativos a qualquer usuário simplesmente modificando
- *  o parâmetro userId enviado via GET).
+ * Na web, é especialmente importante que valores enviados e recebidos através do browser
+ * pelos métodos GET, POST, COOKIE, etc. sejam corretamente validados pelo servidor antes de
+ * serem operados, tendo em vista que os mesmos podem facilmente ser manipulados e informações
+ * vazadas para terceiros que não deveriam ter acesso a essas informações (por exemplo, um
+ * usuário ser capaz de visualizar os dados relativos a qualquer usuário simplesmente modificando
+ * o parâmetro userId enviado via GET).
+ * 
+ * O valor de checksum gerado por esta classe NÃO é criptograficamente seguro, uma vez que a 
+ * função password_hash() do PHP truca os valores de $password maiores do que 72 caracteres
+ * (tornando impossível o uso deste método de geração de hash para valores arbitrários). No
+ * entanto, ele é adequado para a assinatura de parâmetros enviados e recebidos em uma aplicação
+ * normal; o salt para o hash é gerado através da função openssl_random_pseudo_bytes(), que é 
+ * menos previsível do que uniqid(), rand(), microtime() e outros métodos usuais de geração de
+ * salt.
  *  
- *  O valor de checksum gerado por esta classe NÃO é criptograficamente seguro, uma vez que a 
- *  função password_hash() do PHP truca os valores de $password maiores do que 72 caracteres
- *  (tornando impossível o uso deste método de geração de hash para valores arbitrários). No
- *  entanto, ele é adequado para a assinatura de parâmetros enviados e recebidos em uma aplicação
- *  normal; o salt para o hash é gerado através da função openssl_random_pseudo_bytes(), que é 
- *  menos previsível do que uniqid(), rand(), microtime() e outros métodos usuais de geração de
- *  salt.
- *  
- *  @author Darke M. Goulart <darkemg@users.noreply.github.com>
- *  @package Numenor/Autenticacao
+ * @author Darke M. Goulart <darkemg@users.noreply.github.com>
+ * @package Numenor/Autenticacao
  */
 namespace Numenor\Autenticacao;
 use Numenor\Excecao\ExcecaoAlgoritmoHashInvalido;
@@ -34,6 +34,7 @@ class Checksum {
 	
 	/**
 	 * Chave padrão utilizada na aplicação para geração e validação dos checksums.
+	 * 
 	 * Este valor pode ser sobrescrito individualmente em cada instância da classe, mas permite que a
 	 * mesma chave seja utilizada em toda a aplicação, caso isso seja mais conveniente.
 	 *
@@ -67,6 +68,7 @@ class Checksum {
 	protected $cryptoStrong;
 	/**
 	 * Chave utilizada juntamente com o salt para gerar e validar o checksum gerado.
+	 * 
 	 * Esta chave deve ser a mesma tanto para a geração quanto para a verificação do
 	 * checksum.
 	 * 

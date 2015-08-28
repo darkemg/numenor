@@ -20,6 +20,7 @@ abstract class ExcecaoAbstrata extends \Exception {
 	const CODE_ALGORITMO_HASH_INVALIDO = 3;
 	const CODE_CACHE_DISCO_DIR_NAO_DEFINIDO = 4;
 	const CODE_CACHE_DISCO_DIR_ESCRITA = 5;
+	const CODE_ARQUIVO_CONFIG_INVALIDO = 6;
 	
 	/**
 	 * Método abstrato para definição da forma de tratamento geral das exceções.

@@ -8,13 +8,13 @@
  * (leitura/escrita em disco) podem ser demoradas em caso de demanda simultânea muito 
  * grande.
  * 
- *  @author Darke M. Goulart <darkemg@users.noreply.github.com>
- *  @package Numenor/Cache
+ * @author Darke M. Goulart <darkemg@users.noreply.github.com>
+ * @package Numenor/Cache
  */
 namespace Numenor\Cache;
+use Numenor\Excecao\ExcecaoCacheDiscoDirEscrita;
 use Numenor\Excecao\ExcecaoCacheDiscoDirNaoDefinido;
 use Zend\Cache\StorageFactory;
-use Numenor\Excecao\ExcecaoCacheDiscoDirEscrita;
 
 class CacheDisco {
 	
