@@ -13,7 +13,7 @@
  * o parâmetro userId enviado via GET).
  * 
  * O valor de checksum gerado por esta classe NÃO é criptograficamente seguro, uma vez que a 
- * função password_hash() do PHP truca os valores de $password maiores do que 72 caracteres
+ * função password_hash() do PHP trunca os valores de $password maiores do que 72 caracteres
  * (tornando impossível o uso deste método de geração de hash para valores arbitrários). No
  * entanto, ele é adequado para a assinatura de parâmetros enviados e recebidos em uma aplicação
  * normal; o salt para o hash é gerado através da função openssl_random_pseudo_bytes(), que é 

@@ -21,6 +21,14 @@ abstract class ExcecaoAbstrata extends \Exception {
 	const CODE_CACHE_DISCO_DIR_NAO_DEFINIDO = 4;
 	const CODE_CACHE_DISCO_DIR_ESCRITA = 5;
 	const CODE_ARQUIVO_CONFIG_INVALIDO = 6;
+	const CODE_FN_PASSWORD_HASH_INVALIDO = 7;
+	const CODE_FN_ARRAYCOLUMN_NUMPARAMS = 8;
+	const CODE_FN_ARRAYCOLUMN_INVALIDKEY = 9;
+	const CODE_FN_ARRAYCOLUMN_INVALIDINDEX = 10;
+	const CODE_FN_ARRAYFILL_INVALIDINDEX = 11;
+	const CODE_FN_ARRAYFILL_NUMITEMS = 12;
+	const CODE_FN_ARRAYCHANGECASEKEY_INVALID = 13;
+	const CODE_FN_ARRAYCOMBINE_INVALIDSIZE = 14;
 	
 	/**
 	 * Método abstrato para definição da forma de tratamento geral das exceções.
