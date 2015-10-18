@@ -1,6 +1,6 @@
 <?php
 /**
- * Wrapper para as funções de array da biblioteca padrão do PHP.
+ * Wrapper para array e suas funções da biblioteca padrão do PHP.
  * Na minha opinião (e na de muitos desenvolvedores, para falar a verdade), um dos piores aspectos do
  * desenvolvimento em PHP é a nomenclatura das funções da biblioteca padrão. Muitas funções recebem nomes
  * absolutamente idiotas por razões históricas (basicamente, "o nome da função C que executa isso é esse,
@@ -25,56 +25,115 @@ use Numenor\Excecao\Php\ArrayWrapper as ExcecaoArrayWrapper;
 class ArrayWrapper {
 	
 	/**
-	 * Retorna uma cópia do array com os caracteres das suas chaves para maiúsculas ou minúsculas.
-	 * Funciona para chaves com codificação UTF-8.
+	 * O array.
+	 * @access protected
+	 * @var array
+	 */
+	protected $array;
+	
+	/**
+	 * Método construtor da classe.
 	 * 
 	 * @access public
-	 * @param array $array O array a ser alterado.
-	 * @param \Numenor\Php\StringWrapper $stringWrapper Instância do objeto de encapsulamento das operações de strings.
-	 * @param int $case Indica qual a caixa para a qual os índices do array devem ser convertidos. Deve ser uma das
-	 * constantes CASE_LOWER ou CASE_UPPER.
-	 * @throws \Numenor\Excecao\ArrayWrapper\ExcecaoArrayChangeCaseKeyInvalido se o parâmetro $case não for igual a
-	 * uma das constantes CASE_LOWER ou CASE_UPPER. 
-	 * @return array Cópia do array com os índices alterados.
+	 * @param array $array O array a ser encapsulado.
 	 */
-	public function changeCaseKey(array $array, StringWrapper $stringWrapper, $case = CASE_LOWER) {
-		if ($case != CASE_LOWER && $case != CASE_UPPER) {
-			throw new ExcecaoArrayWrapper\ExcecaoArrayChangeCaseKeyInvalido();
-		}
-		$retorno = array();
-		foreach ($array as $chave => $valor) {
-			if ($case == CASE_LOWER) {
-				$retorno[$stringWrapper->lowerCase($chave)] = $valor;
-			} else {
-				$retorno[$stringWrapper->upperCase($chave)] = $valor;
-			}
-		}
-		return $returno;
+	public function __construct(array $array) {
+		$this->array = $array;
 	}
 	
 	/**
-	 * Divide um array em pedaços menores.
+	 * Valida o tipo de uma chave de array.
+	 * Uma chave é considerada válida se ela for um inteiro, uma string, ou um objeto representável como uma string
+	 * (ou seja, um objeto que implemente o método __toString).
+	 * 
+	 * @access protected
+	 * @param mixed $chave A chave a ser validada.
+	 * @return boolean TRUE se a chave é de um tipo válido, FALSE caso contrário.
+	 */
+	protected function validarTipoChave($chave) {
+		return (!is_int($chave)
+				&& !is_string($chave)
+				&& is_object($chave) && !method_exists($chave, '__toString'));
+	}
+	
+	/**
+	 * Retorna o array encapsulado.
 	 * 
 	 * @access public
-	 * @param array $array O array a ser dividido.
-	 * @param int $size Tamanho máximo dos pedaços do array. O último pedaço pode ser menor do que o tamanho indicado.
-	 * @param boolean $preserveKeys Indica se os pedaços devem preservar as suas chaves originais.
-	 * @return array Array multidimensional contendo os pedaços do array.
+	 * @return array
 	 */
-	public function split(array $array, $size, $preserveKeys = false) {
-		return array_chunk($array, $size, $preserveKeys);
+	public function getArray() {
+		return $this->array;
+	}
+	
+	/**
+	 * Retorna todas as chaves do array.
+	 * 
+	 * @access public
+	 * @return \Numenor\Php\ArrayWrapper Lista de chaves do array.
+	 */
+	public function getChaves() {
+		return new self(array_keys($this->array));
+	}
+	
+	/**
+	 * Retorna todas as chaves do array que possuam o valor informado.
+	 * Ao contrário do funcionamento normal da função array_keys(), a comparação é sempre feita de forma estrita (operador ===).
+	 * 
+	 * <code>
+	 * $array = new \Numenor\Php\ArrayWrapper(array('A', 'B', 'C', 'first' => 'A', 'second' => 'B'));
+	 * $array->getChave('A');
+	 * // [0, 'first']
+	 * </code>
+	 * 
+	 * @access public
+	 * @param mixed $valor O valor para o qual se quer as chaves.
+	 * @return \Numenor\Php\ArrayWrapper Lista de chaves que possuem o valor informado.
+	 */
+	public function getChave($valor) {
+		return new self(array_keys($this->array, $valor, true));
+	}
+	
+	/**
+	 * Retorna o item do array com a chave correspondente.
+	 * 
+	 * @access public
+	 * @param string|int $chave Chave do item no array
+	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ExcecaoChaveInexistente se a chave não existir no array.
+	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ExcecaoChaveInvalida se a chave não puder ser convertida para um tipo
+	 * válido (string ou inteiro).
+	 * @return mixed O item da posição correspondente do array.
+	 */
+	public function getItem($chave) {
+		if (!$this->validarTipoChave($chave)) {
+			throw new ExcecaoArrayWrapper\ExcecaoChaveInvalida();
+		}
+		if (!isset($this->array[$chave])) {
+			throw new ExcecaoArrayWrapper\ExcecaoChaveInexistente();
+		}
+		return $this->array[$chave];
+	}
+	
+	/**
+	 * Retorna o tamanho do array.
+	 * 
+	 * @access public
+	 * @return int O tamanho do array.
+	 */
+	public function getTamanho() {
+		return count($this->array);
 	}
 	
 	/**
 	 * Retorna todos os valores de uma única coluna de um array multidimensional, como se fosse uma tabela.
-	 * 
+	 *
 	 * <code>
-	 * $array = array(
-     *		array(
-     *   		'id' => 2135,
-     *   		'first_name' => 'John',
-     *   		'last_name' => 'Doe',
-     *		),
+	 * $array = new \Numenor\Php\ArrayWrapper(array(
+	 *		array(
+	 *   		'id' => 2135,
+	 *   		'first_name' => 'John',
+	 *   		'last_name' => 'Doe',
+	 *		),
 	 *	    array(
 	 *	        'id' => 3245,
 	 *	        'first_name' => 'Sally',
@@ -90,64 +149,42 @@ class ArrayWrapper {
 	 *	        'first_name' => 'Peter',
 	 *	        'last_name' => 'Doe',
 	 *	    )
-	 *	);
-	 * \Numenor\Php\ArrayWrapper::getColumnValues($array, 'first_name');
+	 *	));
+	 * $array->getValorColuna('first_name');
 	 * // ['John', 'Sally', 'Jane', 'Peter']
-	 * \Numenor\Php\ArrayWrapper::getColumnValues($array, 'first_name', 'id');
-	 * // [2135 => 'John', 3245 => 'Sally', 5342 => 'Jane', 5623 => 'Peter'] 
+	 * $array->getValorColuna('first_name', 'id');
+	 * // [2135 => 'John', 3245 => 'Sally', 5342 => 'Jane', 5623 => 'Peter']
 	 * </code>
-	 * 
-	 * @access public 
-	 * @param array $array Array multidimensional de origem dos valores.
-	 * @param string $columnKey Nome da chave representando a coluna dos valores desejados.
-	 * @param string $indexKey Nome da chave da coluna cujos valores serão usados como chave dos array
+	 *
+	 * @access public
+	 * @param string $colunaChave Nome da chave representando a coluna dos valores desejados.
+	 * @param string $chaveIndice Nome da chave da coluna cujos valores serão usados como chave dos array
 	 * resultante.
 	 * @throws \Numenor\Excecap\ArrayWrapper\ExcecaoArrayColumnNumeroParametros se o número de parâmetros informados
-	 * é inferior ao mínimo necessário (2).
+	 * é inferior ao mínimo necessário (1).
 	 * @throws \Numenor\Excecap\ArrayWrapper\ExcecaoArrayColumnChaveInvalida se o parâmetro $columnKey não é do tipo
 	 * {String}, ou não pode ser convertido para uma string.
 	 * @throws \Numenor\Excecap\ArrayWrapper\ExcecaoArrayColumnIndiceInvalido se o parâmetro $indexKey foi informado
 	 * e não é do tipo {String}, ou não pode ser convertido para uma string.
-	 * @return array Lista de todos os valores da coluna correspondente.
+	 * @return \Numenor\Php\ArrayWrapper Lista de todos os valores da coluna correspondente.
 	 */
-	public function getColumnValues(array $array, $columnKey, $indexKey = null) {
-		$argc = func_num_args();
-		$params = func_get_args();
-		if ($argc < 2) {
-			throw new ExcecaoArrayWrapper\ExcecaoArrayColumnNumeroParametros();
+	public function getValorColuna($colunaChave, $chaveIndice = null) {
+		if ($this->validarTipoChave($colunaChave)) {
+			throw new ExcecaoArrayWrapper\ExcecaoChaveInvalida();
 		}
-		if (!is_int($params[1])
-				&& !is_float($params[1])
-				&& !is_string($params[1])
-				&& $params[1] !== null
-				&& !(is_object($params[1]) && method_exists($params[1], '__toString'))) {
-			throw new ExcecaoArrayWrapper\ExcecaoArrayColumnChaveInvalida();
-		}
-		if (isset($params[2])
-				&& !is_int($params[2])
-				&& !is_float($params[2])
-				&& !is_string($params[2])
-				&& !(is_object($params[2]) && method_exists($params[2], '__toString'))
-		) {
-			throw new ExcecaoArrayWrapper\ExcecaoArrayColumnIndiceInvalido();
+		if ($chaveIndice && !$this->validarTipoChave($chaveIndice)) {
+			throw new ExcecaoArrayWrapper\ExcecaoChaveInvalida();
 		}
 		// Se a função array_column não existe (PHP <= 5.4), provê a implementação da mesma
 		// Fonte: <Recommended userland implementation for PHP lower than 5.5>
 		// http://php.net/manual/en/function.array-column.php
 		// https://github.com/ramsey/array_column/blob/master/src/array_column.php
 		if (function_exists('array_column')) {
-			return array_column($array, $columnKey, $indexKey);
+			return array_column($this->$array, $colunaChave, $chaveIndice);
 		}
-		$paramsInput = $params[0];
-		$paramsColumnKey = ($params[1] !== null) ? (string) $params[1] : null;
-		$paramsIndexKey = null;
-		if (isset($params[2])) {
-			if (is_float($params[2]) || is_int($params[2])) {
-				$paramsIndexKey = (int) $params[2];
-			} else {
-				$paramsIndexKey = (string) $params[2];
-			}
-		}
+		$paramsInput = $this->array;
+		$paramsColumnKey = ($colunaChave !== null) ? (string) $colunaChave : null;
+		$paramsIndexKey = $chaveIndice;
 		$resultArray = array();
 		foreach ($paramsInput as $row) {
 			$key = $value = null;
@@ -171,214 +208,367 @@ class ArrayWrapper {
 				}
 			}
 		}
-		return $resultArray;
+		return new self($resultArray);
 	}
 	
 	/**
-	 * Combina dois arrays em um único array, utilizando os valores do primeiro como chaves e os valores do segundo como valores.
+	 * Verifica a existência de uma chave no array.
 	 * 
 	 * @access public
-	 * @param array $keys Array de chaves.
-	 * @param array $values Array de valores.
-	 * @throws \Numenor\Excecao\Php\ExcecaoArrayCombineTamanhosIncompativeis se os dois arrays informados não têm o mesmo
-	 * tamanho. 
-	 * @return array Combinação dos dois arrays informados.
+	 * @param string|int $chave Chave a ser verificada no array
+	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ChaveInvalida se a chave não puder ser convertida para um tipo
+	 * válido (string ou inteiro). 
+	 * @return boolean TRUE caso a chave exista no array, FALSE caso contrário.
 	 */
-	public function combine(array $keys, array $values) {
-		if (count($keys) !== count($values)) {
-			throw new ExcecaoArray\ExcecaoArrayCombineTamanhosIncompativeis();
+	public function verificarChave($chave) {
+		return array_key_exists($chave, $this->array);
+	}
+	
+	/**
+	 * Insere um item no final do array.
+	 * 
+	 * @access public
+	 * @param mixed $item O item a ser adicionado no final do array.
+	 */
+	public function inserirFinal($item) {
+		$this->array[] = $item;
+	}
+	
+	/**
+	 * Remove e retorna o item do final do array.
+	 * 
+	 * @access public
+	 * @return mixed O item removido do final do array.
+	 */
+	public function removerFinal() {
+		return array_pop($this->array);
+	}
+	
+	/**
+	 * Insere um item no início do array, incrementando todas as chaves numéricas dos outros itens. As chaves strings
+	 * não são alteradas.
+	 * 
+	 * @access public
+	 * @param mixed $item O item a ser adicionado no início do array.
+	 */
+	public function inserirInicio($item) {
+		array_unshift($this->array, $item);		
+	}
+	
+	/**
+	 * Remove um item do início do array, decrementando todas as chaves numéricas dos outros itens. As chaves strings
+	 * não são alteradas.
+	 * 
+	 * @access public
+	 * @return mixed O item removido do início do array.
+	 */
+	public function removerInicio() {
+		return array_shift($this->array);
+	}
+	
+	/**
+	 * Insere um item no array com a chave indicada. 
+	 * Se a chave já existir, substitui o valor.
+	 * 
+	 * @access public
+	 * @param mixed $item O item a ser inserido no array.
+	 * @param int|string $chave A chave onde o item deve ser inserido.
+	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ChaveInvalida se a chave não puder ser convertida para um tipo
+	 * válido (string ou inteiro).
+	 */
+	public function inserir($item, $chave) {
+		if (!$this->validarTipoChave($chave)) {
+			throw new ExcecaoArrayWrapper\ExcecaoChaveInvalida();
 		}
-		return array_combine($keys, $values);
+		$this->array[$chave] = $item;
 	}
 	
 	/**
-	 * Conta todos os valores do array e retorna a frequência de ocorrência de cada um deles.
+	 * Remove um item do array com a chave indicada.
+	 * O array é reindexado após a remoção, atualizando suas chaves numéricas. As chaves string não são afetadas.
 	 * 
 	 * @access public
-	 * @param array $array Array a ser analisado. 
-	 * @return array Array com os valores do array informado como chaves, e a frequência de ocorrência como valores.
+	 * @param int|string $chave A chave do item a ser removido.
+	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ExcecaoChaveInexistente se a chave não existir no array.
+	 * @return mixed Item removido do array.
 	 */
-	public function countValues(array $array) {
-		return array_count_values($array);
+	public function remover($chave) {
+		if (!isset($this->array[$chave])) {
+			throw new ExcecaoArrayWrapper\ExcecaoChaveInexistente();
+		}
+		$retorno = $this->array[$chave];
+		unset($this->array[$chave]);
+		array_merge($this->array);
+		return $retorno;
 	}
 	
-	/**
-	 * Retorna a intersecção entre dois arrays, ou seja, todos os elementos que estão presentes em ambos os arrays, preservando
-	 * as chaves dos mesmos.
-	 * Caso um elemento tenha chaves diferentes nos dois arrays, a chave mantida é a chave do primeiro array.
-	 * Ao contrário da função array_intersect(), este método aceita apenas dois arrays de cada vez.
-	 * 
-	 * * <code>
-	 * $array1 = array('A', 'B', 'C');
-	 * $array2 = array('first' => 'A', 'second' => 'D', 'third' => 'C');
-	 * \Numenor\Php\ArrayWrapper::intersect($array1, $array2)
-	 * // ['A', 'C']
-	 * </code>
-	 *
-	 * @access public
-	 * @param array $array1 Primeiro array a ser comparado.
-	 * @param array $array2 Segundo array a ser comparado.
-	 * @return array Array contendo a intersecção dos dois arrays comparados.
-	 */
-	public function intersect(array $array1, array $array2) {
-		return array_intersect($array1, $array2);
-	}
-	
-	/**
-	 * Retorna a intersecção de chaves entre dois arrays, ou seja, todos os elementos cujas chaves estão presentes em ambos
-	 * os arrays, preservando os valores dos mesmos.
-	 * Caso uma chave tenha valores diferentes nos dois arrays, o valor mantido é o valor do primeiro array.
-	 * Ao contrário da função array_intersect_key(), este método aceita apenas dois arrays de cada vez.
-	 * 
-	 * <code>
-	 * $array1 = array('A', 'second' => 'B', 'third' => 'C');
-	 * $array2 = array('first' => 'A', 'second' => 'D', 'final' => 'C');
-	 * \Numenor\Php\ArrayWrapper::intersectKeys($array1, $array2)
-	 * // ['A', 'second' => 'B']
-	 * </code>
-	 *
-	 * @access public
-	 * @param array $array1 Primeiro array a ser comparado.
-	 * @param array $array2 Segundo array a ser comparado.
-	 * @return array Array contendo a intersecção da chaves dos dois arrays comparados.
-	 */
-	public function intersectKeys(array $array1, array $array2) {
-		return array_intersect_key($array1, $array2);
-	}
-	
-	/**
-	 * Calcula a intersecção entre dois arrays,  ou seja, todos os elementos do primeiro array que estão presentes no
-	 * segundo array, considerando tanto os valores quanto as chaves do mesmo.
-	 * Ao contrário da função array_intersect_assoc(), este método aceita apenas dois arrays de cada vez.
-	 *
-	 * <code>
-	 * $array1 = array('A', 'B', 'C');
-	 * $array2 = array('A', 'second' => 'D', 'third' => 'C');
-	 * \Numenor\Php\ArrayWrapper::difference($array1, $array2)
-	 * // ['A']
-	 * </code>
-	 *
-	 * @access public
-	 * @param array Primeiro array a ser comparado.
-	 * @param array $array2 Segundo array a ser comparado.
-	 * @return array Array contendo a intersecção dos dois arrays comparados.
-	 */
-	public function associativeIntersect(array $array1, array $array2) {
-		return array_intersect_assoc($array1, $array2);
-	}
-	
-	/**
-	 * Calcula a diferença entre dois arrays, ou seja, todos os elementos do primeiro array que não estão presentes no 
-	 * segundo array.
-	 * Ao contrário da função array_diff(), este método aceita apenas dois arrays de cada vez.
-	 * 
-	 * <code>
-	 * $array1 = array('A', 'B', 'C');
-	 * $array2 = array('first' => 'A', 'second' => 'D', 'third' => 'C');
-	 * \Numenor\Php\ArrayWrapper::difference($array1, $array2)
-	 * // ['B']
-	 * </code>
-	 * 
-	 * @access public
-	 * @param array $array1 Primeiro array a ser comparado.
-	 * @param array $array2 Segundo array a ser comparado.
-	 * @return array Array contendo a diferença entre os dois arrays comparados.
-	 */
-	public function difference(array $array1, array $array2) {
-		return array_diff($array1, $array2);		
-	}
-	
-	/**
-	 * Calcula a diferença entre dois arrays,  ou seja, todos os elementos do primeiro array que não estão presentes no 
-	 * segundo array, considerando tanto os valores quanto as chaves do mesmo.
-	 * Ao contrário da função array_diff_assoc(), este método aceita apenas dois arrays de cada vez.
-	 * 
-	 * <code>
-	 * $array1 = array('A', 'B', 'C');
-	 * $array2 = array('A', 'second' => 'D', 'third' => 'C');
-	 * \Numenor\Php\ArrayWrapper::difference($array1, $array2)
-	 * // ['B', 'C']
-	 * </code>
-	 * 
-	 * @access public
-	 * @param array Primeiro array a ser comparado.
-	 * @param array $array2 Segundo array a ser comparado.
-	 * @return array Array contendo a diferença entre os dois arrays comparados.
-	 */
-	public function associativeDifference(array $array1, array $array2) {
-		return array_diff_assoc($array1, $array2);
-	}
 	
 	/**
 	 * Cria um array preenchido com um único valor repetido $numerItems vezes.
 	 * Ao contrário da função array_fill(), foi optado por não permitir que o índice seja negativo, nem que o número
 	 * de itens seja menor do que 1 (para manter compatibilidade com PHP <= 5.5).
-	 *  
+	 *
 	 * @access public
-	 * @param int $startIndex Índice inicial do array gerado.
-	 * @param int $numberItems Número de itens do array gerado
-	 * @param mixed $item Valor colocado em todas as posições do array
-	 * @throws \Numenor\Excecao\ArrayWrapper\ExcecaoArrayFillIndiceInvalido se o $startIndex informado for negativo. 
-	 * @throws ExcecaoArrayWrapper\ExcecaoArrayFillTamanhoInvalido se $numberItems for um valor menor do que 1.
-	 * @return array O array preenchido.
+	 * @static
+	 * @param int $inicio Índice inicial do array gerado.
+	 * @param int $quantidadeItens Número de itens do array gerado.
+	 * @param mixed $item Valor colocado em todas as posições do array.
+	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ExcecaoArrayFillIndiceInvalido se o $inicio informado for negativo.
+	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ExcecaoArrayFillTamanhoInvalido se $quantidadeItens for um valor menor do que 1.
+	 * @return \Numenor\Php\ArrayWrapper O array gerado.
 	 */
-	public function create($startIndex, $numberItems, $item) {
-		if ($startIndex < 0) {
+	public static function criar($inicio, $quantidadeItens, $item) {
+		if ($inicio < 0) {
 			throw new ExcecaoArrayWrapper\ExcecaoArrayFillIndiceInvalido();
 		}
-		if ($numberItems < 1) {
+		if ($quantidadeItens < 1) {
 			throw new ExcecaoArrayWrapper\ExcecaoArrayFillTamanhoInvalido();
 		}
-		return array_fill($startIndex, $numberItems, $item);
+		return new self(array_fill($inicio, $quantidadeItens, $item));
 	}
 	
 	/**
-	 * Filtra um array através de uma função de callback.
-	 * A função de callback é chamada para cada item do array; se ela retornar true, o item é incluído no array filtrado.
-	 * 
+	 * Divide o array em pedaços menores.
+	 *
 	 * @access public
-	 * @param array $array O array a ser filtrado.
-	 * @param callable $filterFunction Função aplicada em cada item do array filtrado.
-	 * @param int $flag Flag determinando quais parâmetros são enviados para a função de callback. Se não for informado, o valor
-	 * do item é informado; caso seja informado, deve ser uma das seguintes constantes: ARRAY_FILTER_USE_KEY (envia a chave do
-	 * valor como único parâmetro) ou ARRAY_FILTER_USE_BOTH (envia o valor e a chave como parâmetros).
-	 * @throws \Numenor\Excecao\ExcecaoArrayFilterFlagInvalida se o parâmetro $flag for informado com um valor inválido. 
-	 * @return array O array filtrado.
+	 * @param int $tamanho Tamanho máximo dos pedaços do array. O último pedaço pode ser menor do que o tamanho indicado.
+	 * @param boolean $preservarChaves Indica se os pedaços devem preservar as suas chaves originais.
+	 * @return \Numenor\Php\ArrayWrapper Array multidimensional contendo os pedaços do array.
 	 */
-	public function filter(array $array, callable $filterFunction, $flag = 0) {
-		if ($flag && $flag != ARRAY_FILTER_USE_KEY && $flag != ARRAY_FILTER_USE_BOTH) {
-			throw new ExcecaoArray\ExcecaoArrayFilterFlagInvalida();
+	public function dividir($tamanho, $preservarChaves = false) {
+		return new self(array_chunk($this->$array, $tamanho, $preservarChaves));
+	}
+	
+	/**
+	 * Combina dois arrays em um único array, utilizando os valores do array encapsulado como chaves e os valores do array informado
+	 * como valores no array resultante.
+	 *
+	 * @access public
+	 * @param \Numenor\Php\ArrayWrapper $valores Array de valores.
+	 * @throws \Numenor\Excecao\Php\ExcecaoArrayCombineTamanhosIncompativeis se os dois arrays informados não têm o mesmo
+	 * tamanho.
+	 * @return \Numenor\Php\ArrayWrapper Combinação dos dois arrays informados.
+	 */
+	public function combinar(ArrayWrapper $valores) {
+		if ($this->getTamanho() != $valores->getTamanho()) {
+			throw new ExcecaoArray\ExcecaoArrayCombineTamanhosIncompativeis();
 		}
-		return array_filter($array, $filterFunction, $flag);
+		return new self(array_combine($keys->getArray(), $valores->getArray()));
 	}
 	
 	/**
 	 * Inverte o array de forma que as chaves tornem-se valores e vice-versa.
 	 * Como a função array_flip() não interrompe a execução caso os valores do array não possam ser usados como chave, apenas
 	 * emite um warning, foi acrescentado um laço extra para verificar todos os itens do array e levantar uma exceção caso
-	 * isso ocorra. Por essa razão, a implementação deste método pode não ser indicada para processamento de alta performance. 
-	 * 
+	 * isso ocorra. Por essa razão, a implementação deste método pode não ser indicada para processamento de alta performance.
+	 *
 	 * @access public
-	 * @param array $array O array a ser invertido.
 	 * @throws \Numenor\Excecao\ExcecaoArrayFlipTipoInvalido se qualquer um dos valores do array não poder ser convertido para
 	 * um tipo que possa ser usado como chave do array invertido (string ou inteiro).
-	 * @return array Array com as chaves e valores invertidos.
+	 * @return \Numenor\Php\ArrayWrapper Array com as chaves e valores invertidos.
 	 */
-	public function flip(array $array) {
-		$values = array_values($array);
+	public function flip() {
+		$values = array_values($this->array);
 		$isValid = true;
 		foreach ($values as $item) {
-			if (!is_int($item) 
-					&& !is_string($item) 
-					&& !is_object($item) && method_exists($item, '__toString')) {
-				$isValid = false;
-				break;
-			}
+			$isValid = $this->validarTipoChave($item);
 		}
 		if (!$isValid) {
 			throw new ExcecaoArray\ExcecaoArrayFlipTipoInvalido();
 		}
-		return array_flip($array);
+		return new self(array_flip($this->array));
 	}
 	
+	/**
+	 * Conta todos os valores do array e retorna a frequência de ocorrência de cada um deles.
+	 *
+	 * @access public
+	 * @return \Numenor\Php\ArrayWrapper valores do array como chaves, e a frequência de ocorrência como valores.
+	 */
+	public function contarValores() {
+		return new self(array_count_values($array));
+	}
+	
+	/**
+	 * Retorna uma cópia do array com os caracteres das suas chaves alterados para letras minúsculas.
+	 * Funciona para chaves com codificação UTF-8.
+	 * 
+	 * @access public
+	 * @param \Numenor\Php\StringWrapper $stringWrapper Instância do objeto de encapsulamento das operações de strings. 
+	 * @return \Numenor\Php\ArrayWrapper O array com as chaves alteradas.
+	 */
+	public function chaveMinuscula(StringWrapper $stringWrapper) {
+		$array = array();
+		foreach ($this->array as $chave => $valor) {
+			$array[$stringWrapper->lowerCase($chave)] = $valor;
+		}
+		return new self($array);
+	}
+	
+	/**
+	 * Retorna uma cópia do array com os caracteres das suas chaves alterados para letras maiúsculas.
+	 * Funciona para chaves com codificação UTF-8.
+	 *
+	 * @access public
+	 * @param \Numenor\Php\StringWrapper $stringWrapper Instância do objeto de encapsulamento das operações de strings.
+	 * @return \Numenor\Php\ArrayWrapper O array com as chaves alteradas.
+	 */
+	public function chaveMaiuscula(StringWrapper $stringWrapper) {
+		$array = array();
+		foreach ($this->array as $chave => $valor) {
+			$array[$stringWrapper->upperCase($chave)] = $valor;
+		}
+		return new self($array);
+	}
+	
+	/**
+	 * Retorna a intersecção entre o array instanciado e o array informado, ou seja, todos os elementos que estão presentes 
+	 * em ambos os arrays, preservando as chaves dos mesmos.
+	 * Caso um elemento tenha chaves diferentes nos dois arrays, a chave mantida é a chave do array instanciado.
+	 * Ao contrário da função array_intersect(), este método trabalha com apenas dois arrays de cada vez.
+	 * 
+	 * <code>
+	 * $array1 = new \Numenor\Php\ArrayWrapper(array('A', 'B', 'C'));
+	 * $array2 = new \Numenor\Php\ArrayWrapper(array('first' => 'A', 'second' => 'D', 'third' => 'C'));
+	 * $array1->interseccao($array2);
+	 * // ['A', 'C']
+	 * </code>
+	 *
+	 * @access public
+	 * @param \Numenor\Php\ArrayWrapper $array O array a ser comparado.
+	 * @return \Numenor\Php\ArrayWrapper Array contendo a intersecção dos dois arrays comparados.
+	 */
+	public function interseccao(ArrayWrapper $array) {
+		return new self(array_intersect($this->array, $array));
+	}
+	
+	/**
+	 * Retorna a intersecção de chaves entre o array instanciado e o array informado, ou seja, todos as chaves que estão presentes 
+	 * em ambos os arrays, preservando os valores dos mesmos.
+	 * Caso uma chave tenha valores diferentes nos dois arrays, o valor mantido é o valor do primeiro array.
+	 * Ao contrário da função array_intersect_key(), este método trabalha com apenas dois arrays de cada vez.
+	 * 
+	 * <code>
+	 * $array1 = new \Numenor\Php\ArrayWrapper(array('A', 'second' => 'B', 'third' => 'C'));
+	 * $array2 = new \Numenor\Php\ArrayWrapper(array('first' => 'A', 'second' => 'D', 'final' => 'C'));
+	 * $array1->interseccaoChaves($array2)
+	 * // ['A', 'second' => 'B']
+	 * </code>
+	 *
+	 * @access public
+	 * @param \Numenor\Php\ArrayWrapper $array O array a ser comparado.
+	 * @return \Numenor\Php\ArrayWrapper Array contendo a intersecção da chaves dos dois arrays comparados.
+	 */
+	public function interseccaoChaves(ArrayWrapper $array) {
+		return new self(array_intersect_key($this->array, $array));
+	}
+	
+	/**
+	 * Retorna a intersecção entre o array instanciado e o array informado, ou seja, todos os elementos que estão presentes 
+	 * em ambos os arrays, considerando tanto os valores quanto as chaves do mesmo.
+	 * Ao contrário da função array_intersect_assoc(), este método trabalha com apenas dois arrays de cada vez.
+	 *
+	 * <code>
+	 * $array1 = new \Numenor\Php\ArrayWrapper(array('A', 'B', 'C'));
+	 * $array2 = new \Numenor\Php\ArrayWrapper(array('A', 'second' => 'D', 'third' => 'C'));
+	 * $array1->interseccaoAssociativa($array2);
+	 * // ['A']
+	 * </code>
+	 *
+	 * @access public
+	 * @param \Numenor\Php\ArrayWrapper $array O array a ser comparado.
+	 * @return \Numenor\Php\ArrayWrapper Array contendo a intersecção dos dois arrays comparados.
+	 */
+	public function intersecacaoAssociativa(array $array) {
+		return new self(array_intersect_assoc($this->array, $array));
+	}
+	
+	/**
+	 * Retorna a diferença entre o array instanciado e o array informado, ou seja, todos os elementos do primeiro array 
+	 * que não estão presentes no segundo array.
+	 * Ao contrário da função array_diff(), este método trabalha com apenas dois arrays de cada vez.
+	 * 
+	 * <code>
+	 * $array1 = \Numenor\Php\ArrayWrapper(array('A', 'B', 'C'));
+	 * $array2 = \Numenor\Php\ArrayWrapper(array('first' => 'A', 'second' => 'D', 'third' => 'C'));
+	 * $array1->diferenca($array2);
+	 * // ['B']
+	 * </code>
+	 * 
+	 * @access public
+	 * @param \Numenor\Php\ArrayWrapper $array O array a ser comparado.
+	 * @return \Numenor\Php\ArrayWrapper Array contendo a diferença entre os dois arrays comparados.
+	 */
+	public function diferenca(ArrayWrapper $array) {
+		return new self(array_diff($this->array, $array));		
+	}
+	
+	/**
+	 * Retorna a diferença entre o array instanciado e o array informado, ou seja, todos os elementos do 
+	 * primeiro array que não estão presentes no segundo array, considerando tanto os valores quanto as chaves do mesmo.
+	 * Ao contrário da função array_diff_assoc(), este método trabalha com apenas dois arrays de cada vez.
+	 * 
+	 * <code>
+	 * $array1 = \Numenor\Php\ArrayWrapper(array('A', 'B', 'C'));
+	 * $array2 = \Numenor\Php\ArrayWrapper(array('A', 'second' => 'D', 'third' => 'C'));
+	 * $array1->diferencaAssociativa($array2);
+	 * // ['B', 'C']
+	 * </code>
+	 * 
+	 * @access public
+	 * @param \Numenor\Php\ArrayWrapper $array O array a ser comparado.
+	 * @return \Numenor\Php\ArrayWrapper Array contendo a diferença entre os dois arrays comparados.
+	 */
+	public function diferencaAssociativa(ArrayWrapper $array) {
+		return new self(array_diff_assoc($this->array, $array));
+	}
+	
+	/**
+	 * Filtra o array através de uma função de callback.
+	 * A função de callback é chamada para cada item do array; se ela retornar true, o item é incluído no array filtrado.
+	 * 
+	 * @access public
+	 * @param callable $funcaoFiltro Função aplicada em cada item do array filtrado.
+	 * @param int $flag Flag determinando quais parâmetros são enviados para a função de callback. Se não for informado, o valor
+	 * do item é informado; caso seja informado, deve ser uma das seguintes constantes: ARRAY_FILTER_USE_KEY (envia a chave do
+	 * valor como único parâmetro) ou ARRAY_FILTER_USE_BOTH (envia o valor e a chave como parâmetros).
+	 * @throws \Numenor\Excecao\ExcecaoArrayFilterFlagInvalida se o parâmetro $flag for informado com um valor inválido. 
+	 * @return \Numenor\Php\ArrayWrapper O array filtrado.
+	 */
+	public function filtrar(callable $funcaoFiltro, $flag = 0) {
+		if ($flag && $flag != ARRAY_FILTER_USE_KEY && $flag != ARRAY_FILTER_USE_BOTH) {
+			throw new ExcecaoArray\ExcecaoArrayFilterFlagInvalida();
+		}
+		return new self(array_filter($this->array, $funcaoFiltro, $flag));
+	}
+	
+	/**
+	 * Aplica uma função de callback em cada item do array.
+	 * 
+	 * @access public
+	 * @param callable $callback Função de callback aplicada em cada item do array. A função deve aceitar um parâmetro, correspondente
+	 * ao item do array sendo percorrido.
+	 * @return \Numenor\Php\ArrayWrapper O array alterado.
+	 */
+	public function aplicarCallback(callable $callback) {
+		return new self(array_map($callback, $this->array)); 
+	}
+	
+	/**
+	 * Mescla o array instanciado com o array informado.
+	 * Caso uma mesma chave esteja presente em ambos os arrays, então o array resultante terá o valor do segundo array nesta chave.
+	 * Ao contrário da função array_merge(), este método trabalha com apenas dois arrays de cada vez.
+	 * 
+	 * @access public
+	 * @param \Numenor\Php\ArrayWrapper $array O array a ser mesclado com o array instanciado.
+	 * @return \Numenor\Php\ArrayWrapper O array resultante da mescla dos dois arrays.
+	 */
+	public function mesclar(ArrayWrapper $array) {
+		return new self(array_merge($this->array, $array));
+	}
+	
+	//array_multisort()
+	//array_pad()
+	//array_product()
+	//array_rand()
 }

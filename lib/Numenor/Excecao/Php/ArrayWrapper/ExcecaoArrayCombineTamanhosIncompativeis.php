@@ -16,6 +16,6 @@ class ExcecaoArrayCombineTamanhosIncompativeis extends \Numenor\Excecao\ExcecaoE
 	 * @param \Exception $previous Exceção anterior (se a exceção atual tiver sido encadeada)
 	 */
 	public function __construct(\Exception $previous = null) {
-		parent::__construct('O método combine requer que dois arrays com o mesmo tamanho.', self::CODE_FN_ARRAYCOMBINE_INVALIDSIZE, $previous);
+		parent::__construct('O método ArrayWrapper::combinar requer dois arrays com o mesmo tamanho.', self::CODE_FN_ARRAYCOMBINE_INVALIDSIZE, $previous);
 	}
 }

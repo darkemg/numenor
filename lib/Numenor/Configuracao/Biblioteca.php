@@ -79,9 +79,6 @@ class Biblioteca {
 	 * não existir, não puder ser aberto, ou estiver em um formato inválido.
 	 */
 	public static function init($configuracao = null) {
-		// Incializa a configuração padrão da classe Php\String, determinando o conjunto de caracteres padrão
-		// das funções multibyte como UTF-8.
-		\Numenor\Php\String::init();
 		// Instancia a configuração do servidor.
 		$configuracaoServidor = new Config(array(
 				'diretorioRaiz' => $_SERVER['DOCUMENT_ROOT'] . \DIRECTORY_SEPARATOR,

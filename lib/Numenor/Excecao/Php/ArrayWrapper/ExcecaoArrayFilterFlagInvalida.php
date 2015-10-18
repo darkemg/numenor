@@ -7,7 +7,7 @@
  * @package Numenor/Excecao/Php/ArrayWrapper
  */
 namespace Numenor\Excecao\Php\ArrayWrapper;
-class ExcecaoArrayFillTamanhoInvalido extends \Numenor\Excecao\ExcecaoErroUso {
+class ExcecaoArrayFilterFlagInvalida extends \Numenor\Excecao\ExcecaoErroUso {
 
 	/**
 	 * Método construtor da classe

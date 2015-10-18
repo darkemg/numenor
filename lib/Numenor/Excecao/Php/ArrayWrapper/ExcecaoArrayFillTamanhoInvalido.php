@@ -16,6 +16,6 @@ class ExcecaoArrayFillTamanhoInvalido extends \Numenor\Excecao\ExcecaoErroUso {
 	 * @param \Exception $previous Exceção anterior (se a exceção atual tiver sido encadeada)
 	 */
 	public function __construct(\Exception $previous = null) {
-		parent::__construct('O parâmetro $numberItems não pode ser menor do que 1.', self::CODE_FN_ARRAYFILL_NUMITEMS, $previous);
+		parent::__construct('O número de itens informado para o método criar não pode ser menor do que 1.', self::CODE_FN_ARRAYFILL_NUMITEMS, $previous);
 	}
 }
