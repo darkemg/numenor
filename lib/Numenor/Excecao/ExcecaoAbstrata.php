@@ -29,6 +29,8 @@ abstract class ExcecaoAbstrata extends \Exception {
 	const CODE_FN_ARRAYFILL_NUMITEMS = 12;
 	const CODE_FN_ARRAYCHANGECASEKEY_INVALID = 13;
 	const CODE_FN_ARRAYCOMBINE_INVALIDSIZE = 14;
+	const CODE_FN_ARRAYFILTER_INVALIDFLAG = 15;
+	const CODE_FN_ARRAYFLIP_INVALIDTYPE = 16;
 	
 	/**
 	 * Método abstrato para definição da forma de tratamento geral das exceções.

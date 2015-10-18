@@ -24,16 +24,13 @@
  * de caracteres restritos, porque suporte a Unicode deveria ser uma preocupação crucial da linguagem. Da mesma forma,
  * funções que precisam de algum tratamento no input para produzir um output adequado em Unicode já implementam estes
  * tratamentos.
- * A classe é definida como abstrata para evitar a instanciação (todos os métodos são estáticos, portanto não há necessidade
- * de instanciar esta classe)
  * 
  * @author Darke M. Goulart <darkemg@users.noreply.github.com>
  * @package Numenor/Php
- * @abstract
  */
 namespace Numenor\Php;
 use Numenor\Excecao\Php\StringWrapper as ExcecaoString;
-abstract class StringWrapper {
+class StringWrapper {
 	
 	const REGEX_MULTILINE = 'm';
 	const REGEX_IGNORE_WS = 'x';
@@ -52,6 +49,17 @@ abstract class StringWrapper {
 	const TRIM_BOTH = 'both';
 	
 	/**
+	 * Método construtor da classe.
+	 * Define a codificação UTF-8 como padrão para as operações de regex e manipulação de strings para as funções mb_*.
+	 *
+	 * @access public
+	 */
+	public function __construct() {
+		mb_regex_encoding('UTF-8');
+		mb_internal_encoding('UTF-8');
+	}
+	
+	/**
 	 * Remove o primeiro e o último caracter de uma expressão regular.
 	 * As funções de expressão regular da biblioteca `mb_*` têm uma pegadinha no seu parâmetro $delimiter: 
 	 * embora seja esperada uma expressão regular, a mesma deve ser informada sem o delimitador, ao contrário das
@@ -63,35 +71,21 @@ abstract class StringWrapper {
 	 * // Output: '^(a|b)*?$'
 	 * 
 	 * @access protected
-	 * @static
 	 * @param string $regex
 	 * @return string
 	 */
-	protected static function removerDelimitadorRegex($regex) {
+	protected function removerDelimitadorRegex($regex) {
 		return mb_substr($regex, 1, mb_strlen($regex) - 1);
-	}
-	
-	/**
-	 * Método de inicialização da classe.
-	 * Define a codificação UTF-8 como padrão para as operações de regex e manipulação de strings para as funções mb_*.
-	 *   
-	 * @access public
-	 * @static
-	 */
-	public static function init() {
-		mb_regex_encoding('UTF-8');
-		mb_internal_encoding('UTF-8');
 	}
 	
 	/**
 	 * Converte uma string representando um número binário para hexadecimal.
 	 * 
 	 * @access public
-	 * @static
 	 * @param string $string Texto representando um número binário (p.ex.: 010000010).
 	 * @return string Representação hexadecimal do número binário.
 	 */
-	public static function binaryToHexadecimal($string) {
+	public function binaryToHexadecimal($string) {
 		return bin2hex($string);
 	}
 	
@@ -99,11 +93,10 @@ abstract class StringWrapper {
 	 * Converte uma string representando um número hexadecimal para binário.
 	 * 
 	 * @access public
-	 * @static
 	 * @param string $string Texto representando um número hexadecimal (p.ex.: 1abf)
 	 * @return string Representação binária do número hexadecimal.
 	 */
-	public static function hexadecimalToBinary($string) {
+	public function hexadecimalToBinary($string) {
 		return hex2bin($string);
 	}
 	
@@ -111,11 +104,10 @@ abstract class StringWrapper {
 	 * Retorna o caracter correspondente ao valor do código ASCII informado.
 	 * 
 	 * @access public
-	 * @static
 	 * @param int $asciiCode Valor do código ASCII do caracter.
 	 * @return string Caracter correspondente ao código.
 	 */
-	public static function charFromAscii($asciiCode) {
+	public function charFromAscii($asciiCode) {
 		return chr($asciiCode);
 	}
 	
@@ -123,11 +115,10 @@ abstract class StringWrapper {
 	 * Retorna o código ASCII de um caracter informado.
 	 * 
 	 * @access public
-	 * @static
 	 * @param string $char Caracter ASCII.
 	 * @return int Código ASCII do caracter.
 	 */
-	public static function asciiFromChar($char) {
+	public function asciiFromChar($char) {
 		return ord($char);
 	}
 	
@@ -140,7 +131,6 @@ abstract class StringWrapper {
 	 * visa tornar estas inconsistências transparentes para o desenvolvedor.
 	 * 
 	 * @access public
-	 * @static
 	 * @param string $password Senha para a qual se quer gerar o hash.
 	 * @param int $cost Custo algorítmico do hash gerado. Quanto maior, melhor a força do hash, porém mais
 	 * demorada é a geração do mesmo. O valor padrão 10 é considerado um bom valor base para o custo com
@@ -150,7 +140,7 @@ abstract class StringWrapper {
 	 * @return string O hash da senha gerado.
 	 * @throws \Numenor\Excecao\Php\StringWrapper\ExcecaoHashInvalido se o hash não pôde ser gerado.
 	 */
-	public static function passwordHash($password, $cost = 10, $algorithm = PASSWORD_DEFAULT) {
+	public function passwordHash($password, $cost = 10, $algorithm = PASSWORD_DEFAULT) {
 		$hash = password_hash($password, $algorithm, array('cost' => $cost));
 		// Se o hash não pôde ser gerado, levanta uma exceção (padronização de tratamento de erro).
 		if ($hash === false) {
@@ -162,7 +152,6 @@ abstract class StringWrapper {
 	 * Separa uma string a partir de uma expressão regular delimitadora.
 	 * 
 	 * @access public
-	 * @static
 	 * @param string $delimiter Expressão regular delimitadora. Para fins de uniformização com outras funções de
 	 * expressão regular, a expressão deve ser passada com o delimitador (normalmente, /<regex>/). 
 	 * @param string $string Texto a ser separado.
@@ -170,20 +159,19 @@ abstract class StringWrapper {
 	 * -1 (sem limite). 
 	 * @return array Texto dividido. 
 	 */
-	public static function split($delimiter, $string, $limit = -1) {
-		return mb_split(static::removerDelimitadorRegex($delimiter), $string, $limit);
+	public function split($delimiter, $string, $limit = -1) {
+		return mb_split($this->removerDelimitadorRegex($delimiter), $string, $limit);
 	}
 	
 	/**
 	 * Une uma lista de caracteres utilizando um caracter de união entre cada elemento.
 	 * 
 	 * @access public
-	 * @static
 	 * @param string $glue Texto inserido entre cada um dos elementos da lista de caracteres.
 	 * @param array $pieces Lista de caracteres.
 	 * @return string Texto resultante.
 	 */
-	public static function join($glue, array $pieces) {
+	public function join($glue, array $pieces) {
 		return implode($glue, $pieces);
 	}
 	
@@ -195,10 +183,10 @@ abstract class StringWrapper {
 	 * @param string $string Texto onde será feita a busca.
 	 * @param string $pattern Expressão regular de busca. Para fins de uniformização com outras funções de
 	 * expressão regular, a expressão deve ser passada com o delimitador (normalmente, /<regex>/).
-	 * @return bool
+	 * @return boolean Indica se a expressão regular foi encontrada dentro do texto. 
 	 */
-	public static function regexMatch($string, $pattern) {
-		return mb_ereg_match(static::removerDelimitadorRegex($pattern), $string);
+	public function regexMatch($string, $pattern) {
+		return mb_ereg_match($this->removerDelimitadorRegex($pattern), $string);
 	}
 	
 	/**
@@ -206,7 +194,6 @@ abstract class StringWrapper {
 	 * Este método funciona com strings multibyte.
 	 * 
 	 * @access public
-	 * @static
 	 * @param string $string Texto a ser alterado.
 	 * @param string $pattern Expressão regular de busca. Para fins de uniformização com outras funções de
 	 * expressão regular, a expressão deve ser passada com o delimitador (normalmente, /<regex>/).
@@ -214,7 +201,7 @@ abstract class StringWrapper {
 	 * @param string $option Modificadores da expressão regular de busca.
 	 * @return string Texto substituído.
 	 */
-	public static function regexReplace($string, $pattern, $replacement, $option = self::REGEX_POSIX . self::REGEX_MODE_RUBY) {
+	public function regexReplace($string, $pattern, $replacement, $option = self::REGEX_POSIX . self::REGEX_MODE_RUBY) {
 		return mb_ereg_replace($pattern, $replacement, $string, $option);
 	}
 	
@@ -223,7 +210,6 @@ abstract class StringWrapper {
 	 * Este método funciona com strings multibyte.
 	 * 
 	 * @access public
-	 * @static 
 	 * @param string $string Texto a ser alterado
 	 * @param string $pattern Expressão regular de busca. Para fins de uniformização com outras funções de
 	 * expressão regular, a expressão deve ser passada com o delimitador (normalmente, /<regex>/).
@@ -232,7 +218,7 @@ abstract class StringWrapper {
 	 * @param string $option Modificadores da expressão regular de busca.
 	 * @return string Texto substituído.
 	 */
-	public static function regexReplaceCallback($string, $pattern, callable $callback, $option = self::REGEX_POSIX . self::REGEX_MODE_RUBY) {
+	public function regexReplaceCallback($string, $pattern, callable $callback, $option = self::REGEX_POSIX . self::REGEX_MODE_RUBY) {
 		return mb_ereg_replace_callback($pattern, $callback, $string, $option);
 	}
 	
@@ -243,13 +229,12 @@ abstract class StringWrapper {
 	 * método visa corrigir este problema de padronização dos parâmetros.
 	 *
 	 * @access public
-	 * @static
 	 * @param string $string Texto a ser alterado.
 	 * @param string $needle Parte do texto a ser substituída.
 	 * @param string $replace Texto de substituição.
 	 * @return string Modificadores da expressão regular de busca.
 	 */
-	public static function replace($string, $needle, $replace) {
+	public function replace($string, $needle, $replace) {
 		return str_replace($needle, $replace, $string);
 	}
 	
@@ -262,7 +247,6 @@ abstract class StringWrapper {
 	 * </code>
 	 * 
 	 * @access public
-	 * @static
 	 * @param string $string Texto a ser codificado.
 	 * @param int $flags Máscara de bits das flags indicando como a conversão deve ser efetuada. O padrão ENT_QUOTES | ENT_HTML5
 	 * é o mais indicado para a maioria dos casos (codifica todos os caracteres, incluindo aspas, e trata o código como HTML 5).
@@ -271,7 +255,7 @@ abstract class StringWrapper {
 	 * @param boolean $doubleEncode Indica se entidades HTML pré-existentes no texto devem ser codificadas ou não.
 	 * @return string Texto com os caracteres convertidos para suas representações como entidade HTML.
 	 */
-	public static function htmlEntitiesEncode($string, $flags = ENT_QUOTES | ENT_HTML5, $encoding = 'UTF-8', $doubleEncode = true) {
+	public function htmlEntitiesEncode($string, $flags = ENT_QUOTES | ENT_HTML5, $encoding = 'UTF-8', $doubleEncode = true) {
 		return htmlentities($string, $flags, $encoding, $doubleEncode);
 	}
 	
@@ -284,7 +268,6 @@ abstract class StringWrapper {
 	 * </code>
 	 * 
 	 * @access public
-	 * @static
 	 * @param string $string Texto a ser codificado.
 	 * @param int $flags Máscara de bits das flags indicando como a conversão deve ser efetuada. O padrão ENT_QUOTES | ENT_HTML5
 	 * é o mais indicado para a maioria dos casos (codifica todos os caracteres, incluindo aspas, e trata o código como HTML 5).
@@ -292,7 +275,7 @@ abstract class StringWrapper {
 	 * padrão deste parâmetro é completamente diferente; por isso, foi definido o padrão como UTF-8.
 	 * @return string Texto com os caracteres representados como entidades HTML convertidos para os próprios caracteres. 
 	 */
-	public static function htmlEntitiesDecode($string, $flags = ENT_COMPAT | ENT_HTML5, $encoding = 'UTF-8') {
+	public function htmlEntitiesDecode($string, $flags = ENT_COMPAT | ENT_HTML5, $encoding = 'UTF-8') {
 		return html_entity_decode($string, $flags, $encoding);
 	}
 	
@@ -300,13 +283,12 @@ abstract class StringWrapper {
 	 * Remove caracteres do início e/ou do final da string.
 	 *
 	 * @access public
-	 * @static
 	 * @param string $string Texto a ser tratado.
 	 * @param string $where Indica onde deve ocorrer a remoção dos caracteres (esquerda/início, direita/fim, ou ambos).
 	 * @param string $characterMask Lista de caracteres que devem ser removidos.
 	 * @return string Texto com os caracteres informados removidos do início e/ou do final.
 	 */
-	public static function trim($string, $where = self::TRIM_BOTH, $characterMask = null) {
+	public function trim($string, $where = self::TRIM_BOTH, $characterMask = null) {
 		switch ($where) {
 			case self::TRIM_LEFT:
 				$return = ltrim($string, $characterMask);
@@ -328,15 +310,14 @@ abstract class StringWrapper {
 	 * tamanho desejado.
 	 * 
 	 * @access public
-	 * @static
 	 * @param string $string Texto a ser reduzido.
 	 * @param int $start Posição do texto onde deve começar a redução. 
 	 * @param int $width Largura máxima do texto reduzido.
 	 * @param string $marker Texto de marcação a ser inserido após a redução do texto.
 	 * @return string Texto reduzido.
 	 */
-	public static function truncate($string, $start, $width, $marker = null) {
-		return self::trim(mb_strimwidth($string, $start, $width)) . $marker;
+	public function truncate($string, $start, $width, $marker = null) {
+		return $this->trim(mb_strimwidth($string, $start, $width)) . $marker;
 	}
 	
 	/**
@@ -344,13 +325,12 @@ abstract class StringWrapper {
 	 * Ao contrário da função lcfirst(), este método funciona com strings multibyte.
 	 * 
 	 * @access public
-	 * @static
 	 * @param string $string Texto a ser tratado.
 	 * @return string Texto com o primeiro caracter convertido para minúscula.
 	 */
-	public static function lowerCaseFirst($string) {
+	public function lowerCaseFirst($string) {
 		$primeiroCaracter = mb_substr($string, 0, 1);
-		$primeiroCaracter = self::lowerCase($primeiroCaracter);
+		$primeiroCaracter = $this->lowerCase($primeiroCaracter);
 		return $primeiroCaracter . mb_substr($string, 1);
 	}
 	
@@ -359,13 +339,12 @@ abstract class StringWrapper {
 	 * Ao contrário da função ucfirst, este método funciona com strings multibyte.
 	 * 
 	 * @access public
-	 * @static
 	 * @param string $string Texto a ser tratado.
 	 * @return string Texto com o primeiro caracter convertido para minúscula.
 	 */
-	public static function upperCaseFirst($string) {
+	public function upperCaseFirst($string) {
 		$primeiroCaracter = mb_substr($string, 0, 1);
-		$primeiroCaracter = self::upperCase($primeiroCaracter);
+		$primeiroCaracter = $this->upperCase($primeiroCaracter);
 		return $primeiroCaracter . mb_substr($string, 1);
 	}
 	
@@ -373,11 +352,10 @@ abstract class StringWrapper {
 	 * Converte o texto inteiro para minúsculas.
 	 * 
 	 * @access public
-	 * @static
 	 * @param string $string Texto a ser tratado.
 	 * @return string Texto convertido para minúsculas.
 	 */
-	public static function lowerCase($string) {
+	public function lowerCase($string) {
 		return mb_strtolower($string);
 	}
 	
@@ -385,11 +363,10 @@ abstract class StringWrapper {
 	 * Converte o texto inteiro para maiúsculas.
 	 *
 	 * @access public
-	 * @static
 	 * @param string $string Texto a ser tratado.
 	 * @return string Texto convertido para maiúsculas.
 	 */
-	public static function upperCase($string) {
+	public function upperCase($string) {
 		return mb_strtoupper($string);
 	}
 	
@@ -403,11 +380,10 @@ abstract class StringWrapper {
 	 * </code>
 	 *
 	 * @access public
-	 * @static
 	 * @param string $string Texto a ser tratado.
 	 * @return string Texto convertido para maiúsculas.
 	 */
-	public static function titleCase($string) {
+	public function titleCase($string) {
 		return mb_convert_case($string, MB_CASE_TITLE);
 	}
 	
@@ -419,7 +395,6 @@ abstract class StringWrapper {
 	 * http://stackoverflow.com/questions/3825226/multi-byte-safe-wordwrap-function-for-utf-8
 	 * 
 	 * @access public
-	 * @static
 	 * @param string $string Texto a ser dividido.
 	 * @param int $width Largura máxima do texto antes da introdução do caracter de quebra. 
 	 * @param string $break Caracter de quebra.
@@ -427,10 +402,10 @@ abstract class StringWrapper {
 	 * sempre após uma palavra, mesmo que isso faça a largura daquele trecho do texto ser menor que o tamanho máximo. 
 	 * @return string Texto dividido.
 	 */
-	public static function wordWrap($string, $width = 75, $break = "\n", $cut = false) {
+	public function wordWrap($string, $width = 75, $break = "\n", $cut = false) {
 		$lines = explode($break, $string);
 		foreach ($lines as &$line) {
-			$line = self::trim($line, self::TRIM_RIGHT);
+			$line = $this->trim($line, self::TRIM_RIGHT);
 			if (mb_strlen($line) <= $width) {
 				continue;
 			}
@@ -442,7 +417,7 @@ abstract class StringWrapper {
 					$actual .= $word . ' ';
 				} else {
 					if ($actual != '') {
-						$line .= self::trim($actual, self::TRIM_RIGHT) . $break;
+						$line .= $this->trim($actual, self::TRIM_RIGHT) . $break;
 					}
 					$actual = $word;
 					if ($cut) {
@@ -454,8 +429,8 @@ abstract class StringWrapper {
 					$actual .= ' ';
 				}
 			}
-			$line .= self::trim($actual);
+			$line .= $this->trim($actual);
 		}
-		return self::join($break, $lines);
+		return $this->join($break, $lines);
 	}
 }

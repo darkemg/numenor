@@ -16,7 +16,7 @@ class ExcecaoArrayChangeCaseKeyInvalido extends \Numenor\Excecao\ExcecaoErroUso 
 	 * @param \Exception $previous Exceção anterior (se a exceção atual tiver sido encadeada)
 	 */
 	public function __construct(\Exception $previous = null) {
-		parent::__construct('O método changeCaseKey requer que o parâmetro $case seja igual auma das constantes: CASE_LOWER ou CASE_UPPER.', 
+		parent::__construct('O método changeCaseKey requer que o parâmetro $case seja igual a uma das constantes: CASE_LOWER ou CASE_UPPER.', 
 				self::CODE_FN_ARRAYCHANGECASEKEY_INVALID, $previous);
 	}
 }
