@@ -24,6 +24,9 @@ namespace Numenor\Php;
 use Numenor\Excecao\Php\ArrayWrapper as ExcecaoArrayWrapper;
 class ArrayWrapper {
 	
+	const ORDER_ASC = 'ASC';
+	const ORDER_DESC = 'DESC';
+	
 	/**
 	 * O array.
 	 * @access protected
@@ -565,6 +568,35 @@ class ArrayWrapper {
 	 */
 	public function mesclar(ArrayWrapper $array) {
 		return new self(array_merge($this->array, $array));
+	}
+	
+	/**
+	 * Ordena o array, utilizando a implementação nativa do PHP para o algoritmo Quicksort.
+	 * Ao contrário da maioria das funções de array da biblioteca padrão, a função sort() não retorna uma cópia do array informado;
+	 * ao invés disso, o parâmetro é passado por referência, e a função retorna um valor booleano.
+	 * Para fins de padronização, este método retorna uma cópia do array.
+	 * 
+	 * @access public
+	 * @param string $ordem Indica se a ordenação deve ser em ordem crescente ou decrescente.
+	 * @param string $tipoOrdenacao Indica o tipo de comparação feita entre os valores: SORT_REGULAR não faz conversão de tipo entre os
+	 * valores (podendo levar a resultados inesperados se os tipos dos valores são diferentes), SORT_NUMERIC converte os valores para
+	 * números para fazer a ordenação, SORT_STRING converte os valores para texto, SORTE_LOCALE_STRING é igual a SORT_STRING, mas usando o
+	 * locale definido na configuração do PHP, e SORT_NATURAL converte
+	 * @return \Numenor\Php\ArrayWrapper
+	 */
+	public function ordenar($ordem = self::ASC, $tipoOrdenacao = SORT_STRING) {
+		$sortNatural = defined('SORT_NATURAL')
+			? SORT_NATURAL
+			: 'SORT_NATURAL';
+		if (!in_array($ordem, array(self::ASC, self::DESC))) {
+			
+		}
+		if (!in_array($tipoOrdenacao, array(SORT_REGULAR, SORT_NUMERIC, SORT_STRING, SORT_LOCALE_STRING, $sortNatural))) {
+			
+		}
+		$array = $this->array;
+		sort($array);
+		return new self($array);
 	}
 	
 	//array_multisort()
