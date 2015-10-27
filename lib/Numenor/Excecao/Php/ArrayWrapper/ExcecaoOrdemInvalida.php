@@ -1,13 +1,13 @@
 <?php
 /**
- * Exceção levantada pelo sistema quando os arrays informados para o método \Numenor\Php\ArrayWrapper::combinar()
- * têm tamanhos diferentes.
+ * Exceção levantada pelo sistema quando um método de ordenação da classe \Numenor\Php\ArrayWrapper é invocado com o 
+ * parâmetro $ordenacao de um valor não reconhecido ('ASC' ou 'DESC').
  *
  * @author Darke M. Goulart <darkemg@users.noreply.github.com>
  * @package Numenor/Excecao/Php/ArrayWrapper
  */
 namespace Numenor\Excecao\Php\ArrayWrapper;
-class ExcecaoArrayCombineTamanhosIncompativeis extends ExcecaoArray {
+class ExcecaoOrdemInvalida extends ExcecaoArray {
 	
 	/**
 	 * Método construtor da classe
@@ -16,8 +16,8 @@ class ExcecaoArrayCombineTamanhosIncompativeis extends ExcecaoArray {
 	 * @param \Exception $previous Exceção anterior (se a exceção atual tiver sido encadeada)
 	 */
 	public function __construct(\Exception $previous = null) {
-		parent::__construct('O método ArrayWrapper::combinar() requer dois arrays com o mesmo tamanho.', 
-			self::CODE_FN_ARRAYCOMBINE_TAMANHOINVALIDO, 
+		parent::__construct('O método de ordenação requer que a $ordem informada seja crescente ou decrescente.', 
+			self::CODE_ARRAYWRAPPER_TIPOORDEMINVALIDA, 
 			$previous);
 	}
 }

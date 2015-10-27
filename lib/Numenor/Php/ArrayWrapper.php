@@ -118,6 +118,21 @@ class ArrayWrapper {
 	}
 	
 	/**
+	 * Retorna um ou mais itens do array escolhidos aleatoriamente.
+	 *
+	 * @access public
+	 * @param int $numeroItens Número de itens desejados. O padrão é 1 (apenas um item).
+	 * @return mixed|\Numenor\Php\ArrayWrapper O item escolhido aleatoriamente, caso $numeroItens seja um; um array com
+	 * $numeroItens escolhidos aleatoriamente, caso contrário.
+	 */
+	public function getItemAleatorio($numeroItens = 1) {
+		if ($numeroItens == 1) {
+			return array_rand($this->array);
+		}
+		return new self(array_rand($this->array, $numeroItens));
+	}
+	
+	/**
 	 * Retorna o tamanho do array.
 	 * 
 	 * @access public
@@ -360,6 +375,24 @@ class ArrayWrapper {
 	}
 	
 	/**
+	 * Preenche o array com um valor informado até o tamanho informado.
+	 * Se o $novoTamanho for um número positivo, os itens são acrescentados no final do array.
+	 * Se o $novoTamanho for um número negativo, os itens são acrescentados no início do array.
+	 * 
+	 * @access public
+	 * @param int $novoTamanho Novo tamanho desejado para o array.
+	 * @param mixed $valor Valor a ser inserido nas novas posições do array.
+	 * @return \Numenor\Php\ArrayWrapper O array preenchido com os novos valores.
+	 */
+	public function preencher($novoTamanho, $valor) {
+		if (($novoTamanho > 0 && $novoTamanho <= sizeof($this->array))
+				|| ($novoTamanho < 0 && abs($novoTamanho) <= sizeof($this->array))) {
+			throw new ExcecaoArrayWrapper\ExcecaoArrayPadTamanhoInvalido();
+		}
+		return new self(array_pad($this->array, $novoTamanho, $valor));
+	}
+	
+	/**
 	 * Inverte o array de forma que as chaves tornem-se valores e vice-versa.
 	 * Como a função array_flip() não interrompe a execução caso os valores do array não possam ser usados como chave, apenas
 	 * emite um warning, foi acrescentado um laço extra para verificar todos os itens do array e levantar uma exceção caso
@@ -527,6 +560,22 @@ class ArrayWrapper {
 	}
 	
 	/**
+	 * Calcula o produto de todos os valores do array.
+	 * 
+	 * <code>
+	 * $array = \Numenor\Php\ArrayWrapper(array(2, 4, 6));
+	 * $array->produto();
+	 * // 48 
+	 * </code>
+	 * 
+	 * @access public
+	 * @return number O produto dos valores do array.
+	 */
+	public function produto() {
+		return array_product($this->array);
+	}
+	
+	/**
 	 * Filtra o array através de uma função de callback.
 	 * A função de callback é chamada para cada item do array; se ela retornar true, o item é incluído no array filtrado.
 	 * 
@@ -575,32 +624,125 @@ class ArrayWrapper {
 	 * Ao contrário da maioria das funções de array da biblioteca padrão, a função sort() não retorna uma cópia do array informado;
 	 * ao invés disso, o parâmetro é passado por referência, e a função retorna um valor booleano.
 	 * Para fins de padronização, este método retorna uma cópia do array.
+	 * ATENÇÃO: as chaves do array ordenado não são preservadas; o array é reindexado com chaves numéricas, o que pode ou não ser o
+	 * comportamento desejado.
 	 * 
 	 * @access public
 	 * @param string $ordem Indica se a ordenação deve ser em ordem crescente ou decrescente.
-	 * @param string $tipoOrdenacao Indica o tipo de comparação feita entre os valores: SORT_REGULAR não faz conversão de tipo entre os
-	 * valores (podendo levar a resultados inesperados se os tipos dos valores são diferentes), SORT_NUMERIC converte os valores para
-	 * números para fazer a ordenação, SORT_STRING converte os valores para texto, SORTE_LOCALE_STRING é igual a SORT_STRING, mas usando o
-	 * locale definido na configuração do PHP, e SORT_NATURAL converte
-	 * @return \Numenor\Php\ArrayWrapper
+	 * @param string $tipoOrdenacao Indica o tipo de comparação feita entre os valores: 
+	 * 		- SORT_REGULAR não faz conversão de tipo entre os valores (podendo levar a resultados inesperados se os tipos dos valores 
+	 * 		são diferentes), 
+	 * 		- SORT_NUMERIC converte os valores para números para fazer a ordenação
+	 * 		- SORT_STRING converte os valores para texto
+	 * 		- SORT_LOCALE_STRING é igual a SORT_STRING, mas usando o locale definido na configuração do PHP
+	 * 		- SORT_NATURAL faz a ordenação como "string em ordem natural", ou seja, algo como "1, 2, 10, 11". Definido apenas no 
+	 * 		PHP >= 5.4.
+	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ExcecaoOrdemInvalida se a ordem não corresponde a uma das ordens aceitas (crescente ou 
+	 * decrescente).
+	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ExcecaoTipoOrdemInvalida se o tipo de ordenação não corresponde a um dos tipos de 
+	 * ordenação aceitos. 
+	 * @return \Numenor\Php\ArrayWrapper O array ordenado.
 	 */
 	public function ordenar($ordem = self::ASC, $tipoOrdenacao = SORT_STRING) {
-		$sortNatural = defined('SORT_NATURAL')
-			? SORT_NATURAL
-			: 'SORT_NATURAL';
 		if (!in_array($ordem, array(self::ASC, self::DESC))) {
-			
+			throw new ExcecaoArrayWrapper\ExcecaoOrdemInvalida();
 		}
-		if (!in_array($tipoOrdenacao, array(SORT_REGULAR, SORT_NUMERIC, SORT_STRING, SORT_LOCALE_STRING, $sortNatural))) {
-			
+		if (!in_array($tipoOrdenacao, array(SORT_REGULAR, SORT_NUMERIC, SORT_STRING, SORT_LOCALE_STRING, SORT_NATURAL))) {
+			throw new ExcecaoArrayWrapper\ExcecaoTipoOrdemInvalida();
 		}
 		$array = $this->array;
-		sort($array);
+		switch ($ordem) {
+			case self::ASC:
+				sort($array, $tipoOrdenacao);
+				break;
+			case self::DESC:
+				rsort($array, $tipoOrdenacao);
+				break;
+		}
+		return new self($array);
+	}
+	
+	/**
+	 * Ordena o array, utilizando a implementação nativa do PHP para o algoritmo Quicksort, e mantendo a associação entre chaves e valores.
+	 * Ao contrário da maioria das funções de array da biblioteca padrão, a função sort() não retorna uma cópia do array informado;
+	 * ao invés disso, o parâmetro é passado por referência, e a função retorna um valor booleano.
+	 * Para fins de padronização, este método retorna uma cópia do array.
+	 *
+	 * @access public
+	 * @param string $ordem Indica se a ordenação deve ser em ordem crescente ou decrescente.
+	 * @param string $tipoOrdenacao Indica o tipo de comparação feita entre os valores:
+	 * 		- SORT_REGULAR não faz conversão de tipo entre os valores (podendo levar a resultados inesperados se os tipos dos valores
+	 * 		são diferentes),
+	 * 		- SORT_NUMERIC converte os valores para números para fazer a ordenação
+	 * 		- SORT_STRING converte os valores para texto
+	 * 		- SORT_LOCALE_STRING é igual a SORT_STRING, mas usando o locale definido na configuração do PHP
+	 * 		- SORT_NATURAL faz a ordenação como "string em ordem natural", ou seja, algo como "1, 2, 10, 11". Definido apenas no
+	 * 		PHP >= 5.4.
+	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ExcecaoOrdemInvalida se a ordem não corresponde a uma das ordens aceitas (crescente ou
+	 * decrescente).
+	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ExcecaoTipoOrdemInvalida se o tipo de ordenação não corresponde a um dos tipos de
+	 * ordenação aceitos.
+	 * @return \Numenor\Php\ArrayWrapper O array ordenado, com as suas chaves preservadas.
+	 */
+	public function ordenarAssociativo($ordem = self::ASC, $tipoOrdenacao = SORT_STRING) {
+		if (!in_array($ordem, array(self::ASC, self::DESC))) {
+			throw new ExcecaoArrayWrapper\ExcecaoOrdemInvalida();
+		}
+		if (!in_array($tipoOrdenacao, array(SORT_REGULAR, SORT_NUMERIC, SORT_STRING, SORT_LOCALE_STRING, SORT_NATURAL))) {
+			throw new ExcecaoArrayWrapper\ExcecaoTipoOrdemInvalida();
+		}
+		$array = $this->array;
+		switch ($ordem) {
+			case self::ASC:
+				asort($array, $tipoOrdenacao);
+				break;
+			case self::DESC:
+				arsort($array, $tipoOrdenacao);
+				break;
+		}
+		return new self($array);
+	}
+	
+	/**
+	 * Ordena o array pelas suas chaves, utilizando a implementação nativa do PHP para o algoritmo Quicksort.
+	 * Ao contrário da maioria das funções de array da biblioteca padrão, a função ksort() não retorna uma cópia do 
+	 * array informado; ao invés disso, o parâmetro é passado por referência, e a função retorna um valor booleano.
+	 * Para fins de padronização, este método retorna uma cópia do array.
+	 * 
+	 * @access public
+	 * @param string $ordem Indica se a ordenação deve ser em ordem crescente ou decrescente.
+	 * @param string $tipoOrdenacao Indica o tipo de comparação feita entre os valores: 
+	 * 		- SORT_REGULAR não faz conversão de tipo entre os valores (podendo levar a resultados inesperados se os 
+	 * 		tipos dos valores são diferentes), 
+	 * 		- SORT_NUMERIC converte os valores para números para fazer a ordenação
+	 * 		- SORT_STRING converte os valores para texto
+	 * 		- SORT_LOCALE_STRING é igual a SORT_STRING, mas usando o locale definido na configuração do PHP
+	 * 		- SORT_NATURAL faz a ordenação como "string em ordem natural", ou seja, algo como "1, 2, 10, 11". Definido 
+	 * 		apenas no PHP >= 5.4.
+	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ExcecaoOrdemInvalida se a ordem não corresponde a uma das ordens 
+	 * aceitas (crescente ou decrescente).
+	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ExcecaoTipoOrdemInvalida se o tipo de ordenação não corresponde a um 
+	 * dos tipos de ordenação aceitos. 
+	 * @return \Numenor\Php\ArrayWrapper O array ordenado pelas chaves.
+	 */
+	public function ordenarChave($ordem = self::ASC, $tipoOrdenacao = SORT_STRING) {
+		if (!in_array($ordem, array(self::ASC, self::DESC))) {
+			throw new ExcecaoArrayWrapper\ExcecaoOrdemInvalida();
+		}
+		if (!in_array($tipoOrdenacao, array(SORT_REGULAR, SORT_NUMERIC, SORT_STRING, SORT_LOCALE_STRING, SORT_NATURAL))) {
+			throw new ExcecaoArrayWrapper\ExcecaoTipoOrdemInvalida();
+		}
+		$array = $this->array;
+		switch ($ordem) {
+			case self::ASC:
+				ksort($array, $tipoOrdenacao);
+				break;
+			case self::DESC:
+				krsort($array, $tipoOrdenacao);
+				break;
+		}
 		return new self($array);
 	}
 	
 	//array_multisort()
-	//array_pad()
-	//array_product()
-	//array_rand()
 }

@@ -85,7 +85,7 @@ class StringWrapper {
 	 * @param string $string Texto representando um número binário (p.ex.: 010000010).
 	 * @return string Representação hexadecimal do número binário.
 	 */
-	public function binaryToHexadecimal($string) {
+	public function binarioParaHexadecimal($string) {
 		return bin2hex($string);
 	}
 	
@@ -93,10 +93,10 @@ class StringWrapper {
 	 * Converte uma string representando um número hexadecimal para binário.
 	 * 
 	 * @access public
-	 * @param string $string Texto representando um número hexadecimal (p.ex.: 1abf)
+	 * @param string $string Texto representando um número hexadecimal (p.ex.: 1abf).
 	 * @return string Representação binária do número hexadecimal.
 	 */
-	public function hexadecimalToBinary($string) {
+	public function hexadecimalParaBinary($string) {
 		return hex2bin($string);
 	}
 	
@@ -107,7 +107,7 @@ class StringWrapper {
 	 * @param int $asciiCode Valor do código ASCII do caracter.
 	 * @return string Caracter correspondente ao código.
 	 */
-	public function charFromAscii($asciiCode) {
+	public function caracterAscii($asciiCode) {
 		return chr($asciiCode);
 	}
 	
@@ -118,7 +118,7 @@ class StringWrapper {
 	 * @param string $char Caracter ASCII.
 	 * @return int Código ASCII do caracter.
 	 */
-	public function asciiFromChar($char) {
+	public function asciiCaracter($char) {
 		return ord($char);
 	}
 	
@@ -131,17 +131,17 @@ class StringWrapper {
 	 * visa tornar estas inconsistências transparentes para o desenvolvedor.
 	 * 
 	 * @access public
-	 * @param string $password Senha para a qual se quer gerar o hash.
-	 * @param int $cost Custo algorítmico do hash gerado. Quanto maior, melhor a força do hash, porém mais
+	 * @param string $senha Senha para a qual se quer gerar o hash.
+	 * @param int $custo Custo algorítmico do hash gerado. Quanto maior, melhor a força do hash, porém mais
 	 * demorada é a geração do mesmo. O valor padrão 10 é considerado um bom valor base para o custo com
 	 * relação ao tempo gasto.
-	 * @param string $algorithm Identificador do algoritmo usado para a geração do hash. Deve ser uma das
+	 * @param string $algoritmo Identificador do algoritmo usado para a geração do hash. Deve ser uma das
 	 * constantes de senha do PHP.
 	 * @return string O hash da senha gerado.
 	 * @throws \Numenor\Excecao\Php\StringWrapper\ExcecaoHashInvalido se o hash não pôde ser gerado.
 	 */
-	public function passwordHash($password, $cost = 10, $algorithm = PASSWORD_DEFAULT) {
-		$hash = password_hash($password, $algorithm, array('cost' => $cost));
+	public function hashSenha($senha, $custo = 10, $algoritmo = PASSWORD_DEFAULT) {
+		$hash = password_hash($senha, $algoritmo, array('cost' => $custo));
 		// Se o hash não pôde ser gerado, levanta uma exceção (padronização de tratamento de erro).
 		if ($hash === false) {
 			throw new ExcecaoString\ExcecaoHashInvalido();
@@ -150,76 +150,30 @@ class StringWrapper {
 	
 	/**
 	 * Separa uma string a partir de uma expressão regular delimitadora.
+	 * Este método funciona com strings multibyte.
 	 * 
 	 * @access public
-	 * @param string $delimiter Expressão regular delimitadora. Para fins de uniformização com outras funções de
+	 * @param string $delimitador Expressão regular delimitadora. Para fins de uniformização com outras funções de
 	 * expressão regular, a expressão deve ser passada com o delimitador (normalmente, /<regex>/). 
 	 * @param string $string Texto a ser separado.
-	 * @param int $limit Indica o limite máximo de elementos em que o texto deve ser divido. Se não informado, o padrão é
+	 * @param int $limite Indica o limite máximo de elementos em que o texto deve ser divido. Se não informado, o padrão é
 	 * -1 (sem limite). 
 	 * @return array Texto dividido. 
 	 */
-	public function split($delimiter, $string, $limit = -1) {
-		return mb_split($this->removerDelimitadorRegex($delimiter), $string, $limit);
+	public function separar($delimitador, $string, $limite = -1) {
+		return mb_split($this->removerDelimitadorRegex($delimitador), $string, $limite);
 	}
 	
 	/**
 	 * Une uma lista de caracteres utilizando um caracter de união entre cada elemento.
 	 * 
 	 * @access public
-	 * @param string $glue Texto inserido entre cada um dos elementos da lista de caracteres.
-	 * @param array $pieces Lista de caracteres.
+	 * @param string $unificador Texto inserido entre cada um dos elementos da lista de caracteres.
+	 * @param array $partes Lista de caracteres.
 	 * @return string Texto resultante.
 	 */
-	public function join($glue, array $pieces) {
-		return implode($glue, $pieces);
-	}
-	
-	/**
-	 * Busca por expressão regular dentro de um texto.
-	 * Este método funciona com strings multibyte.
-	 * 
-	 * @access public
-	 * @param string $string Texto onde será feita a busca.
-	 * @param string $pattern Expressão regular de busca. Para fins de uniformização com outras funções de
-	 * expressão regular, a expressão deve ser passada com o delimitador (normalmente, /<regex>/).
-	 * @return boolean Indica se a expressão regular foi encontrada dentro do texto. 
-	 */
-	public function regexMatch($string, $pattern) {
-		return mb_ereg_match($this->removerDelimitadorRegex($pattern), $string);
-	}
-	
-	/**
-	 * Substitui as ocorrências de uma string identificada por uma expressão regular por outra.
-	 * Este método funciona com strings multibyte.
-	 * 
-	 * @access public
-	 * @param string $string Texto a ser alterado.
-	 * @param string $pattern Expressão regular de busca. Para fins de uniformização com outras funções de
-	 * expressão regular, a expressão deve ser passada com o delimitador (normalmente, /<regex>/).
-	 * @param string $replacement Texto de substituição.
-	 * @param string $option Modificadores da expressão regular de busca.
-	 * @return string Texto substituído.
-	 */
-	public function regexReplace($string, $pattern, $replacement, $option = self::REGEX_POSIX . self::REGEX_MODE_RUBY) {
-		return mb_ereg_replace($pattern, $replacement, $string, $option);
-	}
-	
-	/**
-	 * Substitui as ocorrências de uma string identificada por uma expressão regular utilizando uma função de callback.
-	 * Este método funciona com strings multibyte.
-	 * 
-	 * @access public
-	 * @param string $string Texto a ser alterado
-	 * @param string $pattern Expressão regular de busca. Para fins de uniformização com outras funções de
-	 * expressão regular, a expressão deve ser passada com o delimitador (normalmente, /<regex>/).
-	 * @param callable $callback Função de callback que será chamada passando um array dos elementos encontrados dentro do texto a 
-	 * ser alterado.
-	 * @param string $option Modificadores da expressão regular de busca.
-	 * @return string Texto substituído.
-	 */
-	public function regexReplaceCallback($string, $pattern, callable $callback, $option = self::REGEX_POSIX . self::REGEX_MODE_RUBY) {
-		return mb_ereg_replace_callback($pattern, $callback, $string, $option);
+	public function unir($unificador, array $partes) {
+		return implode($unificador, $partes);
 	}
 	
 	/**
@@ -230,12 +184,59 @@ class StringWrapper {
 	 *
 	 * @access public
 	 * @param string $string Texto a ser alterado.
-	 * @param string $needle Parte do texto a ser substituída.
-	 * @param string $replace Texto de substituição.
+	 * @param string $busca Parte do texto a ser substituída.
+	 * @param string $substituicao Texto de substituição.
 	 * @return string Modificadores da expressão regular de busca.
 	 */
-	public function replace($string, $needle, $replace) {
-		return str_replace($needle, $replace, $string);
+	public function substituir($string, $busca, $substituicao) {
+		return str_replace($busca, $substituicao, $string);
+	}
+	
+	/**
+	 * Busca por expressão regular dentro de um texto.
+	 * Este método funciona com strings multibyte.
+	 * 
+	 * @access public
+	 * @param string $string Texto onde será feita a busca.
+	 * @param string $regex Expressão regular de busca. Para fins de uniformização com outras funções de
+	 * expressão regular, a expressão deve ser passada com o delimitador (normalmente, /<regex>/).
+	 * @return boolean Indica se a expressão regular foi encontrada dentro do texto. 
+	 */
+	public function regexBusca($string, $regex) {
+		return mb_ereg_match($this->removerDelimitadorRegex($regex), $string);
+	}
+	
+	/**
+	 * Substitui as ocorrências de uma string identificada por uma expressão regular por outra.
+	 * Este método funciona com strings multibyte.
+	 * 
+	 * @access public
+	 * @param string $string Texto a ser alterado.
+	 * @param string $regex Expressão regular de busca. Para fins de uniformização com outras funções de
+	 * expressão regular, a expressão deve ser passada com o delimitador (normalmente, /<regex>/).
+	 * @param string $substituicao Texto de substituição.
+	 * @param string $opcoes Modificadores da expressão regular de busca.
+	 * @return string Texto substituído.
+	 */
+	public function regexSubstituir($string, $regex, $substituicao, $opcoes = self::REGEX_POSIX . self::REGEX_MODE_RUBY) {
+		return mb_ereg_replace($this->removerDelimitadorRegex($regex), $substituicao, $string, $opcoes);
+	}
+	
+	/**
+	 * Substitui as ocorrências de uma string identificada por uma expressão regular utilizando uma função de callback.
+	 * Este método funciona com strings multibyte.
+	 * 
+	 * @access public
+	 * @param string $string Texto a ser alterado
+	 * @param string $regex Expressão regular de busca. Para fins de uniformização com outras funções de
+	 * expressão regular, a expressão deve ser passada com o delimitador (normalmente, /<regex>/).
+	 * @param callable $callback Função de callback que será chamada passando um array dos elementos encontrados dentro do texto a 
+	 * ser alterado.
+	 * @param string $opcoes Modificadores da expressão regular de busca.
+	 * @return string Texto substituído.
+	 */
+	public function regexSubstituirCallback($string, $regex, callable $callback, $opcoes = self::REGEX_POSIX . self::REGEX_MODE_RUBY) {
+		return mb_ereg_replace_callback($regex, $callback, $string, $opcoes);
 	}
 	
 	/**
@@ -255,7 +256,7 @@ class StringWrapper {
 	 * @param boolean $doubleEncode Indica se entidades HTML pré-existentes no texto devem ser codificadas ou não.
 	 * @return string Texto com os caracteres convertidos para suas representações como entidade HTML.
 	 */
-	public function htmlEntitiesEncode($string, $flags = ENT_QUOTES | ENT_HTML5, $encoding = 'UTF-8', $doubleEncode = true) {
+	public function codificarHtmlEntities($string, $flags = ENT_QUOTES | ENT_HTML5, $encoding = 'UTF-8', $doubleEncode = true) {
 		return htmlentities($string, $flags, $encoding, $doubleEncode);
 	}
 	
@@ -271,12 +272,12 @@ class StringWrapper {
 	 * @param string $string Texto a ser codificado.
 	 * @param int $flags Máscara de bits das flags indicando como a conversão deve ser efetuada. O padrão ENT_QUOTES | ENT_HTML5
 	 * é o mais indicado para a maioria dos casos (codifica todos os caracteres, incluindo aspas, e trata o código como HTML 5).
-	 * @param string $encoding Codificação do texto usada para fazer a conversão dos caracteres. Dependendo da versão do PHP, o valor
+	 * @param string $codificacao Codificação do texto usada para fazer a conversão dos caracteres. Dependendo da versão do PHP, o valor
 	 * padrão deste parâmetro é completamente diferente; por isso, foi definido o padrão como UTF-8.
 	 * @return string Texto com os caracteres representados como entidades HTML convertidos para os próprios caracteres. 
 	 */
-	public function htmlEntitiesDecode($string, $flags = ENT_COMPAT | ENT_HTML5, $encoding = 'UTF-8') {
-		return html_entity_decode($string, $flags, $encoding);
+	public function decodificarHtmlEntities($string, $flags = ENT_COMPAT | ENT_HTML5, $codificacao = 'UTF-8') {
+		return html_entity_decode($string, $flags, $codificacao);
 	}
 	
 	/**
@@ -284,21 +285,21 @@ class StringWrapper {
 	 *
 	 * @access public
 	 * @param string $string Texto a ser tratado.
-	 * @param string $where Indica onde deve ocorrer a remoção dos caracteres (esquerda/início, direita/fim, ou ambos).
-	 * @param string $characterMask Lista de caracteres que devem ser removidos.
+	 * @param string $onde Indica onde deve ocorrer a remoção dos caracteres (esquerda/início, direita/fim, ou ambos).
+	 * @param string $caracteres Lista de caracteres que devem ser removidos.
 	 * @return string Texto com os caracteres informados removidos do início e/ou do final.
 	 */
-	public function trim($string, $where = self::TRIM_BOTH, $characterMask = null) {
-		switch ($where) {
+	public function trim($string, $onde = self::TRIM_BOTH, $caracteres = null) {
+		switch ($onde) {
 			case self::TRIM_LEFT:
-				$return = ltrim($string, $characterMask);
+				$return = ltrim($string, $caracteres);
 				break;
 			case self::TRIM_RIGHT:
-				$return = rtrim($string, $characterMask);
+				$return = rtrim($string, $caracteres);
 				break;
 			case self::TRIM_BOTH:
 			default:
-				$return = trim($string, $characterMask);
+				$return = trim($string, $caracteres);
 				break; 
 		}
 		return $return;
@@ -308,16 +309,17 @@ class StringWrapper {
 	 * Reduz um texto para o tamanho informado, opcionalmente posposto por um texto de marcação.
 	 * O texto reduzido é tratado de forma que ele não termine em espaço em branco, mesmo que isto torne-o menor do que o
 	 * tamanho desejado.
+	 * Este método funciona com strings multibyte.
 	 * 
 	 * @access public
 	 * @param string $string Texto a ser reduzido.
-	 * @param int $start Posição do texto onde deve começar a redução. 
-	 * @param int $width Largura máxima do texto reduzido.
-	 * @param string $marker Texto de marcação a ser inserido após a redução do texto.
+	 * @param int $inicio Posição do texto onde deve começar a redução. 
+	 * @param int $largura Largura máxima do texto reduzido.
+	 * @param string $marcador Texto de marcação a ser inserido após a redução do texto.
 	 * @return string Texto reduzido.
 	 */
-	public function truncate($string, $start, $width, $marker = null) {
-		return $this->trim(mb_strimwidth($string, $start, $width)) . $marker;
+	public function reduzir($string, $inicio, $largura, $marcador = null) {
+		return $this->trim(mb_strimwidth($string, $inicio, $largura)) . $marcador;
 	}
 	
 	/**
@@ -328,9 +330,9 @@ class StringWrapper {
 	 * @param string $string Texto a ser tratado.
 	 * @return string Texto com o primeiro caracter convertido para minúscula.
 	 */
-	public function lowerCaseFirst($string) {
+	public function primeiraLetraMinuscula($string) {
 		$primeiroCaracter = mb_substr($string, 0, 1);
-		$primeiroCaracter = $this->lowerCase($primeiroCaracter);
+		$primeiroCaracter = $this->converterMinusculas($primeiroCaracter);
 		return $primeiroCaracter . mb_substr($string, 1);
 	}
 	
@@ -342,9 +344,9 @@ class StringWrapper {
 	 * @param string $string Texto a ser tratado.
 	 * @return string Texto com o primeiro caracter convertido para minúscula.
 	 */
-	public function upperCaseFirst($string) {
+	public function primeiraLetraMaiuscula($string) {
 		$primeiroCaracter = mb_substr($string, 0, 1);
-		$primeiroCaracter = $this->upperCase($primeiroCaracter);
+		$primeiroCaracter = $this->converterMaiusculas($primeiroCaracter);
 		return $primeiroCaracter . mb_substr($string, 1);
 	}
 	
@@ -355,7 +357,7 @@ class StringWrapper {
 	 * @param string $string Texto a ser tratado.
 	 * @return string Texto convertido para minúsculas.
 	 */
-	public function lowerCase($string) {
+	public function converterMinusculas($string) {
 		return mb_strtolower($string);
 	}
 	
@@ -366,7 +368,7 @@ class StringWrapper {
 	 * @param string $string Texto a ser tratado.
 	 * @return string Texto convertido para maiúsculas.
 	 */
-	public function upperCase($string) {
+	public function converterMaiusculas($string) {
 		return mb_strtoupper($string);
 	}
 	
@@ -383,7 +385,7 @@ class StringWrapper {
 	 * @param string $string Texto a ser tratado.
 	 * @return string Texto convertido para maiúsculas.
 	 */
-	public function titleCase($string) {
+	public function converterPalavrasMaiusculas($string) {
 		return mb_convert_case($string, MB_CASE_TITLE);
 	}
 	
@@ -396,34 +398,34 @@ class StringWrapper {
 	 * 
 	 * @access public
 	 * @param string $string Texto a ser dividido.
-	 * @param int $width Largura máxima do texto antes da introdução do caracter de quebra. 
-	 * @param string $break Caracter de quebra.
-	 * @param boolean $cut Indica se a quebra pode ser inserida no meio de uma palavra. Caso este parâmetro seja false, a quebra é feita
+	 * @param int $largura Largura máxima do texto antes da introdução do caracter de quebra. 
+	 * @param string $quebra Caracter de quebra.
+	 * @param boolean $cortar Indica se a quebra pode ser inserida no meio de uma palavra. Caso este parâmetro seja false, a quebra é feita
 	 * sempre após uma palavra, mesmo que isso faça a largura daquele trecho do texto ser menor que o tamanho máximo. 
 	 * @return string Texto dividido.
 	 */
-	public function wordWrap($string, $width = 75, $break = "\n", $cut = false) {
-		$lines = explode($break, $string);
+	public function quebrarLinha($string, $largura = 75, $quebra = "\n", $cortar = false) {
+		$lines = explode($quebra, $string);
 		foreach ($lines as &$line) {
 			$line = $this->trim($line, self::TRIM_RIGHT);
-			if (mb_strlen($line) <= $width) {
+			if (mb_strlen($line) <= $largura) {
 				continue;
 			}
 			$words = explode(' ', $line);
 			$line = '';
 			$actual = '';
 			foreach ($words as $word) {
-				if (mb_strlen($actual . $word) <= $width) {
+				if (mb_strlen($actual . $word) <= $largura) {
 					$actual .= $word . ' ';
 				} else {
 					if ($actual != '') {
-						$line .= $this->trim($actual, self::TRIM_RIGHT) . $break;
+						$line .= $this->trim($actual, self::TRIM_RIGHT) . $quebra;
 					}
 					$actual = $word;
-					if ($cut) {
-						while (mb_strlen($actual) > $width) {
-							$line .= mb_substr($actual, 0, $width) . $break;
-							$actual = mb_substr($actual, $width);
+					if ($cortar) {
+						while (mb_strlen($actual) > $largura) {
+							$line .= mb_substr($actual, 0, $largura) . $quebra;
+							$actual = mb_substr($actual, $largura);
 						}
 					}
 					$actual .= ' ';
@@ -431,6 +433,6 @@ class StringWrapper {
 			}
 			$line .= $this->trim($actual);
 		}
-		return $this->join($break, $lines);
+		return implode($break, $lines);
 	}
 }
