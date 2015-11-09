@@ -11,6 +11,7 @@
 	},
     "require": {
     	"ircmaxell/password-compat": "1.*",
+ 		"matthiasmullie/minify": "1.*",
     	"zendframework/zend-config": "2.*",
         "zendframework/zend-cache": "2.*",
         "zendframework/zend-i18n": "2.*",
