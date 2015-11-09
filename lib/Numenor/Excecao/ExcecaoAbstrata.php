@@ -32,6 +32,8 @@ abstract class ExcecaoAbstrata extends \Exception {
 	const CODE_ARRAYWRAPPER_ORDEMINVALIDA = 15;
 	const CODE_ARRAYWRAPPER_TIPOORDEMINVALIDA = 16;
 	const CODE_FN_ARRAYPAD_TAMANHOINVALIDO = 17;
+	const CODE_ARRAYWRAPPER_ITEMNAOENCONTRADO = 18; 
+	const CODE_DECODIFICACAO_INVALIDA = 19;
 	
 	/**
 	 * Método abstrato para definição da forma de tratamento geral das exceções.

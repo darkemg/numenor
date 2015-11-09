@@ -2,6 +2,7 @@
 /**
  * Classe de controle do adaptador de cache Zend\Cache\Storage\Adapter\Filesystem, que utiliza o sistema de arquivos do 
  * servidor para armazenar o cache em disco.
+ * 
  * Embora este adaptador de cache seja o mais comumente utilizado pela conveniência (os registros do cache ficam 
  * armazenados em disco, e não é necessário instalar nenhuma extensão para que funcione), tenha em mente que operações 
  * de I/O (leitura/escrita em disco) podem ser demoradas em caso de demanda simultânea muito grande.
@@ -18,7 +19,9 @@ class CacheDisco extends CacheAbstrato {
 	
 	/**
 	 * Diretório padrão de armazenamento dos arquivos de cache.
+	 * 
 	 * As instâncias da classe CacheDisco podem sobrescrever este diretório em seus construtores.
+	 * 
 	 * @access private
 	 * @static
 	 * @var string
@@ -26,15 +29,18 @@ class CacheDisco extends CacheAbstrato {
 	private static $diretorioPadrao;
 	/**
 	 * Modo de acesso ao cache ('r' = somente leitura, 'w' = somente escrita, 'rw' = leitura e escrita).
+	 * 
 	 * @access private
 	 * @var string
 	 */
 	private $modo;
 	/**
 	 * Diretório onde os arquivos de cache serão armazeados.
+	 * 
 	 * O diretório deve ter permissão de leitura, execução e escrita para o usuário do PHP (normalmente 0700, mas nesse
 	 * caso não será possível remover os arquivos de cache via FTP ou SSH a menos que se tenha acesso como super-
 	 * usuário).
+	 * 
 	 * @access private
 	 * @var string
 	 */
@@ -42,9 +48,11 @@ class CacheDisco extends CacheAbstrato {
 	/**
 	 * Em quantos subníveis de diretórios os arquivos de cache deverão ser subdivididos (espelhados) dentro do diretório
 	 * de cache.
+	 * 
 	 * Quando há muitos registros de cache diferentes (namespace + id + tags), pode ser necessário subdividir os mesmos 
 	 * em 2 ou mais subníveis de subdiretórios para não causar problemas na estrutura de arquivos do sistema 
 	 * operacional. No entanto, a divisão em subníveis torna a operação de remover os registros por tag mais demorada.
+	 * 
 	 * @access private
 	 * @var int
 	 */

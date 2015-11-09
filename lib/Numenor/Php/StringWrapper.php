@@ -1,25 +1,29 @@
 <?php
 /**
  * Wrapper para as funções de string da biblioteca padrão do PHP.
- * Na minha opinião (e na de muitos desenvolvedores, para falar a verdade), um dos piores aspectos do
- * desenvolvimento em PHP é a nomenclatura das funções da biblioteca padrão. Muitas funções recebem nomes
- * absolutamente idiotas por razões históricas (basicamente, "o nome da função C que executa isso é esse,
- * vamos usar o mesmo nome"), o que acabou não só trazendo antigos hábitos de nomenclatura para dentro de
- * uma linguagem que se pretende moderna, como ainda introduziu alguns novos maus hábitos de nomenclatura
- * novos. E isso sem falar em problemas com ordem de parâmetros inconsistente, comportamentos inconsistentes
- * entre funções que deveriam ser parecidas, etc.
- * O caso das funções de string é bastante emblemático, pois há exemplos de praticamente todos esses problemas.
- * O site PHP Sadness (http://phpsadness.com) faz um bom trabalho de listar os casos, mas basta olhar para 
- * coisas como nl2br, parse_str e explode e notar que não há padrão algum na forma como essas funções são nomeadas,
- * ou seus parâmetros ordenados em comparação com outras funções semelhantes.
+ * 
+ * Na minha opinião (e na de muitos desenvolvedores, para falar a verdade), um dos piores aspectos do desenvolvimento em
+ * PHP é a nomenclatura das funções da biblioteca padrão. Muitas funções recebem nomes absolutamente idiotas por razões 
+ * históricas (basicamente, "o nome da função C que executa isso é esse, vamos usar o mesmo nome"), o que acabou não só 
+ * trazendo antigos hábitos de nomenclatura para dentro de uma linguagem que se pretende moderna, como ainda introduziu 
+ * alguns novos maus hábitos de nomenclatura novos. E isso sem falar em problemas com ordem de parâmetros inconsistente,
+ * comportamentos inconsistentes entre funções que deveriam ser parecidas, etc.
+ * 
+ * O caso das funções de string é bastante emblemático, pois há exemplos de praticamente todos esses problemas. O site 
+ * PHP Sadness (http://phpsadness.com) faz um bom trabalho de listar os casos, mas basta olhar para coisas como nl2br(), 
+ * parse_str() e explode() e notar que não há padrão algum na forma como essas funções são nomeadas, ou seus parâmetros 
+ * ordenados em comparação com outras funções semelhantes.
+ * 
  * Esta classe visa prover uma interface normalizada e uniforme para estas funções de string, de modo que o
- * desenvolvedor possa facilmente autocompletá-las utilizando uma IDE minimamente decente sem ter que ficar
- * lembrando ou consultando a documentação do PHP para lembrar exatamente como determinada função funciona. Eu
- * acredito que os beneficios de clareza e legibilidade superem o custo de overhead de uma chamada a mais de
- * função para executar a operação.
+ * desenvolvedor possa facilmente autocompletá-las utilizando uma IDE minimamente decente sem ter que ficar lembrando ou
+ * consultando a documentação do PHP para lembrar exatamente como determinada função funciona. Eu acredito que os 
+ * beneficios de clareza e legibilidade superem o custo de overhead de uma chamada a mais de função para executar a 
+ * operação.
+ * 
  * No desenvolvimento desta parte da biblioteca, meu objetivo foi manter um equilíbrio entre o padrão minimalista de
  * nomes do PHP nativo e a ridícula verbosidade de nomes estilo Java. Abreviações, quando fazem sentido, foram 
  * mantidas.
+ * 
  * Quando possível, a versão mb_* (multibyte) de uma função foi preferida à versão normal que só funciona com conjuntos
  * de caracteres restritos, porque suporte a Unicode deveria ser uma preocupação crucial da linguagem. Da mesma forma,
  * funções que precisam de algum tratamento no input para produzir um output adequado em Unicode já implementam estes
@@ -61,17 +65,19 @@ class StringWrapper {
 	
 	/**
 	 * Remove o primeiro e o último caracter de uma expressão regular.
-	 * As funções de expressão regular da biblioteca `mb_*` têm uma pegadinha no seu parâmetro $delimiter: 
-	 * embora seja esperada uma expressão regular, a mesma deve ser informada sem o delimitador, ao contrário das
-	 * funções padrão que trabalham com expressões regulares (por exemplo, `preg_match()`). Este método corrige este 
-	 * problema de padronização e aceita a expressão regular com o delimitador.
+	 * 
+	 * As funções de expressão regular da biblioteca `mb_*` têm uma pegadinha no seu parâmetro $delimiter: embora seja 
+	 * esperada uma expressão regular, a mesma deve ser informada sem o delimitador, ao contrário das funções padrão que
+	 * trabalham com expressões regulares (por exemplo, `preg_match()`). Este método corrige este problema de 
+	 * padronização e aceita a expressão regular com o delimitador.
 	 * 
 	 * <code>
 	 * $regex = '/^(a|b)*?$/';
 	 * // Output: '^(a|b)*?$'
+	 * </code>
 	 * 
 	 * @access protected
-	 * @param string $regex
+	 * @param string $regex Expressão regular.
 	 * @return string
 	 */
 	protected function removerDelimitadorRegex($regex) {
@@ -124,19 +130,20 @@ class StringWrapper {
 	
 	/**
 	 * Cria um hash de senha criptograficamente seguro. O hash gerado é automaticamente "salgado".
-	 * Este método deve ser usado preferencialmente no lugar do função `crypt`, que não salga o hash
-	 * automaticamente, e portanto pode ser utilizado incorretamente pelo desenvolvedor.
-	 * A função password_hash, apesar de relativamente recente, possui algumas inconsistências na 
-	 * sua declaração (como o parâmetro opcional $salt ser marcado como deprecated no PHP 7). Este método
-	 * visa tornar estas inconsistências transparentes para o desenvolvedor.
+	 * 
+	 * Este método deve ser usado preferencialmente no lugar do função `crypt`, que não salga o hash automaticamente, e 
+	 * portanto pode ser utilizado incorretamente pelo desenvolvedor.
+	 * 
+	 * A função password_hash, apesar de relativamente recente, possui algumas inconsistências na sua declaração 
+	 * (como o parâmetro opcional $salt ser marcado como deprecated no PHP 7). Este método visa tornar estas 
+	 * inconsistências transparentes para o desenvolvedor.
 	 * 
 	 * @access public
 	 * @param string $senha Senha para a qual se quer gerar o hash.
-	 * @param int $custo Custo algorítmico do hash gerado. Quanto maior, melhor a força do hash, porém mais
-	 * demorada é a geração do mesmo. O valor padrão 10 é considerado um bom valor base para o custo com
-	 * relação ao tempo gasto.
-	 * @param string $algoritmo Identificador do algoritmo usado para a geração do hash. Deve ser uma das
-	 * constantes de senha do PHP.
+	 * @param int $custo Custo algorítmico do hash gerado. Quanto maior, melhor a força do hash, porém mais demorada é a
+	 * geração do mesmo. O valor padrão 10 é considerado um bom valor base para o custo com relação ao tempo gasto.
+	 * @param string $algoritmo Identificador do algoritmo usado para a geração do hash. Deve ser uma das constantes de 
+	 * senha do PHP.
 	 * @return string O hash da senha gerado.
 	 * @throws \Numenor\Excecao\Php\StringWrapper\ExcecaoHashInvalido se o hash não pôde ser gerado.
 	 */
@@ -150,14 +157,15 @@ class StringWrapper {
 	
 	/**
 	 * Separa uma string a partir de uma expressão regular delimitadora.
+	 * 
 	 * Este método funciona com strings multibyte.
 	 * 
 	 * @access public
 	 * @param string $delimitador Expressão regular delimitadora. Para fins de uniformização com outras funções de
 	 * expressão regular, a expressão deve ser passada com o delimitador (normalmente, /<regex>/). 
 	 * @param string $string Texto a ser separado.
-	 * @param int $limite Indica o limite máximo de elementos em que o texto deve ser divido. Se não informado, o padrão é
-	 * -1 (sem limite). 
+	 * @param int $limite Indica o limite máximo de elementos em que o texto deve ser divido. Se não informado, o padrão
+	 * é -1 (sem limite). 
 	 * @return array Texto dividido. 
 	 */
 	public function separar($delimitador, $string, $limite = -1) {
@@ -178,9 +186,11 @@ class StringWrapper {
 	
 	/**
 	 * Substitui todas as ocorrências de uma string por outra.
+	 * 
 	 * Ao contrário de várias outras funções de string da biblioteca padrão, str_replace funciona com strings multibyte;
-	 * porém, a ordem dos parâmetros é diferente (o texto a ser alterado é o último parâmetro, ao invés do primeiro). Este
-	 * método visa corrigir este problema de padronização dos parâmetros.
+	 * porém, a ordem dos parâmetros é diferente (o texto a ser alterado é o último parâmetro, ao invés do primeiro). 
+	 * 
+	 * Este método visa corrigir este problema de padronização dos parâmetros.
 	 *
 	 * @access public
 	 * @param string $string Texto a ser alterado.
@@ -194,12 +204,13 @@ class StringWrapper {
 	
 	/**
 	 * Busca por expressão regular dentro de um texto.
+	 * 
 	 * Este método funciona com strings multibyte.
 	 * 
 	 * @access public
 	 * @param string $string Texto onde será feita a busca.
-	 * @param string $regex Expressão regular de busca. Para fins de uniformização com outras funções de
-	 * expressão regular, a expressão deve ser passada com o delimitador (normalmente, /<regex>/).
+	 * @param string $regex Expressão regular de busca. Para fins de uniformização com outras funções de expressão 
+	 * regular, a expressão deve ser passada com o delimitador (normalmente, /<regex>/).
 	 * @return boolean Indica se a expressão regular foi encontrada dentro do texto. 
 	 */
 	public function regexBusca($string, $regex) {
@@ -208,12 +219,13 @@ class StringWrapper {
 	
 	/**
 	 * Substitui as ocorrências de uma string identificada por uma expressão regular por outra.
+	 * 
 	 * Este método funciona com strings multibyte.
 	 * 
 	 * @access public
 	 * @param string $string Texto a ser alterado.
-	 * @param string $regex Expressão regular de busca. Para fins de uniformização com outras funções de
-	 * expressão regular, a expressão deve ser passada com o delimitador (normalmente, /<regex>/).
+	 * @param string $regex Expressão regular de busca. Para fins de uniformização com outras funções de expressão 
+	 * regular, a expressão deve ser passada com o delimitador (normalmente, /<regex>/).
 	 * @param string $substituicao Texto de substituição.
 	 * @param string $opcoes Modificadores da expressão regular de busca.
 	 * @return string Texto substituído.
@@ -224,14 +236,15 @@ class StringWrapper {
 	
 	/**
 	 * Substitui as ocorrências de uma string identificada por uma expressão regular utilizando uma função de callback.
+	 * 
 	 * Este método funciona com strings multibyte.
 	 * 
 	 * @access public
 	 * @param string $string Texto a ser alterado
 	 * @param string $regex Expressão regular de busca. Para fins de uniformização com outras funções de
 	 * expressão regular, a expressão deve ser passada com o delimitador (normalmente, /<regex>/).
-	 * @param callable $callback Função de callback que será chamada passando um array dos elementos encontrados dentro do texto a 
-	 * ser alterado.
+	 * @param callable $callback Função de callback que será chamada passando um array dos elementos encontrados dentro 
+	 * do texto a ser alterado.
 	 * @param string $opcoes Modificadores da expressão regular de busca.
 	 * @return string Texto substituído.
 	 */
@@ -240,7 +253,8 @@ class StringWrapper {
 	}
 	
 	/**
-	 * Codifica todos os caracteres do texto que possuem uma representação como entidade HTML para a entidade correspondente.
+	 * Codifica todos os caracteres do texto que possuem uma representação como entidade HTML para a entidade 
+	 * correspondente.
 	 * 
 	 * <code>
 	 * $string = "A 'quote' is <b>bold</b>."
@@ -249,10 +263,11 @@ class StringWrapper {
 	 * 
 	 * @access public
 	 * @param string $string Texto a ser codificado.
-	 * @param int $flags Máscara de bits das flags indicando como a conversão deve ser efetuada. O padrão ENT_QUOTES | ENT_HTML5
-	 * é o mais indicado para a maioria dos casos (codifica todos os caracteres, incluindo aspas, e trata o código como HTML 5).
-	 * @param string $encoding Codificação do texto usada para fazer a conversão dos caracteres. Dependendo da versão do PHP, o valor
-	 * padrão deste parâmetro é completamente diferente; por isso, foi definido o padrão como UTF-8.
+	 * @param int $flags Máscara de bits das flags indicando como a conversão deve ser efetuada. O padrão ENT_QUOTES | 
+	 * ENT_HTML5 é o mais indicado para a maioria dos casos (codifica todos os caracteres, incluindo aspas, e trata o 
+	 * código como HTML 5).
+	 * @param string $encoding Codificação do texto usada para fazer a conversão dos caracteres. Dependendo da versão do
+	 * PHP, o valor padrão deste parâmetro é completamente diferente; por isso, foi definido o padrão como UTF-8.
 	 * @param boolean $doubleEncode Indica se entidades HTML pré-existentes no texto devem ser codificadas ou não.
 	 * @return string Texto com os caracteres convertidos para suas representações como entidade HTML.
 	 */
@@ -270,14 +285,46 @@ class StringWrapper {
 	 * 
 	 * @access public
 	 * @param string $string Texto a ser codificado.
-	 * @param int $flags Máscara de bits das flags indicando como a conversão deve ser efetuada. O padrão ENT_QUOTES | ENT_HTML5
-	 * é o mais indicado para a maioria dos casos (codifica todos os caracteres, incluindo aspas, e trata o código como HTML 5).
-	 * @param string $codificacao Codificação do texto usada para fazer a conversão dos caracteres. Dependendo da versão do PHP, o valor
-	 * padrão deste parâmetro é completamente diferente; por isso, foi definido o padrão como UTF-8.
+	 * @param int $flags Máscara de bits das flags indicando como a conversão deve ser efetuada. O padrão ENT_QUOTES | 
+	 * ENT_HTML5 é o mais indicado para a maioria dos casos (codifica todos os caracteres, incluindo aspas, e trata o 
+	 * código como HTML 5).
+	 * @param string $codificacao Codificação do texto usada para fazer a conversão dos caracteres. Dependendo da versão
+	 * do PHP, o valor padrão deste parâmetro é completamente diferente; por isso, foi definido o padrão como UTF-8.
 	 * @return string Texto com os caracteres representados como entidades HTML convertidos para os próprios caracteres. 
 	 */
 	public function decodificarHtmlEntities($string, $flags = ENT_COMPAT | ENT_HTML5, $codificacao = 'UTF-8') {
 		return html_entity_decode($string, $flags, $codificacao);
+	}
+	
+	/**
+	 * Codifica uma string em MIME base64.
+	 * 
+	 * @access public
+	 * @param string $string Texto a ser codificado.
+	 * @return string O texto codificado em base64.
+	 */
+	public function codificarBase64($string) {
+		return base64_encode($string);
+	}
+	
+	/**
+	 * Decodifica uma string MIME base64.
+	 * 
+	 * @access public
+	 * @param string $string Texto a ser decodificado.
+	 * @throws \Numenor\Excecao\Php\StringWrapper\ExcecaoDecodificacaoInvalida se ocorrer um erro na decodificação do
+	 * texto.
+	 * @return string O texto decodificado.
+	 */
+	public function decodificarBase64($string) {
+		// Substitui qualquer espaço em branco pelo caracter +, para evitar que codificações geradas por algumas
+		// bibliotecas sejam consideradas inválidas (p.ex., a codificação gerada pelo método Javascript 
+		// canvas.toUrlData() 
+		$retorno = base64_decode(str_replace(' ', '+', $string));
+		if (!$retorno) {
+			throw new ExcecaoString\ExcecaoDecodificacaoInvalida();
+		}
+		return $retorno;
 	}
 	
 	/**

@@ -2,8 +2,8 @@
 /**
  * Classe de boostrap da biblioteca Numenor.
  * 
- * A biblioteca pode ser configurada a partir de um único método estático, ou ter suas
- * dependências injetadas manualmente.
+ * A biblioteca pode ser configurada a partir de um único método estático, ou ter suas dependências injetadas 
+ * manualmente.
  * 
  * @author Darke M. Goulart <darkemg@users.noreply.github.com>
  * @package Numenor/Configuracao
@@ -22,6 +22,7 @@ class Biblioteca {
 	/**
 	 * Configurações oriundas do servidor. Por exemplo, diretório raiz da aplicação, versão do sistema operacional
 	 * do servidor, etc.
+	 * 
 	 * @access private
 	 * @var \Zend\Config\Config
 	 */
@@ -29,6 +30,7 @@ class Biblioteca {
 	/**
 	 * Configurações específicas da biblioteca. Por exemplo, configurações do sistema de cache, geração de checksums,
 	 * etc.
+	 * 
 	 * @access private 
 	 * @var \Zend\Config\Config
 	 */
@@ -88,13 +90,13 @@ class Biblioteca {
 				'portaUsuario' => $_SERVER['REMOTE_PORT']
 		));
 		// Instancia a configuração da biblioteca, de acordo com a origem dos parâmetros enviados:
-		// - caso $configuracao seja nulo, então instancia a classe Zend\Config\Config diretamente sem
-		//   nenhum conteúdo. Isto permite que os componentes da biblioteca Numenor que dispensam 
-		//   configuração possam ser utilizados de maneira independente.
-		// - caso $configuracao seja um array, instancia a classe Zend\Config\Config diretamente,
-		//   passando o array de configuração para o construtor.
-		// - caso $configuracao seja um arquivo, chama a classe de factory do pacote Zend\Config para
-		//   criar o objeto de configuração a partir deste arquivo.
+		// - caso $configuracao seja nulo, então instancia a classe Zend\Config\Config diretamente sem nenhum conteúdo. 
+		//   Isto permite que os componentes da biblioteca Numenor que dispensam configuração possam ser utilizados de 
+		//   maneira independente.
+		// - caso $configuracao seja um array, instancia a classe Zend\Config\Config diretamente, passando o array de 
+		//   configuração para o construtor.
+		// - caso $configuracao seja um arquivo, chama a classe de factory do pacote Zend\Config para criar o objeto de 
+		//   configuração a partir deste arquivo.
 		if ($configuracao === null) {
 			return new self($configuracaoServidor);
 		}

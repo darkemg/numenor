@@ -12,6 +12,7 @@ abstract class CacheAbstrato {
 	
 	/**
 	 * Identificador de namespace do cache (para evitar colisão com outras instâncias).
+	 * 
 	 * @access protected
 	 * @var string
 	 */
@@ -19,12 +20,14 @@ abstract class CacheAbstrato {
 	/**
 	 * Duração da validade do cache, em segundos. O valor 0 indica que o cache não expira por duração (mas pode expirar
 	 * por outras razões, de acordo com as regras do adaptador de cache escolhido).
+	 * 
 	 * @access protected
 	 * @var int
 	 */
 	protected $duracao;
 	/**
 	 * Instância do objeto adaptador de cache.
+	 * 
 	 * @access protected
 	 * @var \Zend\Cache\Storage\Adapter
 	 */
