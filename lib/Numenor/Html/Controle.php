@@ -1,38 +1,32 @@
 <?php
 namespace Numenor\Html;
+use MatthiasMullie\Minify;
 use Numenor\Php\ArrayWrapper;
+use Numenor\Php\StringWrapper;
 
-class Controle {
+abstract class Controle {
 	
+	/**
+	 * 
+	 * @var \Numenor\Php\ArrayWrapper;
+	 */
 	protected $arrayWrapper;
-	protected $css;
-	protected $js;
+	/**
+	 * 
+	 * @var \Numenor\Php\StringWrapper;
+	 */
+	protected $stringWrapper;
+	protected $diretorioOutput;
 	
-	public function __construct(ArrayWrapper $arrayWrapper, array $css = array(), array $js = array()) {
+	protected function gerarNome(array $listaAssets) {
+		return hash('sha1', $this->stringWrapper->unir('', $listaAssets));
+	}
+	
+	public function __construct(ArrayWrapper $arrayWrapper, StringWrapper $stringWrapper, $diretorioOutput) {
 		$this->arrayWrapper = $arrayWrapper;
-		$this->css = $css;
-		$this->js = $js;
+		$this->stringWrapper = $stringWrapper;
+		$this->diretorioOutput = $diretorioOutput;
 	}
 	
-	public function getCss() {
-		return $this->css;
-	}
-	
-	public function getJs() {
-		return $this->js;
-	}
-	
-	public function adicionarCss(Asset $asset) {
-		
-	}
-	
-	public function adicionarJs(Javascript $js) {
-		if (sizeof($this->js) == 0) {
-			$this->js[] = $js;
-		} else {
-			foreach ($this->js as $javascript) {
-				
-			}
-		}
-	}
+	abstract public function gerarCodigoInclusao();
 }
