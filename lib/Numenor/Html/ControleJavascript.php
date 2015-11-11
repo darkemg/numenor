@@ -13,7 +13,7 @@ class ControleJavascript extends Controle {
 	 */
 	protected $listaJs;
 	
-	protected function gerarListaConcatCompat() {
+	protected function gerarListaConcatCompact() {
 		$lista = array();
 		foreach ($this->listaJs as $js) {
 			if ($js->isCompactavel() && $js->isConcatenavel()) {
@@ -33,7 +33,7 @@ class ControleJavascript extends Controle {
 		return $lista;
 	}
 	
-	protected function gerarListaCompat() {
+	protected function gerarListaCompact() {
 		$lista = array();
 		foreach ($this->listaJs as $js) {
 			if ($js->isCompactavel() && !$js->isConcatenavel()) {
@@ -51,6 +51,29 @@ class ControleJavascript extends Controle {
 			}
 		}
 		return $lista;
+	}
+	
+	protected function minificar() {
+		//
+		$listaConcatCompact = $this->gerarListaConcatCompact();
+		$nomeConcatCompact = $this->gerarNome($listaConcatCompact);
+		$minificadorConcatCompact = clone $this->minificadorJs;
+		if (!file_exists($this->diretorioOutput . \DIRECTORY_SEPARATOR . $nomeConcatCompact . '.js')) {
+			foreach ($listaConcatCompact as $js) {
+				$minificadorConcatCompact->add($js);
+			}
+			$minificadorConcatCompact->execute($this->diretorioOutput . \DIRECTORY_SEPARATOR . $nomeConcatCompact);
+		}
+		unset($minificadorConcatCompact);
+		// 
+		$listaConcat = $this->gerarListaConcat();
+		$nomeConcat = $this->gerarNome($listaConcat);
+		if (!file_exists($this->diretorioOutput . \DIRECTORY_SEPARATOR . $nomeConcat . '.js')) {
+			foreach ($listaConcat as $js) {
+				file_put_contents($this->diretorioOutput . \DIRECTORY_SEPARATOR . $nomeConcat . '.js', file_get_contents($js) . "\n", FILE_APPEND);
+			}
+		}
+		// 
 	}
 	
 	public function adicionarJs(Javascript $js) {

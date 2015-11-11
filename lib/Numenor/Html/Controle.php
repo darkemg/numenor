@@ -1,6 +1,7 @@
 <?php
 namespace Numenor\Html;
 use MatthiasMullie\Minify;
+use Numenor\Configuracao\Biblioteca;
 use Numenor\Php\ArrayWrapper;
 use Numenor\Php\StringWrapper;
 
