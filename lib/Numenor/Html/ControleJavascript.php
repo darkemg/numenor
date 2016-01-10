@@ -1,124 +1,124 @@
 <?php
+/**
+ * Classe de controle para inclusão de arquivos Javascript em páginas HTML.
+ *
+ * Arquivos JS podem ser concatenados, minificados e gzipados para melhorar o desempenho da página onde são carregados.
+ * Também é possível controlar a inclusão de arquivos de script originados em servidores externos (CDNs), que não são
+ * pré-processados da mesma maneira que os scripts armazenados localmente no servidor.
+ *
+ * @author Darke M. Goulart <darkemg@users.noreply.github.com>
+ * @package Numenor/Html
+ */
 namespace Numenor\Html;
+use MatthiasMullie\Minify\JS as MinifyJs;
 class ControleJavascript extends Controle {
 	
 	/**
+	 * Componente de minificação dos assets Javascript.
 	 * 
+	 * @access protected
 	 * @var \MatthiasMullie\Minify\JS
 	 */
 	protected $minificadorJs;
 	/**
+	 * Lista de arquivos Javascript adicionados para processamento na página.
 	 * 
+	 * @access protected
 	 * @var \Numenor\Html\Javascript[]
 	 */
 	protected $listaJs;
 	/**
+	 * Lista de arquivos Javascript que serão efetivamente incluídos na página.
 	 * 
+	 * @access protected
 	 * @var array
 	 */
 	protected $listaArquivosIncluir;
 	
-	protected function gerarListaConcatCompact() {
-		$lista = array();
-		foreach ($this->listaJs as $js) {
-			if ($js->isCompactavel() && $js->isConcatenavel()) {
-				$lista[] = (string) $js;
-			}
-		}
-		return $lista;
-	}
-	
-	protected function gerarListaConcat() {
-		$lista = array();
-		foreach ($this->listaJs as $js) {
-			if ($js->isConcatenavel() && !$js->isCompactavel()) {
-				$lista[] = (string) $js;
-			}
-		}
-		return $lista;
-	}
-	
-	protected function gerarListaCompact() {
-		$lista = array();
-		foreach ($this->listaJs as $js) {
-			if ($js->isCompactavel() && !$js->isConcatenavel()) {
-				$lista[] = (string) $js;
-			}
-		}
-		return $lista;
-	}
-	
-	protected function gerarListaNormal() {
-		$lista = array();
-		foreach ($this->listaJs as $js) {
-			if (!$js->isCompactavel() && !$js->isConcatenavel()) {
-				$lista[] = (string) $js;
-			}
-		}
-		return $lista;
-	}
-	
+	/**
+	 * Processa a lista de arquivos Javascript incluídos, alterando-os conforme necessário (minificação, concatenação,
+	 * etc.) e gerando os snippets de inclusão dos mesmos.
+	 * 
+	 * @access protected
+	 */
 	protected function minificar() {
-		//
+		// Reseta a lista de arquivos a serem incluídos
 		$this->listaArquivosIncluir = array();
-		//
-		$listaConcatCompact = $this->gerarListaConcatCompact();
-		$nomeConcatCompact = $this->gerarNome($listaConcatCompact);
-		$minificadorConcatCompact = clone $this->minificadorJs;
-		$outputConcatCompact = $this->diretorioOutput . \DIRECTORY_SEPARATOR . $nomeConcatCompact . '.js';
-		if (!file_exists($outputConcatCompact)) {
-			foreach ($listaConcatCompact as $js) {
-				$minificadorConcatCompact->add($js);
+		// Adiciona os arquivos que devem ser minificados e concatenados em um só arquivo
+		$listaConcatCompact = $this->gerarListaConcatCompact($this->listaJs);
+		if (count($listaConcatCompact) > 0) {
+			$nomeConcatCompact = $this->gerarNome($listaConcatCompact);
+			$minificadorConcatCompact = clone $this->minificadorJs;
+			$outputConcatCompact = $this->diretorioOutput . $nomeConcatCompact . '.js';
+			if (!file_exists($outputConcatCompact)) {
+				foreach ($listaConcatCompact as $js) {
+					$minificadorConcatCompact->add($js);
+				}
+				file_put_contents($outputConcatCompact, $minificadorConcatCompact->execute($outputConcatCompact), \FILE_APPEND);
 			}
-			$minificadorConcatCompact->gzip($outputConcatCompact);
+			$this->listaArquivosIncluir[] = '<script src="' . $this->urlBase . $nomeConcatCompact . '.js"></script>' . \PHP_EOL;
 		}
-		$this->listaArquivosIncluir[] = $outputConcatCompact;
 		unset($minificadorConcatCompact);
-		// 
-		$listaConcat = $this->gerarListaConcat();
-		$nomeConcat = $this->gerarNome($listaConcat);
-		$outputConcat = $this->diretorioOutput . \DIRECTORY_SEPARATOR . $nomeConcat . '.js';
-		if (!file_exists($outputConcat)) {
-			foreach ($listaConcat as $js) {
-				file_put_contents(
-						$outputConcat, 
-						gzencode(file_get_contents($js . "\n"), 9, FORCE_GZIP), 
-						FILE_APPEND);
+		// Adiciona os arquivos que devem ser concatenados em um só arquivo, sem minificação
+		$listaConcat = $this->gerarListaConcat($this->listaJs);
+		if (count($listaConcat) > 0) {
+			$nomeConcat = $this->gerarNome($listaConcat);
+			$outputConcat = $this->diretorioOutput . $nomeConcat . '.js';
+			if (!file_exists($outputConcat)) {
+				foreach ($listaConcat as $js) {
+					file_put_contents(
+							$outputConcat, 
+							file_get_contents($js) . \PHP_EOL, 
+							\FILE_APPEND);
+				}
+			}
+			$this->listaArquivosIncluir[] = '<script src="' . $this->urlBase . $nomeConcat . '.js"></script>' . \PHP_EOL;
+		}
+		// Adiciona os arquivos que devem ser minificados, sem concatenação
+		$listaCompact = $this->gerarListaCompact($this->listaJs);
+		if (count($listaCompact) > 0) {
+			foreach ($listaCompact as $js) {
+				$minificadorCompact = clone $this->minificadorJs;
+				$nomeCompact = $this->gerarNome(array($js));
+				$outputCompact = $this->diretorioOutput . $nomeCompact . '.js';
+				if (!file_exists($outputCompact)) {
+					$minificadorCompact->add($js);
+					file_put_contents($outputCompact, $minificadorCompact->execute($outputCompact), \FILE_APPEND);
+				}
+				$this->listaArquivosIncluir[] = '<script src="' . $this->urlBase . $nomeCompact . '.js"></script>' . \PHP_EOL;
+				unset($minificadorCompact);
 			}
 		}
-		$this->listaArquivosIncluir[] = $outputConcat;
-		// 
-		$listaCompact = $this->gerarListaCompact();
-		foreach ($listaCompact as $js) {
-			$minificadorCompact = clone $this->minificadorJs;
-			$nomeCompact = $this->gerarNome(array($js));
-			$outputCompact = $this->diretorioOutput . \DIRECTORY_SEPARATOR . $nomeCompact . '.js';
-			if (!file_exists($outputCompact)) {
-				$minificadorCompact->add($js);
-				$minificadorCompact->gzip($outputCompact);
-			}
-			$this->listaArquivosIncluir[] = $outputCompact;
-			unset($minificadorCompact);
-		}
-		$listaNormal = $this->gerarListaNormal();
-		foreach ($listaNormal as $js) {
-			if ($js instanceof JavascriptRemoto) {
-				
-			} else {
-				$this->listaArquivosIncluir[] = (string) $js;
+		// Adiciona os arquivos que devem ser processados sem minificação ou concatenação.
+		$listaNormal = $this->gerarListaNormal($this->listaJs);
+		if (count($listaNormal) > 0) {
+			foreach ($listaNormal as $js) {
+				if ($js instanceof JavascriptRemoto) {
+					$this->listaArquivosIncluir[] = $js->gerarSnippetInclusao();
+				} else {
+					$this->listaArquivosIncluir[] = '<script src="'. $js . '"></script>' . \PHP_EOL;
+				}
 			}
 		}
 	}
 	
+	/**
+	 * Adiciona um arquivo Javascript à lista de arquivos incluídos na página.
+	 * 
+	 * @access public
+	 * @param \Numenor\Html\Javascript $js Novo arquivo incluído na página.
+	 */
 	public function adicionarJs(Javascript $js) {
 		$this->listaJs[] = $js;
 	}
 	
-	public function setMinificadorJs(Minify\JS $minificador) {
+	/**
+	 * Define o minificador utilizado pelo sistema para processar e compactar os arquivos.
+	 *
+	 * @access public
+	 * @param MatthiasMullie\Minify\JS $minificador Instância do minificador.
+	 */
+	public function setMinificadorJs(MinifyJs $minificador) {
 		$this->minificadorJs = $minificador;
-	}
-	
-	public function gerarCodigoInclusao() {
-		
 	}
 }

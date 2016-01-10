@@ -17,7 +17,7 @@ class ExcecaoArrayPadTamanhoInvalido extends ExcecaoArray {
 	 */
 	public function __construct(\Exception $previous = null) {
 		parent::__construct('O novo tamanho do array informado para o método ArrayWrapper::preencher() não pode ser menor do que o tamanho atual do array.',
-			self::CODE_FN_ARRAYPAD_TAMANHOINVALIDO, 
+			static::DEFAULT_CODE,
 			$previous);
 	}
 }

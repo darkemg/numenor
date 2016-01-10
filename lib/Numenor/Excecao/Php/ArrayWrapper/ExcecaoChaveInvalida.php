@@ -18,7 +18,7 @@ class ExcecaoChaveInvalida extends ExcecaoArray {
 	 */
 	public function __construct(\Exception $previous = null) {
 		parent::__construct('O método invocado requer que o parâmetro $chave seja de um tipo válido: {String}, {Integer}, ou um objeto representável como uma string.', 
-			self::CODE_ARRAYWRAPPER_CHAVETIPOINVALIDO, 
+			static::DEFAULT_CODE,
 			$previous);
 	}
 }

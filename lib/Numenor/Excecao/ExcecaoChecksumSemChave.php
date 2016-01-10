@@ -17,6 +17,6 @@ class ExcecaoChecksumSemChave extends ExcecaoErroUso {
 	 * @param \Exception $previous Exceção anterior (se a exceção atual tiver sido encadeada)
 	 */
 	public function __construct(\Exception $previous = null) {
-		parent::__construct('A chave do gerador de checksums ainda não foi definida. Você deve informá-la através do método Checksum::setChave', self::CODE_CHECKSUM_SEM_CHAVE, $previous);
+		parent::__construct('A chave do gerador de checksums ainda não foi definida. Você deve informá-la através do método Checksum::setChave', static::DEFAULT_CODE, $previous);
 	}
 }

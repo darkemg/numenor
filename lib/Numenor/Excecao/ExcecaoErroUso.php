@@ -2,9 +2,11 @@
 /**
  * Classe de exceções levantadas pelo sistema quando há um erro de uso de alguma funcionalidade da 
  * aplicação.
+ * 
  * Erros de uso são causados pela invocação incorreta de alguma operação disponibilizada pela aplicação
  * (por exemplo, chamada de um método de um objeto que depende de uma configuração prévia sem que esta
  * tenha sido feita antes).
+ * 
  * Estes erros produzem um estado irrecuperável na aplicação e devem ser tratados com a interrupção do
  * script.
  *

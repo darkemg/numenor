@@ -1,8 +1,10 @@
 <?php
 /**
  * Classe de exceções levantadas pelo sistema quando há um erro de sistema na aplicação.
+ * 
  * Erros de sistema são causados por algum tipo de operação que causou um erro irrecuperável (por exemplo,
- * falta de memória, operação em um arquivo que foi deletado subitamente por um outro processo, etc.)
+ * falta de memória, operação em um arquivo que foi deletado subitamente por um outro processo, etc.).
+ * 
  * Estes erros produzem um estado irrecuperável na aplicação e devem ser tratados com a interrupção do
  * script.
  *

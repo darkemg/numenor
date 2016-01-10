@@ -17,7 +17,7 @@ class ExcecaoArrayFillTamanhoInvalido extends ExcecaoArray {
 	 */
 	public function __construct(\Exception $previous = null) {
 		parent::__construct('O número de itens informado para o método ArrayWrapper::criar() não pode ser menor do que 1.', 
-			self::CODE_FN_ARRAYFILL_NUMITEMS, 
+			static::DEFAULT_CODE,
 			$previous);
 	}
 }

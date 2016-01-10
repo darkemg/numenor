@@ -16,6 +16,6 @@ class ExcecaoHashInvalido extends \Numenor\Excecao\ExcecaoErroSistema {
 	 * @param \Exception $previous Exceção anterior (se a exceção atual tiver sido encadeada)
 	 */
 	public function __construct(\Exception $previous = null) {
-		parent::__construct('Não foi possível gerar um hash para a senha informada.', self::CODE_FN_PASSWORD_HASH_INVALIDO, $previous);
+		parent::__construct('Não foi possível gerar um hash para a senha informada.', static::DEFAULT_CODE, $previous);
 	}
 }

@@ -18,7 +18,7 @@ class ExcecaoTipoOrdemInvalida extends ExcecaoArray {
 	 */
 	public function __construct(\Exception $previous = null) {
 		parent::__construct('O método de ordenação requer que o $tipoOrdem informado seja um dos valores padrão de ordenação.', 
-			self::CODE_ARRAYWRAPPER_TIPOORDEMINVALIDA, 
+			static::DEFAULT_CODE,
 			$previous);
 	}
 }

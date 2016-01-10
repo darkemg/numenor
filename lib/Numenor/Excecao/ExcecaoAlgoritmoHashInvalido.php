@@ -17,6 +17,6 @@ class ExcecaoAlgoritmoHashInvalido extends ExcecaoErroUso {
 	 * @param \Exception $previous Exceção anterior (se a exceção atual tiver sido encadeada)
 	 */
 	public function __construct(\Exception $previous = null) {
-		parent::__construct('O algoritmo de hash informado é inválido ou não está disponível nesta versão do PHP.', self::CODE_ALGORITMO_HASH_INVALIDO, $previous);
+		parent::__construct('O algoritmo de hash informado é inválido ou não está disponível nesta versão do PHP.', static::DEFAULT_CODE, $previous);
 	}
 }

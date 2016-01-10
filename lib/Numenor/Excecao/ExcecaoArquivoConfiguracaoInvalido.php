@@ -17,6 +17,6 @@ class ExcecaoArquivoConfiguracaoInvalido extends ExcecaoErroUso {
 	 * @param \Exception $previous Exceção anterior (se a exceção atual tiver sido encadeada)
 	 */
 	public function __construct(\Exception $previous = null) {
-		parent::__construct('O arquivo de configuração informado não pode ser lido. Ele pode não existir, não estar acessível, ou não estar em um formato válido.', self::CODE_ARQUIVO_CONFIG_INVALIDO, $previous);
+		parent::__construct('O arquivo de configuração informado não pode ser lido. Ele pode não existir, não estar acessível, ou não estar em um formato válido.', static::DEFAULT_CODE, $previous);
 	}
 }

@@ -17,7 +17,7 @@ class ExcecaoChaveInexistente extends ExcecaoArray {
 	 */
 	public function __construct(\Exception $previous = null) {
 		parent::__construct('Não existe nenhum item no array que corresponda à chave informada.', 
-			self::CODE_ARRAYWRAPPER_CHAVEINEXISTENTE, 
+			static::DEFAULT_CODE,
 			$previous);
 	}
 }

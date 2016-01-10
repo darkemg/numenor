@@ -17,7 +17,7 @@ class ExcecaoArrayCombineTamanhosIncompativeis extends ExcecaoArray {
 	 */
 	public function __construct(\Exception $previous = null) {
 		parent::__construct('O método ArrayWrapper::combinar() requer dois arrays com o mesmo tamanho.', 
-			self::CODE_FN_ARRAYCOMBINE_TAMANHOINVALIDO, 
+			static::DEFAULT_CODE, 
 			$previous);
 	}
 }

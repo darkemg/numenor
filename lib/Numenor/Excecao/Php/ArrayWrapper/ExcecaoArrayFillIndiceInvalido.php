@@ -16,6 +16,6 @@ class ExcecaoArrayFillIndiceInvalido extends ExcecaoArray {
 	 * @param \Exception $previous Exceção anterior (se a exceção atual tiver sido encadeada)
 	 */
 	public function __construct(\Exception $previous = null) {
-		parent::__construct('O índice de início do array não pode ser negativo.', self::CODE_FN_ARRAYFILL_INVALIDINDEX, $previous);
+		parent::__construct('O índice de início do array não pode ser negativo.', static::DEFAULT_CODE, $previous);
 	}
 }

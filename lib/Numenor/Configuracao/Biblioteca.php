@@ -83,7 +83,7 @@ class Biblioteca {
 	public static function init($configuracao = null) {
 		// Instancia a configuração do servidor.
 		$configuracaoServidor = new Config(array(
-				'diretorioRaiz' => $_SERVER['DOCUMENT_ROOT'] . \DIRECTORY_SEPARATOR,
+				'diretorioRaiz' => $_SERVER['DOCUMENT_ROOT'] . '/',
 				'enderecoIp' => $_SERVER['SERVER_ADDR'],
 				'https' => (boolean) $_SERVER['HTTPS'],
 				'ipUsuario' => $_SERVER['REMOTE_ADDR'],

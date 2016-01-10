@@ -1,8 +1,9 @@
 # Untracked directories
 .settings
 external-tools
-vendor
+public
 temp
+vendor
 # Untracked files
 .buildpath
 .project

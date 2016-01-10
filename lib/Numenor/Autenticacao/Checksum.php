@@ -14,7 +14,7 @@
  * O valor de checksum gerado por esta classe NÃO é criptograficamente seguro, uma vez que a função password_hash() do 
  * PHP trunca os valores de $password maiores do que 72 caracteres (tornando impossível o uso deste método de geração de
  * hash para valores arbitrários). No entanto, ele é adequado para a assinatura de parâmetros enviados e recebidos em 
- * uma aplicação normal; o salt para o hash é gerado através da função openssl_random_pseudo_bytes(), que é  menos 
+ * uma aplicação normal; o salt para o hash é gerado através da função openssl_random_pseudo_bytes(), que é menos 
  * previsível do que uniqid(), rand(), microtime() e outros métodos usuais de geração de salt.
  *  
  * @author Darke M. Goulart <darkemg@users.noreply.github.com>

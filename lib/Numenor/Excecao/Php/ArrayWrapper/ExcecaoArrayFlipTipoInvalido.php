@@ -18,7 +18,7 @@ class ExcecaoArrayFlipTipoInvalido extends ExcecaoArray {
 	 */
 	public function __construct(\Exception $previous = null) {
 		parent::__construct('O método ArrayWrapper::flip() não pode ser invocado sobre arrays com valores que não pode ser convertidos para {String} ou {Integer}.',
-			self::CODE_FN_ARRAYFLIP_INVALIDTYPE,
+			static::DEFAULT_CODE,
 			$previous);
 	}
 }

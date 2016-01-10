@@ -17,7 +17,7 @@ class ExcecaoOrdemInvalida extends ExcecaoArray {
 	 */
 	public function __construct(\Exception $previous = null) {
 		parent::__construct('O método de ordenação requer que a $ordem informada seja crescente ou decrescente.', 
-			self::CODE_ARRAYWRAPPER_TIPOORDEMINVALIDA, 
+			static::DEFAULT_CODE,
 			$previous);
 	}
 }

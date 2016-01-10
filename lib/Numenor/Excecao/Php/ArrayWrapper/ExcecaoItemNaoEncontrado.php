@@ -17,7 +17,7 @@ class ExcecaoItemNaoEncontrado extends \Numenor\Excecao\ExcecaoErroLogico {
 	 */
 	public function __construct(\Exception $previous = null) {
 		parent::__construct('O item informado não foi encontrado no array.', 
-			self::CODE_ARRAYWRAPPER_ITEMNAOENCONTRADO, 
+			static::DEFAULT_CODE,
 			$previous);
 	}
 }

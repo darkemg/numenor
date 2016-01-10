@@ -15,6 +15,6 @@ class ExcecaoDecodificacaoInvalida extends \Numenor\Excecao\ExcecaoErroSistema {
 	 * @param \Exception $previous Exceção anterior (se a exceção atual tiver sido encadeada)
 	 */
 	public function __construct(\Exception $previous = null) {
-		parent::__construct('Erro na decodificação da string informada.', self::CODE_DECODIFICACAO_INVALIDA, $previous);
+		parent::__construct('Erro na decodificação da string informada.', static::DEFAULT_CODE, $previous);
 	}
 }

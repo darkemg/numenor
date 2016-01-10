@@ -12,8 +12,8 @@ class Formatacao {
 	
 	const TEMPLATE_HTML_RAW = '<pre>{{VALOR}}</pre>';
 	const TEMPLATE_HTML_FANCY = '<div class="output output-fancy">{{VALOR}}</div>';
-	const TEMPLATE_HTML_COMENT = '<!-- ' . "\n" . '{{VALOR}}' . "\n" . ' -->';
-	const TEMPLATE_RAW = '================================' . "\n" . '{{VALOR}}' . "\n"; 
+	const TEMPLATE_HTML_COMENT = '<!-- ' . \PHP_EOL . '{{VALOR}}' . \PHP_EOL . ' -->';
+	const TEMPLATE_RAW = '================================' . \PHP_EOL . '{{VALOR}}' . \PHP_EOL; 
 	
 	/**
 	 * Formata um valor com o template de HTML cru.

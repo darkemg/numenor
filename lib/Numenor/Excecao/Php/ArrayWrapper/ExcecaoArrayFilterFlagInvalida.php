@@ -17,7 +17,7 @@ class ExcecaoArrayFilterFlagInvalida extends ExcecaoArray {
 	 */
 	public function __construct(\Exception $previous = null) {
 		parent::__construct('O método ArrayWrapper::filtrar() requer que o parâmetro $flag, caso informado, seja igual a uma das constantes: ARRAY_FILTER_USE_KEY ou ARRAY_FILTER_USE_BOTH.',
-			self::CODE_FN_ARRAYFILTER_INVALIDFLAG,
+			static::DEFAULT_CODE,
 			$previous);
 	}
 }

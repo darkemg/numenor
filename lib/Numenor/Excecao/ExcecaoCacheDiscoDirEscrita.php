@@ -16,6 +16,6 @@ class ExcecaoCacheDiscoDirEscrita extends ExcecaoErroUso {
 	 * @param \Exception $previous Exceção anterior (se a exceção atual tiver sido encadeada)
 	 */
 	public function __construct(\Exception $previous = null) {
-		parent::__construct('O diretório de cache para este adaptador existe ou não possui permissão de escrita.', self::CODE_CACHE_DISCO_DIR_ESCRITA, $previous);
+		parent::__construct('O diretório de cache para este adaptador existe ou não possui permissão de escrita.', static::DEFAULT_CODE, $previous);
 	}
 }
