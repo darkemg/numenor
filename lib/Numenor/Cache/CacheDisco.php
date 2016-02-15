@@ -102,10 +102,10 @@ class CacheDisco extends CacheAbstrato {
 				$readable = false;
 				$writable = false;
 		}
-		$this->adapter = StorageFactory::factory(array(
-				'adapter' => array(
+		$this->adapter = StorageFactory::factory([
+				'adapter' => [
 						'name' => 'filesystem',
-						'options' => array(
+						'options' => [
 								'namespace' => $this->namespace,
 								'ttl' => $this->duracao,
 								'readable' => $readable,
@@ -120,15 +120,15 @@ class CacheDisco extends CacheAbstrato {
 								'key_pattern' => '/^[a-z0-9_\+\-]*$/Di',
 								'no_atime' => true,
 								'no_ctime' => true
-						)
-				),
-				'plugins' => array(
-						'exception_handler' => array(
+						]
+				],
+				'plugins' => [
+						'exception_handler' => [
 								'throw_exceptions' => true
-						),
+						],
 						'Serializer'
-				)
-		));
+				]
+		]);
 	}
 	
 	/**

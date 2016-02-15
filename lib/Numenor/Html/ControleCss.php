@@ -34,7 +34,7 @@ class ControleCss extends Controle {
 	 */
 	protected function minificar() {
 	// Reseta a lista de arquivos a serem incluídos
-		$this->listaArquivosIncluir = array();
+		$this->listaArquivosIncluir = [];
 		// Adiciona os arquivos que devem ser minificados e concatenados em um só arquivo
 		$listaConcatCompact = $this->gerarListaConcatCompact($this->listaCss);
 		if (count($listaConcatCompact) > 0) {
@@ -70,7 +70,7 @@ class ControleCss extends Controle {
 		if (count($listaCompact) > 0) {
 			foreach ($listaCompact as $css) {
 				$minificadorCompact = clone $this->minificadorCss;
-				$nomeCompact = $this->gerarNome(array($css));
+				$nomeCompact = $this->gerarNome([$css]);
 				$outputCompact = $this->diretorioOutput . $nomeCompact . '.css';
 				if (!file_exists($outputCompact)) {
 					$minificadorCompact->add($css);

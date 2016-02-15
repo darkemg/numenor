@@ -1,6 +1,7 @@
 # Untracked directories
 .settings
 external-tools
+logs
 public
 temp
 vendor

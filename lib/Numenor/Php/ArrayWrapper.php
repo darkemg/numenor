@@ -93,28 +93,28 @@ class ArrayWrapper {
 	 * Retorna todos os valores de uma única coluna de um array multidimensional, como se fosse uma tabela.
 	 *
 	 * <code>
-	 * $array = array(
-	 *		array(
+	 * $array = [
+	 *		[
 	 *   		'id' => 2135,
 	 *   		'first_name' => 'John',
 	 *   		'last_name' => 'Doe',
-	 *		),
-	 *	    array(
+	 *		],
+	 *	    [
 	 *	        'id' => 3245,
 	 *	        'first_name' => 'Sally',
 	 *	        'last_name' => 'Smith',
-	 *	    ),
-	 *	    array(
+	 *	    ],
+	 *	    [
 	 *	        'id' => 5342,
 	 *	        'first_name' => 'Jane',
 	 *	        'last_name' => 'Jones',
-	 *	    ),
-	 *	    array(
+	 *	    ],
+	 *	    [
 	 *	        'id' => 5623,
 	 *	        'first_name' => 'Peter',
 	 *	        'last_name' => 'Doe',
-	 *	    )
-	 *	);
+	 *	    ]
+	 *	];
 	 * \Numenor\Php\ArrayWrapper::getValorColuna($array, 'first_name');
 	 * // ['John', 'Sally', 'Jane', 'Peter']
 	 * \Numenor\Php\ArrayWrapper::getValorColuna($array, 'first_name', 'id');
@@ -151,7 +151,7 @@ class ArrayWrapper {
 		$paramsInput = $array;
 		$paramsColumnKey = ($colunaChave !== null) ? (string) $colunaChave : null;
 		$paramsIndexKey = $chaveIndice;
-		$resultArray = array();
+		$resultArray = [];
 		foreach ($paramsInput as $row) {
 			$key = $value = null;
 			$keySet = $valueSet = false;

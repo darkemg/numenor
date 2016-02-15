@@ -44,7 +44,7 @@ class CronometroExecucao {
 	 * @access private
 	 * @var \stdClass[]
 	 */
-	private $parciais = array();
+	private $parciais = [];
 	
 	/**
 	 * Método construtor da classe
@@ -65,9 +65,10 @@ class CronometroExecucao {
 	 * @param string $descricao Descrição do momento de início do cronômetro, para referência.
 	 */
 	public function iniciar($descricao = '') {
-		$this->inicio = (object) array(
+		$this->inicio = (object) [
 				'tempo' => microtime(true),
-				'descricao' => $descricao);
+				'descricao' => $descricao
+		];
 	}
 	
 	/**
@@ -78,8 +79,9 @@ class CronometroExecucao {
 	 * @param string $descricao Descrição da parcial do cronômetro, para referência.
 	 */
 	public function definirParcial($descricao = '') {
-		$this->parciais[] = (object) array(
+		$this->parciais[] = (object) [
 				'tempo' => microtime(true) - $this->inicio->tempo,
-				'descricao' => $descricao);
+				'descricao' => $descricao
+		];
 	}
 }

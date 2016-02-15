@@ -171,7 +171,7 @@ class Checksum {
 	 * atributos nome + 'Checksum').
 	 */
 	public function gerarChecksumLista(\stdClass $listaValores, $encoded = false) {
-		$checksums = array();
+		$checksums = [];
 		foreach ($listaValores as $nome => $valor) {
 			$checksums[$nome . 'Checksum'] = $this->gerarChecksum($valor, $encoded);
 		}

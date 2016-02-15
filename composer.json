@@ -1,5 +1,6 @@
 {
 	"name": "darkemg/numenor",
+	"license": "MIT",
 	"repositories": [
 	    {
 	        "type": "composer",

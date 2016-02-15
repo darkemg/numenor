@@ -82,13 +82,13 @@ class Biblioteca {
 	 */
 	public static function init($configuracao = null) {
 		// Instancia a configuração do servidor.
-		$configuracaoServidor = new Config(array(
+		$configuracaoServidor = new Config([
 				'diretorioRaiz' => $_SERVER['DOCUMENT_ROOT'] . '/',
 				'enderecoIp' => $_SERVER['SERVER_ADDR'],
 				'https' => (boolean) $_SERVER['HTTPS'],
 				'ipUsuario' => $_SERVER['REMOTE_ADDR'],
 				'portaUsuario' => $_SERVER['REMOTE_PORT']
-		));
+		]);
 		// Instancia a configuração da biblioteca, de acordo com a origem dos parâmetros enviados:
 		// - caso $configuracao seja nulo, então instancia a classe Zend\Config\Config diretamente sem nenhum conteúdo. 
 		//   Isto permite que os componentes da biblioteca Numenor que dispensam configuração possam ser utilizados de 

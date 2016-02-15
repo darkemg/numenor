@@ -43,7 +43,7 @@ class ControleJavascript extends Controle {
 	 */
 	protected function minificar() {
 		// Reseta a lista de arquivos a serem incluídos
-		$this->listaArquivosIncluir = array();
+		$this->listaArquivosIncluir = [];
 		// Adiciona os arquivos que devem ser minificados e concatenados em um só arquivo
 		$listaConcatCompact = $this->gerarListaConcatCompact($this->listaJs);
 		if (count($listaConcatCompact) > 0) {
@@ -79,7 +79,7 @@ class ControleJavascript extends Controle {
 		if (count($listaCompact) > 0) {
 			foreach ($listaCompact as $js) {
 				$minificadorCompact = clone $this->minificadorJs;
-				$nomeCompact = $this->gerarNome(array($js));
+				$nomeCompact = $this->gerarNome([$js]);
 				$outputCompact = $this->diretorioOutput . $nomeCompact . '.js';
 				if (!file_exists($outputCompact)) {
 					$minificadorCompact->add($js);

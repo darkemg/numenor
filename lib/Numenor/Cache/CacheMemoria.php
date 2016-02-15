@@ -35,22 +35,22 @@ class cacheMemoria extends CacheAbstrato {
 	public function __construct($namespace, $duracao, $limiteMemoria) {
 		parent::__construct($namespace, $duracao);
 		$this->limiteMemoria = $limiteMemoria;
-		$this->adapter = StorageFactory::factory(array(
-				'adapter' => array(
+		$this->adapter = StorageFactory::factory([
+				'adapter' => [
 						'name' => 'memory',
-						'options' => array(
+						'options' => [
 								'namespace' => $this->namespace,
 								'ttl' => $this->duracao,
 								'namespace_separator' => '$',
 								'memory_limit' => $limiteMemoria
-						)
-				),
-				'plugins' => array(
-						'exception_handler' => array(
+						]
+				],
+				'plugins' => [
+						'exception_handler' => [
 								'throw_exceptions' => true
-						)
-				)
-		));
+						]
+				]
+		]);
 	}
 	
 	

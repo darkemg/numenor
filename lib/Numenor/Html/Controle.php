@@ -83,7 +83,7 @@ abstract class Controle {
 	 * @return array Lista de arquivos de assets que devem ser minificados e concatenados.
 	 */
 	protected function gerarListaConcatCompact(array $listaAssets) {
-		$lista = array();
+		$lista = [];
 		foreach ($listaAssets as $asset) {
 			if ($asset->isCompactavel() && $asset->isConcatenavel()) {
 				$lista[] = (string) $asset;
@@ -100,7 +100,7 @@ abstract class Controle {
 	 * @return array Lista de arquivos de assets que devem ser concatenados.
 	 */
 	protected function gerarListaConcat(array $listaAssets) {
-		$lista = array();
+		$lista = [];
 		foreach ($listaAssets as $asset) {
 			if ($asset->isConcatenavel() && !$asset->isCompactavel()) {
 				$lista[] = (string) $asset;
@@ -117,7 +117,7 @@ abstract class Controle {
 	 * @return array Lista de arquivos de assets que devem ser minificados.
 	 */
 	protected function gerarListaCompact(array $listaAssets) {
-		$lista = array();
+		$lista = [];
 		foreach ($listaAssets as $asset) {
 			if ($asset->isCompactavel() && !$asset->isConcatenavel()) {
 				$lista[] = (string) $asset;
@@ -134,7 +134,7 @@ abstract class Controle {
 	 * @return array Lista de arquivos de assets que devem ser incluídos sem nenhum processamento adicional.
 	 */
 	protected function gerarListaNormal(array $listaAssets) {
-		$lista = array();
+		$lista = [];
 		foreach ($listaAssets as $asset) {
 			if (!$asset->isCompactavel() && !$asset->isConcatenavel()) {
 				$lista[] = (string) $asset;
