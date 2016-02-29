@@ -135,6 +135,7 @@ class ControleCss extends Controle {
 	 * @throws \Numenor\Excecao\ExcecaoAssetDuplicado se o asset informado já foi incluído anteriormente.
 	 */
 	public function adicionarCss(Css $css) {
+		$indice = null;
 		try {
 			// Se o asset já existe, o método ArrayWrapper::encontrarItem retorna o índice do mesmo.
 			$indice = $this->arrayWrapper->encontrarItem($this->listaCss, $css);
