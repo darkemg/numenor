@@ -27,14 +27,51 @@ class ControleCss extends Controle {
 	protected $listaCss;
 	
 	/**
+	 * Gera a lista de arquivos de assets de inclusão remota.
+	 *
+	 * @access protected
+	 * @param array $listaAssets Lista de assets analisados.
+	 * @return array Lista de arquivos de assets de inclusão remota.
+	 */
+	protected function gerarListaRemoto(array $listaAssets) {
+		$lista = [];
+		foreach ($listaAssets as $asset) {
+			if ($asset instanceof CssRemoto) {
+				$lista[] = (string) $asset;
+			}
+		}
+		return $lista;
+	}
+	
+	/**
+	 * Método construtor da classe.
+	 * 
+	 * @access public
+	 * @param \Numenor\Php\ArrayWrapper $arrayWrapper Instância do objeto de encapsulamento das operações de array.
+	 * @param \Numenor\Php\StringWrapper $stringWrapper Instância do objeto de encapsulamento das operações de string.
+	 * @param string $diretorioOutput Diretório onde os arquivos processados serão salvos.
+	 * @param string $urlBase URL base de inclusão dos assets.
+	 */
+	public function __construct($arrayWrapper, $stringWrapper, $diretorioOutput, $urlBase) {
+		parent::__construct($arrayWrapper, $stringWrapper, $diretorioOutput, $urlBase);
+		$this->listaCss = [];
+		$this->listaArquivosIncluir = [];
+	}
+	
+	/**
 	 * Processa a lista de arquivos CSS incluídos, alterando-os conforme necessário (minificação, concatenação,
 	 * etc.) e gerando os snippets de inclusão dos mesmos.
 	 *
 	 * @access protected
 	 */
 	protected function minificar() {
-	// Reseta a lista de arquivos a serem incluídos
+		// Reseta a lista de arquivos a serem incluídos
 		$this->listaArquivosIncluir = [];
+		// Adiciona os scripts remotos
+		$listaRemoto = $this->gerarListaRemoto($this->listaCss);
+		if (count($listaRemoto) > 0) {
+			$this->listaArquivosIncluir = $listaRemoto;
+		}
 		// Adiciona os arquivos que devem ser minificados e concatenados em um só arquivo
 		$listaConcatCompact = $this->gerarListaConcatCompact($this->listaCss);
 		if (count($listaConcatCompact) > 0) {
@@ -45,7 +82,7 @@ class ControleCss extends Controle {
 				foreach ($listaConcatCompact as $css) {
 					$minificadorConcatCompact->add($css);
 				}
-				file_put_contents($outputConcatCompact, $minificadorConcatCompact->execute($outputConcatCompact), \FILE_APPEND);
+				$minificadorConcatCompact->minify($outputConcatCompact);
 			}
 			$this->listaArquivosIncluir[] = '<link rel="stylesheet" href="' . $this->urlBase . $nomeConcatCompact . '.css">' . \PHP_EOL;
 		}
@@ -74,7 +111,7 @@ class ControleCss extends Controle {
 				$outputCompact = $this->diretorioOutput . $nomeCompact . '.css';
 				if (!file_exists($outputCompact)) {
 					$minificadorCompact->add($css);
-					file_put_contents($outputCompact, $minificadorCompact->execute($outputCompact), \FILE_APPEND);
+					$minificadorCompact->minify($outputCompact);
 				}
 				$this->listaArquivosIncluir[] = '<link rel="stylesheet" href="' . $this->urlBase . $nomeCompact . '.css">' . \PHP_EOL;
 				unset($minificadorCompact);
@@ -94,9 +131,11 @@ class ControleCss extends Controle {
 	 *
 	 * @access public
 	 * @param \Numenor\Html\Css $css Novo arquivo incluído na página.
+	 * @return \Numenor\Html\ControleCss Instância do próprio objeto para encadeamento.
 	 */
 	public function adicionarCss(Css $css) {
 		$this->listaCss[] = $css;
+		return $this;
 	}
 	
 	/**
@@ -104,8 +143,10 @@ class ControleCss extends Controle {
 	 *
 	 * @access public
 	 * @param MatthiasMullie\Minify\CSS $minificador Instância do minificador.
+	 * @return \Numenor\Html\ControleCss Instância do próprio objeto para encadeamento.
 	 */
 	public function setMinificadorCss(MinifyCss $minificador) {
 		$this->minificadorCss = $minificador;
+		return $this;
 	}
 }

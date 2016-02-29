@@ -13,11 +13,11 @@ class Css extends Asset {
 	 * Método construtor da classe.
 	 *
 	 * @access public
-	 * @param string $url URL do arquivo CSS.
+	 * @param string $caminhoArquivo Caminho físico do arquivo CSS.
 	 * @param boolean $compactavel Indica se o arquivo CSS deve ser minificado.
 	 * @param boolean $concatenavel Indica se o arquivo CSS deve ser concatenado.
 	 */
-	public function __construct($url, $compactavel = true, $concatenavel = true) {
-		parent::__construct($url, $compactavel, $concatenavel);
+	public function __construct($caminhoArquivo, $compactavel = true, $concatenavel = true) {
+		parent::__construct($caminhoArquivo, $compactavel, $concatenavel);
 	}
 }

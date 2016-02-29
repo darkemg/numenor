@@ -11,7 +11,6 @@
  * @package Numenor/Html
  */
 namespace Numenor\Html;
-use Numenor\Configuracao\Biblioteca;
 use Numenor\Php\ArrayWrapper;
 use Numenor\Php\StringWrapper;
 
@@ -57,7 +56,6 @@ abstract class Controle {
 	 * @access protected
 	 * @var array
 	 */
-	protected $listaArquivosIncluir;
 	
 	/**
 	 * Método construtor da classe.
@@ -136,7 +134,14 @@ abstract class Controle {
 	protected function gerarListaNormal(array $listaAssets) {
 		$lista = [];
 		foreach ($listaAssets as $asset) {
-			if (!$asset->isCompactavel() && !$asset->isConcatenavel()) {
+			// Inclui os assets marcados como não concatenáveis, não compactáveis, e que não são remotos.
+			$traits = class_uses($asset);
+			try {
+				$isRemoto = $this->arrayWrapper->encontrarItem($traits, Remoto::class);
+			} catch (\Throwable $e) {
+				$isRemoto = false;
+			}
+			if (!$isRemoto && !$asset->isCompactavel() && !$asset->isConcatenavel()) {
 				$lista[] = (string) $asset;
 			}
 		}

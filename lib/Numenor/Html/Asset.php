@@ -10,12 +10,12 @@ namespace Numenor\Html;
 abstract class Asset {
 	
 	/**
-	 * URL do arquivo do asset.
+	 * Caminho físico do arquivo asset.
 	 * 
 	 * @access protected
 	 * @var string
 	 */
-	protected $url;
+	protected $caminhoArquivo;
 	/**
 	 * Indica se o asset é minificável.
 	 * 
@@ -32,13 +32,16 @@ abstract class Asset {
 	protected $concatenavel;
 	
 	/**
-	 * Método construtor da classe
-	 * @param unknown $url
-	 * @param string $compactavel
-	 * @param string $concatenavel
+	 * Método construtor da classe.
+	 * 
+	 * @access public
+	 * @param string $caminhoArquivo URL do arquivo do asset.
+	 * @param boolean $compactavel Indica se o asset pode ser compactado através de um minificador. 
+	 * @param boolean $concatenavel Infica se o asset pode ser concatenado com outros assets que possuem a mesma
+	 * propriedade.
 	 */
-	public function __construct($url, $compactavel = true, $concatenavel = true) {
-		$this->url = $url;
+	public function __construct($caminhoArquivo, $compactavel = true, $concatenavel = true) {
+		$this->caminhoArquivo = $caminhoArquivo;
 		$this->compactavel = $compactavel;
 		$this->concatenavel = $concatenavel;
 	}
@@ -50,17 +53,17 @@ abstract class Asset {
 	 * @return string A representação do objeto como string.
 	 */
 	public function __toString() {
-		return $this->url;
+		return $this->caminhoArquivo;
 	}
 	
 	/**
-	 * Método getter da URL do asset.
+	 * Método getter do caminho físico do arquivo do asset.
 	 * 
 	 * @access public
-	 * @return string URL do asset.
+	 * @return string Caminho físico do arquivo do asset.
 	 */
-	public function getUrl() {
-		return $this->url;
+	public function getCaminhoArquivo() {
+		return $this->caminhoArquivo;
 	}
 	
 	/**
