@@ -39,7 +39,7 @@ class ArrayWrapper {
 	 * @param mixed $chave A chave a ser validada.
 	 * @return boolean TRUE se a chave é de um tipo válido, FALSE caso contrário.
 	 */
-	protected function validarTipoChave($chave) {
+	protected function validarTipoChave($chave) : bool {
 		return (!is_int($chave)
 				&& !is_string($chave)
 				&& is_object($chave) && !method_exists($chave, '__toString'));
@@ -52,7 +52,7 @@ class ArrayWrapper {
 	 * @param array $array O array.
 	 * @return array Lista de chaves do array.
 	 */
-	public function getChaves(array $array) {
+	public function getChaves(array $array) : array {
 		return array_keys($array);
 	}
 	
@@ -72,7 +72,7 @@ class ArrayWrapper {
 	 * @param mixed $valor O valor para o qual se quer as chaves.
 	 * @return array Lista de chaves que possuem o valor informado.
 	 */
-	public function getChave(array $array, $valor) {
+	public function getChave(array $array, $valor) : array {
 		return array_keys($array, $valor, true);
 	}
 	
@@ -85,7 +85,7 @@ class ArrayWrapper {
 	 * @return mixed|array O item escolhido aleatoriamente, caso $numeroItens seja um; um array com $numeroItens 
 	 * escolhidos aleatoriamente, caso contrário.
 	 */
-	public function getItemAleatorio(array $array, $numeroItens = 1) {
+	public function getItemAleatorio(array $array, int $numeroItens = 1) {
 		return array_rand($array, $numeroItens);
 	}
 	
@@ -134,47 +134,14 @@ class ArrayWrapper {
 	 * e não é do tipo {String}, ou não pode ser convertido para uma string.
 	 * @return array Lista de todos os valores da coluna correspondente.
 	 */
-	public function getValorColuna(array $array, $colunaChave, $chaveIndice = null) {
+	public function getValorColuna(array $array, string $colunaChave, string $chaveIndice = '') : array {
 		if ($this->validarTipoChave($colunaChave)) {
 			throw new ExcecaoArrayWrapper\ExcecaoChaveInvalida();
 		}
 		if ($chaveIndice && !$this->validarTipoChave($chaveIndice)) {
 			throw new ExcecaoArrayWrapper\ExcecaoChaveInvalida();
 		}
-		// Se a função array_column não existe (PHP <= 5.4), provê a implementação da mesma
-		// Fonte: <Recommended userland implementation for PHP lower than 5.5>
-		// http://php.net/manual/en/function.array-column.php
-		// https://github.com/ramsey/array_column/blob/master/src/array_column.php
-		if (function_exists('array_column')) {
-			return array_column($array, $colunaChave, $chaveIndice);
-		}
-		$paramsInput = $array;
-		$paramsColumnKey = ($colunaChave !== null) ? (string) $colunaChave : null;
-		$paramsIndexKey = $chaveIndice;
-		$resultArray = [];
-		foreach ($paramsInput as $row) {
-			$key = $value = null;
-			$keySet = $valueSet = false;
-			if ($paramsIndexKey !== null && array_key_exists($paramsIndexKey, $row)) {
-				$keySet = true;
-				$key = (string) $row[$paramsIndexKey];
-			}
-			if ($paramsColumnKey === null) {
-				$valueSet = true;
-				$value = $row;
-			} elseif (is_array($row) && array_key_exists($paramsColumnKey, $row)) {
-				$valueSet = true;
-				$value = $row[$paramsColumnKey];
-			}
-			if ($valueSet) {
-				if ($keySet) {
-					$resultArray[$key] = $value;
-				} else {
-					$resultArray[] = $value;
-				}
-			}
-		}
-		return $resultArray;
+		return array_column($array, $colunaChave, $chaveIndice);
 	}
 	
 	/**
@@ -183,8 +150,8 @@ class ArrayWrapper {
 	 * @access public
 	 * @param array $array O array.
 	 * @param mixed $item O item buscado.
-	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ExcecaoItemNaoEncontrado se o item não existe no array.
 	 * @return mixed A chave correspondente ao item encontrado no array.
+	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ExcecaoItemNaoEncontrado se o item não existe no array.
 	 */
 	public function encontrarItem(array $array, $item) {
 		$indiceItem = array_search($item, $array, true);
@@ -204,7 +171,7 @@ class ArrayWrapper {
 	 * válido (string ou inteiro). 
 	 * @return boolean TRUE caso a chave exista no array, FALSE caso contrário.
 	 */
-	public function verificarChave(array $array, $chave) {
+	public function verificarChave(array $array, $chave) : bool {
 		return array_key_exists($chave, $array);
 	}
 	
@@ -299,19 +266,19 @@ class ArrayWrapper {
 	 * Cria um array preenchido com um único valor repetido $quantidadeItens vezes.
 	 * 
 	 * Ao contrário da função array_fill(), foi optado por não permitir que o índice seja negativo, nem que o número
-	 * de itens seja menor do que 1 (para manter compatibilidade com PHP <= 5.5).
+	 * de itens seja menor do que 1.
 	 *
 	 * @access public
 	 * @static
 	 * @param int $inicio Índice inicial do array gerado.
 	 * @param int $quantidadeItens Número de itens do array gerado.
 	 * @param mixed $item Valor colocado em todas as posições do array.
+	 * @return array O array gerado.
 	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ExcecaoArrayFillIndiceInvalido se o $inicio informado for negativo.
 	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ExcecaoArrayFillTamanhoInvalido se $quantidadeItens for um valor menor 
 	 * do que 1.
-	 * @return array O array gerado.
 	 */
-	public static function criar($inicio, $quantidadeItens, $item) {
+	public static function criar(int $inicio, int $quantidadeItens, $item) : array {
 		if ($inicio < 0) {
 			throw new ExcecaoArrayWrapper\ExcecaoArrayFillIndiceInvalido();
 		}
@@ -330,7 +297,7 @@ class ArrayWrapper {
 	 * @param boolean $preservarChaves Indica se os pedaços devem preservar as suas chaves originais.
 	 * @return array Array multidimensional contendo os pedaços do array.
 	 */
-	public function dividir($array, $tamanho, $preservarChaves = false) {
+	public function dividir(array $array, int $tamanho, bool $preservarChaves = false) : array {
 		return array_chunk($array, $tamanho, $preservarChaves);
 	}
 	
@@ -365,7 +332,7 @@ class ArrayWrapper {
 	 * @param mixed $valor Valor a ser inserido nas novas posições do array.
 	 * @return array O array preenchido com os novos valores.
 	 */
-	public function preencher(array $array, $novoTamanho, $valor) {
+	public function preencher(array $array, int $novoTamanho, $valor) : array {
 		if (($novoTamanho > 0 && $novoTamanho <= sizeof($array))
 				|| ($novoTamanho < 0 && abs($novoTamanho) <= sizeof($array))) {
 			throw new ExcecaoArrayWrapper\ExcecaoArrayPadTamanhoInvalido();
@@ -387,7 +354,7 @@ class ArrayWrapper {
 	 * convertido para um tipo que possa ser usado como chave do array invertido (string ou inteiro).
 	 * @return array Array com as chaves e valores invertidos.
 	 */
-	public function flip(array $array) {
+	public function flip(array $array) : array {
 		$values = array_values($array);
 		$isValid = true;
 		foreach ($values as $item) {
@@ -406,7 +373,7 @@ class ArrayWrapper {
 	 * @param array $array O array.
 	 * @return array Valores do array como chaves, e a frequência de ocorrência como valores.
 	 */
-	public function contarValores(array $array) {
+	public function contarValores(array $array) : array {
 		return array_count_values($array);
 	}
 	
@@ -420,7 +387,7 @@ class ArrayWrapper {
 	 * @param \Numenor\Php\StringWrapper $stringWrapper Instância do objeto de encapsulamento das operações de strings. 
 	 * @return array O array com as chaves alteradas.
 	 */
-	public function chaveMinuscula(array $array, StringWrapper $stringWrapper) {
+	public function chaveMinuscula(array $array, StringWrapper $stringWrapper) : array {
 		$retorno = array();
 		foreach ($array as $chave => $valor) {
 			$retorno[$stringWrapper->lowerCase($chave)] = $valor;
@@ -436,9 +403,9 @@ class ArrayWrapper {
 	 * @access public
 	 * @param array $array O array.
 	 * @param \Numenor\Php\StringWrapper $stringWrapper Instância do objeto de encapsulamento das operações de strings.
-	 * @return \Numenor\Php\ArrayWrapper O array com as chaves alteradas.
+	 * @return array O array com as chaves alteradas.
 	 */
-	public function chaveMaiuscula(array $array, StringWrapper $stringWrapper) {
+	public function chaveMaiuscula(array $array, StringWrapper $stringWrapper) : array {
 		$retorno = array();
 		foreach ($array as $chave => $valor) {
 			$retorno[$stringWrapper->upperCase($chave)] = $valor;
@@ -465,7 +432,7 @@ class ArrayWrapper {
 	 * @param array $array2 Segundo array.
 	 * @return array Intersecção dos dois arrays comparados.
 	 */
-	public function interseccao(array $array1, array $array2) {
+	public function interseccao(array $array1, array $array2) : array {
 		return array_intersect($array1, $array2);
 	}
 	
@@ -489,7 +456,7 @@ class ArrayWrapper {
 	 * @param array $array2 Segundo array.
 	 * @return array Intersecção da chaves dos dois arrays comparados.
 	 */
-	public function interseccaoChaves(array $array1, array $array2) {
+	public function interseccaoChaves(array $array1, array $array2) : array {
 		return array_intersect_key($array1, $array2);
 	}
 	
@@ -511,7 +478,7 @@ class ArrayWrapper {
 	 * @param array $array2 Segundo array.
 	 * @return array Array contendo a intersecção dos dois arrays comparados.
 	 */
-	public function intersecacaoAssociativa(array $array1, array $array2) {
+	public function intersecacaoAssociativa(array $array1, array $array2) : array {
 		return array_intersect_assoc($array1, $array2);
 	}
 	
@@ -533,8 +500,8 @@ class ArrayWrapper {
 	 * @param array $array2 Segundo array.
 	 * @return array Array contendo a diferença entre os dois arrays comparados.
 	 */
-	public function diferenca(array $array1, array $array2) {
-		return array_diff($array1, $array2);		
+	public function diferenca(array $array1, array $array2) : array {
+		return array_diff($array1, $array2);
 	}
 	
 	/**
@@ -555,7 +522,7 @@ class ArrayWrapper {
 	 * @param array $array2 Segundo array.
 	 * @return array Array contendo a diferença entre os dois arrays comparados.
 	 */
-	public function diferencaAssociativa(array $array1, array $array2) {
+	public function diferencaAssociativa(array $array1, array $array2) : array {
 		return array_diff_assoc($array1, $array2);
 	}
 	
@@ -590,7 +557,7 @@ class ArrayWrapper {
 	 * @throws \Numenor\Excecao\ExcecaoArrayFilterFlagInvalida se o parâmetro $flag for informado com um valor inválido. 
 	 * @return array O array filtrado.
 	 */
-	public function filtrar(array $array, callable $funcaoFiltro, $flag = 0) {
+	public function filtrar(array $array, callable $funcaoFiltro, int $flag = 0) : array {
 		if ($flag && $flag != ARRAY_FILTER_USE_KEY && $flag != ARRAY_FILTER_USE_BOTH) {
 			throw new ExcecaoArray\ExcecaoArrayFilterFlagInvalida();
 		}
@@ -606,7 +573,7 @@ class ArrayWrapper {
 	 * correspondente ao item do array sendo percorrido.
 	 * @return array O array alterado.
 	 */
-	public function aplicarCallback(array $array, callable $callback) {
+	public function aplicarCallback(array $array, callable $callback) : array {
 		return array_map($callback, $array); 
 	}
 	
@@ -623,7 +590,7 @@ class ArrayWrapper {
 	 * @param array $array2 Segundo array.
 	 * @return array O array resultante da mescla dos dois arrays.
 	 */
-	public function mesclar(array $array1, array $array2) {
+	public function mesclar(array $array1, array $array2) : array {
 		return array_merge($array1, $array2);
 	}
 	
@@ -640,26 +607,25 @@ class ArrayWrapper {
 	 * @access public
 	 * @param array $array O array.
 	 * @param string $ordem Indica se a ordenação deve ser em ordem crescente ou decrescente.
-	 * @param string $tipoOrdenacao Indica o tipo de comparação feita entre os valores: 
+	 * @param int $tipoOrdenacao Indica o tipo de comparação feita entre os valores: 
 	 * 		- SORT_REGULAR não faz conversão de tipo entre os valores (podendo levar a resultados inesperados se os 
 	 * 		tipos dos valores são diferentes), 
 	 * 		- SORT_NUMERIC converte os valores para números para fazer a ordenação
 	 * 		- SORT_STRING converte os valores para texto
 	 * 		- SORT_LOCALE_STRING é igual a SORT_STRING, mas usando o locale definido na configuração do PHP
-	 * 		- SORT_NATURAL faz a ordenação como "string em ordem natural", ou seja, algo como "1, 2, 10, 11". Definido 
-	 * 		apenas no PHP >= 5.4.
+	 * 		- SORT_NATURAL faz a ordenação como "string em ordem natural", ou seja, algo como "1, 2, 10, 11".
+	 * @return array O array ordenado.
 	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ExcecaoOrdemInvalida se a ordem não corresponde a uma das ordens 
 	 * aceitas (crescente ou 
 	 * decrescente).
 	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ExcecaoTipoOrdemInvalida se o tipo de ordenação não corresponde a um 
 	 * dos tipos de ordenação aceitos. 
-	 * @return array O array ordenado.
 	 */
-	public function ordenar(array $array, $ordem = self::ASC, $tipoOrdenacao = SORT_STRING) {
+	public function ordenar(array $array, string $ordem = self::ASC, int $tipoOrdenacao = \SORT_STRING) : array {
 		if (!in_array($ordem, array(self::ASC, self::DESC))) {
 			throw new ExcecaoArrayWrapper\ExcecaoOrdemInvalida();
 		}
-		if (!in_array($tipoOrdenacao, array(SORT_REGULAR, SORT_NUMERIC, SORT_STRING, SORT_LOCALE_STRING, SORT_NATURAL))) {
+		if (!in_array($tipoOrdenacao, array(\SORT_REGULAR, \SORT_NUMERIC, \SORT_STRING, \SORT_LOCALE_STRING, \SORT_NATURAL))) {
 			throw new ExcecaoArrayWrapper\ExcecaoTipoOrdemInvalida();
 		}
 		$copia = $array;
@@ -686,21 +652,20 @@ class ArrayWrapper {
 	 * @access public
 	 * @param array $array O array.
 	 * @param string $ordem Indica se a ordenação deve ser em ordem crescente ou decrescente.
-	 * @param string $tipoOrdenacao Indica o tipo de comparação feita entre os valores:
+	 * @param int $tipoOrdenacao Indica o tipo de comparação feita entre os valores:
 	 * 		- SORT_REGULAR não faz conversão de tipo entre os valores (podendo levar a resultados inesperados se os 
 	 * 		tipos dos valores são diferentes),
 	 * 		- SORT_NUMERIC converte os valores para números para fazer a ordenação
 	 * 		- SORT_STRING converte os valores para texto
 	 * 		- SORT_LOCALE_STRING é igual a SORT_STRING, mas usando o locale definido na configuração do PHP
-	 * 		- SORT_NATURAL faz a ordenação como "string em ordem natural", ou seja, algo como "1, 2, 10, 11". Definido 
-	 * 		apenas no PHP >= 5.4.
+	 * 		- SORT_NATURAL faz a ordenação como "string em ordem natural", ou seja, algo como "1, 2, 10, 11".
+	 * @return array O array ordenado, com as suas chaves preservadas.
 	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ExcecaoOrdemInvalida se a ordem não corresponde a uma das ordens 
 	 * aceitas (crescente ou decrescente).
 	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ExcecaoTipoOrdemInvalida se o tipo de ordenação não corresponde a um 
 	 * dos tipos de ordenação aceitos.
-	 * @return array O array ordenado, com as suas chaves preservadas.
 	 */
-	public function ordenarAssociativo(array $array, $ordem = self::ASC, $tipoOrdenacao = SORT_STRING) {
+	public function ordenarAssociativo(array $array, string $ordem = self::ASC, int $tipoOrdenacao = SORT_STRING) : array {
 		if (!in_array($ordem, array(self::ASC, self::DESC))) {
 			throw new ExcecaoArrayWrapper\ExcecaoOrdemInvalida();
 		}
@@ -730,21 +695,20 @@ class ArrayWrapper {
 	 * @access public
 	 * @param array $array O array.
 	 * @param string $ordem Indica se a ordenação deve ser em ordem crescente ou decrescente.
-	 * @param string $tipoOrdenacao Indica o tipo de comparação feita entre os valores: 
+	 * @param int $tipoOrdenacao Indica o tipo de comparação feita entre os valores: 
 	 * 		- SORT_REGULAR não faz conversão de tipo entre os valores (podendo levar a resultados inesperados se os 
 	 * 		tipos dos valores são diferentes), 
 	 * 		- SORT_NUMERIC converte os valores para números para fazer a ordenação
 	 * 		- SORT_STRING converte os valores para texto
 	 * 		- SORT_LOCALE_STRING é igual a SORT_STRING, mas usando o locale definido na configuração do PHP
-	 * 		- SORT_NATURAL faz a ordenação como "string em ordem natural", ou seja, algo como "1, 2, 10, 11". Definido 
-	 * 		apenas no PHP >= 5.4.
+	 * 		- SORT_NATURAL faz a ordenação como "string em ordem natural", ou seja, algo como "1, 2, 10, 11".
+	 * @return array O array ordenado pelas chaves.
 	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ExcecaoOrdemInvalida se a ordem não corresponde a uma das ordens 
 	 * aceitas (crescente ou decrescente).
 	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ExcecaoTipoOrdemInvalida se o tipo de ordenação não corresponde a um 
 	 * dos tipos de ordenação aceitos. 
-	 * @return array O array ordenado pelas chaves.
 	 */
-	public function ordenarChave(array $array, $ordem = self::ASC, $tipoOrdenacao = SORT_STRING) {
+	public function ordenarChave(array $array, string $ordem = self::ASC, int $tipoOrdenacao = SORT_STRING) : array {
 		if (!in_array($ordem, array(self::ASC, self::DESC))) {
 			throw new ExcecaoArrayWrapper\ExcecaoOrdemInvalida();
 		}

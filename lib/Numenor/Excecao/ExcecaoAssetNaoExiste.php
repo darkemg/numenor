@@ -1,13 +1,13 @@
 <?php
 /**
- * Exceção levantada pelo sistema quando um asset já existente é adicionado à controladora de assets.
+ * Exceção levantada pelo sistema um asset é adicionado à controladora sem que exista o arquivo físico referenciado.
  *
  * @author Darke M. Goulart <darkemg@users.noreply.github.com>
  * @package Numenor/Excecao
  */
 namespace Numenor\Excecao;
 use Numenor\Html\Asset;
-class ExcecaoAssetDuplicado extends ExcecaoErroUso {
+class ExcecaoAssetNaoExiste extends ExcecaoErroUso {
 	
 	/**
 	 * Método construtor da classe
@@ -15,8 +15,9 @@ class ExcecaoAssetDuplicado extends ExcecaoErroUso {
 	 * @access public
 	 * @param \Numenor\Html\Asset $asset Asset referenciado que causou o erro.
 	 * @param \Exception $previous Exceção anterior (se a exceção atual tiver sido encadeada).
+	 * 
 	 */
 	public function __construct(Asset $asset, \Exception $previous = null) {
-		parent::__construct('Asset duplicado: ' . $asset->getCaminhoArquivo() . ' já foi adicionado ao controlador', static::DEFAULT_CODE, $previous);
+		parent::__construct('Asset inexistente; arquivo não encontrado: ' . $asset . '.', static::DEFAULT_CODE, $previous);
 	}
 }

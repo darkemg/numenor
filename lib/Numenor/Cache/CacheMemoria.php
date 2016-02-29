@@ -32,7 +32,7 @@ class cacheMemoria extends CacheAbstrato {
 	 * @param int $duracao Validade do cache, em segundos (0 = cache não expira)
 	 * @param int $limiteMemoria Limite de memória, em bytes, que o cache pode fazer o script PHP atingir.
 	 */
-	public function __construct($namespace, $duracao, $limiteMemoria) {
+	public function __construct(string $namespace, int $duracao, int $limiteMemoria) {
 		parent::__construct($namespace, $duracao);
 		$this->limiteMemoria = $limiteMemoria;
 		$this->adapter = StorageFactory::factory([

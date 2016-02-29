@@ -33,8 +33,8 @@ class JavascriptRemoto extends Javascript {
 	 * @param string $integrityCheck Informação para checagem de integridade do script remoto.
 	 * @param string $crossorigin Identificação do tipo de requisição crossorigin do script remoto.
 	 */
-	public function __construct($url, $fallback = '', $integrityCheck = '', $crossorigin = 'anonymous') {
-		parent::__construct(null, false, false);
+	public function __construct(string $url, string $fallback = '', string $integrityCheck = '', string $crossorigin = 'anonymous') {
+		parent::__construct('', false, false);
 		$this->url = $url;
 		$this->fallback = $fallback;
 		$this->integrityCheck = $integrityCheck;
@@ -47,7 +47,7 @@ class JavascriptRemoto extends Javascript {
 	 * @access public
 	 * @return string A representação do objeto como string.
 	 */
-	public function __toString() {
+	public function __toString() : string {
 		$script = '<script src="'. $this->url .'"';
 		if (!empty($this->integrityCheck)) {
 			$script .= ' integrity="'. $this->integrityCheck . '"';

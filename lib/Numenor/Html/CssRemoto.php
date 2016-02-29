@@ -21,8 +21,8 @@ class CssRemoto extends Css {
 	 * @param string $integrityCheck Informação para checagem de integridade do asset.
 	 * @param string $crossorigin Identificação do tipo de requisição crossorigin do asset.
 	 */
-	public function __construct($url, $integrityCheck = '', $crossorigin = 'anonymous') {
-		parent::__construct(null, false, false);
+	public function __construct(string $url, string $integrityCheck = '', string $crossorigin = 'anonymous') {
+		parent::__construct('', false, false);
 		$this->url = $url;
 		$this->integrityCheck = $integrityCheck;
 		$this->crossorigin = $crossorigin;
@@ -34,7 +34,7 @@ class CssRemoto extends Css {
 	 * @access public
 	 * @return string A representação do objeto como string.
 	 */
-	public function __toString() {
+	public function __toString() : string {
 		$link = '<link rel="stylesheet" href="'. $this->url .'"';
 		if (!empty($this->integrityCheck)) {
 			$link .= ' integrity="'. $this->integrityCheck . '"';

@@ -17,7 +17,7 @@ class Css extends Asset {
 	 * @param boolean $compactavel Indica se o arquivo CSS deve ser minificado.
 	 * @param boolean $concatenavel Indica se o arquivo CSS deve ser concatenado.
 	 */
-	public function __construct($caminhoArquivo, $compactavel = true, $concatenavel = true) {
+	public function __construct(string $caminhoArquivo, bool $compactavel = true, bool $concatenavel = true) {
 		parent::__construct($caminhoArquivo, $compactavel, $concatenavel);
 	}
 }

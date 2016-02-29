@@ -73,11 +73,11 @@ class CacheDisco extends CacheAbstrato {
 	 * @throws \Numenor\Excecao\ExcecaoCacheDiscoDirEscrita se o diretório de cache informado não existir ou não tiver 
 	 * permissão de escrita
 	 */
-	public function __construct($namespace, $duracao, $diretorio = null, $nivel = 1, $modo = 'rw') {
+	public function __construct(string $namespace, int $duracao, string $diretorio = '', int $nivel = 1, string $modo = 'rw') {
 		parent::__construct($namespace, $duracao);
-		$this->diretorio = !empty($diretorio)
-				? $diretorio 
-				: static::$diretorioPadrao;
+		$this->diretorio = $diretorio !== ''
+			? $diretorio 
+			: static::$diretorioPadrao;
 		if (empty($this->diretorio)) {
 			throw new ExcecaoCacheDiscoDirNaoDefinido();
 		}
@@ -103,31 +103,31 @@ class CacheDisco extends CacheAbstrato {
 				$writable = false;
 		}
 		$this->adapter = StorageFactory::factory([
-				'adapter' => [
-						'name' => 'filesystem',
-						'options' => [
-								'namespace' => $this->namespace,
-								'ttl' => $this->duracao,
-								'readable' => $readable,
-								'writable' => $writable,
-								'namespace_separator' => '$',
-								'cache_dir' => $this->diretorio,
-								'clear_stat_cache' => true,
-								'dir_level' => $nivel,
-								'dir_permission' => 0700,
-								'file_locking' => true,
-								'file_permission' => 0600,
-								'key_pattern' => '/^[a-z0-9_\+\-]*$/Di',
-								'no_atime' => true,
-								'no_ctime' => true
-						]
-				],
-				'plugins' => [
-						'exception_handler' => [
-								'throw_exceptions' => true
-						],
-						'Serializer'
+			'adapter' => [
+				'name' => 'filesystem',
+				'options' => [
+					'namespace' => $this->namespace,
+					'ttl' => $this->duracao,
+					'readable' => $readable,
+					'writable' => $writable,
+					'namespace_separator' => '$',
+					'cache_dir' => $this->diretorio,
+					'clear_stat_cache' => true,
+					'dir_level' => $nivel,
+					'dir_permission' => 0700,
+					'file_locking' => true,
+					'file_permission' => 0600,
+					'key_pattern' => '/^[a-z0-9_\+\-]*$/Di',
+					'no_atime' => true,
+					'no_ctime' => true
 				]
+			],
+			'plugins' => [
+				'exception_handler' => [
+					'throw_exceptions' => true
+				],
+				'Serializer'
+			]
 		]);
 	}
 	
@@ -140,7 +140,7 @@ class CacheDisco extends CacheAbstrato {
 	 * @throws \Numenor\Excecao\ExcecaoCacheDiscoDirEscrita se o diretório padrão informado não existir ou não tiver 
 	 * permissão de escrita 
 	 */
-	public static function setDiretorioPadrao($diretorioPadrao) {
+	public static function setDiretorioPadrao(string $diretorioPadrao) {
 		if (!is_writable($diretorioPadrao)) {
 			throw new ExcecaoCacheDiscoDirEscrita();
 		}

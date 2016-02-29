@@ -9,6 +9,8 @@
  */
 namespace Numenor\Html;
 use MatthiasMullie\Minify\CSS as MinifyCss;
+use Numenor\Php\ArrayWrapper;
+use Numenor\Php\StringWrapper;
 class ControleCss extends Controle {
 	
 	/**
@@ -52,7 +54,7 @@ class ControleCss extends Controle {
 	 * @param string $diretorioOutput Diretório onde os arquivos processados serão salvos.
 	 * @param string $urlBase URL base de inclusão dos assets.
 	 */
-	public function __construct($arrayWrapper, $stringWrapper, $diretorioOutput, $urlBase) {
+	public function __construct(ArrayWrapper $arrayWrapper, StringWrapper $stringWrapper, string $diretorioOutput, string $urlBase) {
 		parent::__construct($arrayWrapper, $stringWrapper, $diretorioOutput, $urlBase);
 		$this->listaCss = [];
 		$this->listaArquivosIncluir = [];
@@ -72,13 +74,29 @@ class ControleCss extends Controle {
 		if (count($listaRemoto) > 0) {
 			$this->listaArquivosIncluir = $listaRemoto;
 		}
+		if ($this->comportamentoPadrao === self::COMPORTAMENTO_PADRAO_DEV) {
+			// Se está configurado para ter o comportamento padrão de ambiente de desenvolvimento, todos os arquivos
+			// não-remotos são processados sem concatenação ou compactação
+			$listaConcatCompact = [];
+			$listaConcat = [];
+			$listaCompact = [];
+			$listaNormal = $this->arrayWrapper->mesclar($this->gerarListaNormal($this->listaCss), $this->gerarListaConcatCompact($this->listaCss));
+			$listaNormal = $this->arrayWrapper->mesclar($listaNormal, $this->gerarListaConcat($this->listaCss));
+			$listaNormal = $this->arrayWrapper->mesclar($listaNormal, $this->gerarListaCompact($this->listaCss));
+		} else {
+			// Caso contrário, processa normalmente os assets de acordo com seus tipos
+			$listaConcatCompact = $this->gerarListaConcatCompact($this->listaCss);
+			$listaConcat = $this->gerarListaConcat($this->listaCss);
+			$listaCompact = $this->gerarListaCompact($this->listaCss);
+			$listaNormal = $this->gerarListaNormal($this->listaCss);
+		}
 		// Adiciona os arquivos que devem ser minificados e concatenados em um só arquivo
 		$listaConcatCompact = $this->gerarListaConcatCompact($this->listaCss);
 		if (count($listaConcatCompact) > 0) {
 			$nomeConcatCompact = $this->gerarNome($listaConcatCompact);
 			$minificadorConcatCompact = clone $this->minificadorCss;
 			$outputConcatCompact = $this->diretorioOutput . $nomeConcatCompact . '.css';
-			if (!file_exists($outputConcatCompact)) {
+			if ($this->corportamentoPadrao === self::COMPORTAMENTO_PADRAO_HOMOLOG || !file_exists($outputConcatCompact)) {
 				foreach ($listaConcatCompact as $css) {
 					$minificadorConcatCompact->add($css);
 				}
@@ -92,7 +110,7 @@ class ControleCss extends Controle {
 		if (count($listaConcat) > 0) {
 			$nomeConcat = $this->gerarNome($listaConcat);
 			$outputConcat = $this->diretorioOutput . $nomeConcat . '.css';
-			if (!file_exists($outputConcat)) {
+			if ($this->corportamentoPadrao === self::COMPORTAMENTO_PADRAO_HOMOLOG || !file_exists($outputConcat)) {
 				foreach ($listaConcat as $css) {
 					file_put_contents(
 							$outputConcat, 
@@ -109,7 +127,7 @@ class ControleCss extends Controle {
 				$minificadorCompact = clone $this->minificadorCss;
 				$nomeCompact = $this->gerarNome([$css]);
 				$outputCompact = $this->diretorioOutput . $nomeCompact . '.css';
-				if (!file_exists($outputCompact)) {
+				if ($this->corportamentoPadrao === self::COMPORTAMENTO_PADRAO_HOMOLOG || !file_exists($outputCompact)) {
 					$minificadorCompact->add($css);
 					$minificadorCompact->minify($outputCompact);
 				}
@@ -133,8 +151,9 @@ class ControleCss extends Controle {
 	 * @param \Numenor\Html\Css $css Novo arquivo incluído na página.
 	 * @return \Numenor\Html\ControleCss Instância do próprio objeto para encadeamento.
 	 * @throws \Numenor\Excecao\ExcecaoAssetDuplicado se o asset informado já foi incluído anteriormente.
+	 * @throws \Numenor\Excecao\ExcecaoAssetNaoExiste se o arquivo do asset informado não existe.
 	 */
-	public function adicionarCss(Css $css) {
+	public function adicionarCss(Css $css) : self {
 		$indice = null;
 		try {
 			// Se o asset já existe, o método ArrayWrapper::encontrarItem retorna o índice do mesmo.
@@ -146,8 +165,11 @@ class ControleCss extends Controle {
 			// Por fim, verifica o valor de retorno da busca pelo asset.
 			// Se ele já existe, levanta-se a exceção
 			if (!is_null($indice)) {
-				throw new ExcecaoAssetDuplicado();
+				throw new ExcecaoAssetDuplicado($css);
 			}
+		}
+		if (!($css instanceof CssRemoto) && !file_exists((string) $css)) {
+			throw new ExcecaoAssetNaoExiste($css);
 		}
 		$this->listaCss[] = $css;
 		return $this;
@@ -157,10 +179,10 @@ class ControleCss extends Controle {
 	 * Define o minificador utilizado pelo sistema para processar e compactar os arquivos.
 	 *
 	 * @access public
-	 * @param MatthiasMullie\Minify\CSS $minificador Instância do minificador.
+	 * @param \MatthiasMullie\Minify\CSS $minificador Instância do minificador.
 	 * @return \Numenor\Html\ControleCss Instância do próprio objeto para encadeamento.
 	 */
-	public function setMinificadorCss(MinifyCss $minificador) {
+	public function setMinificadorCss(MinifyCss $minificador) : self {
 		$this->minificadorCss = $minificador;
 		return $this;
 	}

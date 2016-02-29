@@ -16,6 +16,10 @@ use Numenor\Php\StringWrapper;
 
 abstract class Controle {
 	
+	const COMPORTAMENTO_PADRAO_DEV = 'dev';
+	const COMPORTAMENTO_PADRAO_HOMOLOG = 'homolog';
+	const COMPORTAMENTO_PADRAO_PROD = 'prod';
+	
 	/**
 	 * Instância do objeto de encapsulamento das operações de array.
 	 * 
@@ -51,11 +55,28 @@ abstract class Controle {
 	 */
 	protected $urlBase;
 	/**
-	 * Lista de arquivos que serão efetivamente incluídos na página.
-	 *
+	 * Comportamento padrão do controlador de assets.
+	 * 
+	 * Por padrão, os arquivos de assets processados pelo controlador são tratados conforme suas configurações 
+	 * (minificados e concatenados em um só arquivo, minificados separadamente, concatenados sem minificação, ou 
+	 * adicionados sem nenhum processamento adicional). Esta configuração permite que este comportamento padrão seja
+	 * sobrescrito de forma a facilitar o controle dos arquivos em determinados ambientes da aplicação:
+	 * 
+	 * - Ambiente de desenvolvimento: nesse tipo de ambiente, todos os arquivos são adicionados como se tivessem sido
+	 * configurados sem processamento adicional, de modo a facilitar o debug desses arquivos.
+	 * - Ambiente de homologação: neste tipo de ambiente, os arquivos são processados conforme suas configurações,
+	 * porém o sistema sempre gera novamente e sobrescreve os arquivos concatenados/minificados. Dessa maneira, não é
+	 * necessário limpar os arquivos gerados a cada atualização. A penalidade de desempenho incorrida normalmente não é
+	 * problema para ambientes de homologação.
+	 * - Padrão/Ambiente de produção: neste tipo de ambiente, os arquivos são processados de acordo com suas
+	 * configurações e é feita a verificação da existência dos arquivos resultantes antes de efetuar o processamento.
+	 * Caso um ou mais assets sejam alterados, é necessário apagar os arquivos resultantes manualmente para que eles
+	 * sejam regenerados. 
+	 * 
 	 * @access protected
-	 * @var array
+	 * @var string
 	 */
+	protected $comportamentoPadrao;
 	
 	/**
 	 * Método construtor da classe.
@@ -66,11 +87,12 @@ abstract class Controle {
 	 * @param string $diretorioOutput Diretório onde os arquivos processados serão salvos.
 	 * @param string $urlBase URL base de inclusão dos assets.
 	 */
-	public function __construct(ArrayWrapper $arrayWrapper, StringWrapper $stringWrapper, $diretorioOutput, $urlBase) {
+	public function __construct(ArrayWrapper $arrayWrapper, StringWrapper $stringWrapper, string $diretorioOutput, string $urlBase) {
 		$this->arrayWrapper = $arrayWrapper;
 		$this->stringWrapper = $stringWrapper;
 		$this->diretorioOutput = $diretorioOutput;
 		$this->urlBase = $urlBase;
+		$this->comportamentoPadrao = self::COMPORTAMENTO_PADRAO_PROD;
 	}
 	
 	/**
@@ -80,7 +102,7 @@ abstract class Controle {
 	 * @param array $listaAssets Lista de assets analisados.
 	 * @return array Lista de arquivos de assets que devem ser minificados e concatenados.
 	 */
-	protected function gerarListaConcatCompact(array $listaAssets) {
+	protected function gerarListaConcatCompact(array $listaAssets) : array {
 		$lista = [];
 		foreach ($listaAssets as $asset) {
 			if ($asset->isCompactavel() && $asset->isConcatenavel()) {
@@ -97,7 +119,7 @@ abstract class Controle {
 	 * @param array $listaAssets Lista de assets analisados.
 	 * @return array Lista de arquivos de assets que devem ser concatenados.
 	 */
-	protected function gerarListaConcat(array $listaAssets) {
+	protected function gerarListaConcat(array $listaAssets) : array {
 		$lista = [];
 		foreach ($listaAssets as $asset) {
 			if ($asset->isConcatenavel() && !$asset->isCompactavel()) {
@@ -114,7 +136,7 @@ abstract class Controle {
 	 * @param array $listaAssets Lista de assets analisados.
 	 * @return array Lista de arquivos de assets que devem ser minificados.
 	 */
-	protected function gerarListaCompact(array $listaAssets) {
+	protected function gerarListaCompact(array $listaAssets) : array {
 		$lista = [];
 		foreach ($listaAssets as $asset) {
 			if ($asset->isCompactavel() && !$asset->isConcatenavel()) {
@@ -131,7 +153,7 @@ abstract class Controle {
 	 * @param array $listaAssets Lista de assets analisados.
 	 * @return array Lista de arquivos de assets que devem ser incluídos sem nenhum processamento adicional.
 	 */
-	protected function gerarListaNormal(array $listaAssets) {
+	protected function gerarListaNormal(array $listaAssets) : array {
 		$lista = [];
 		foreach ($listaAssets as $asset) {
 			// Inclui os assets marcados como não concatenáveis, não compactáveis, e que não são remotos.
@@ -155,8 +177,20 @@ abstract class Controle {
 	 * @param array $listaAssets Lista de nomes dos assets.
 	 * @return string Hash gerado a partir dos nomes dos assets listados.
 	 */
-	protected function gerarNome(array $listaAssets) {
+	protected function gerarNome(array $listaAssets) : string {
 		return hash('sha1', $this->stringWrapper->unir('', $listaAssets));
+	}
+	
+	/**
+	 * Método setter do comportamento padrão do controlador de assets. 
+	 * 
+	 * @access public
+	 * @param string $comportamentoPadrao Valor do comportamento padrão do controlador.
+	 * @return \Numenor\Html\Controle Instância do próprio objeto para encadeamento.
+	 */
+	public function setComportamentoPadrão(string $comportamentoPadrao) : self {
+		$this->comportamentoPadrao = $comportamentoPadrao;
+		return $this;
 	}
 	
 	/**
@@ -165,7 +199,7 @@ abstract class Controle {
 	 * @access public
 	 * @return string O snippet de inclusão dos arquivos processados.
 	 */
-	public function gerarCodigoInclusao() {
+	public function gerarCodigoInclusao() : string {
 		$this->minificar();
 		return $this->stringWrapper->unir('', $this->listaArquivosIncluir);
 	}

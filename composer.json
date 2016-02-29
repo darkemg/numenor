@@ -2,26 +2,27 @@
 	"name": "darkemg/numenor",
 	"license": "MIT",
 	"repositories": [
-	    {
-	        "type": "composer",
-	        "url": "https://packages.zendframework.com/"
-	    }
+		{
+			"type": "composer",
+			"url": "https://packages.zendframework.com/"
+		}
 	],
 	"require-dev": {
 		"phpdocumentor/phpdocumentor": "2.*"
 	},
-    "require": {
-    	"ircmaxell/password-compat": "1.*",
+	"require": {
+		"php": ">=7.0",
+		"ircmaxell/password-compat": "1.*",
  		"matthiasmullie/minify": "1.*",
-    	"zendframework/zend-config": "2.*",
-        "zendframework/zend-cache": "2.*",
-        "zendframework/zend-i18n": "2.*",
-        "zendframework/zend-loader": "2.*",
-        "zendframework/zend-servicemanager": "2.*"
-    },
-    "autoload": {
-    	"psr-4": {
-    		"Numenor\\": "lib/Numenor"
-    	} 
-    }
+		"zendframework/zend-config": "2.*",
+		"zendframework/zend-cache": "2.*",
+		"zendframework/zend-i18n": "2.*",
+		"zendframework/zend-loader": "2.*",
+		"zendframework/zend-servicemanager": "2.*"
+	},
+	"autoload": {
+		"psr-4": {
+			"Numenor\\": "lib/Numenor"
+		} 
+	}
 }

@@ -54,7 +54,7 @@ class Biblioteca {
 	 * @access public
 	 * @return \Zend\Config\Config Objeto de configuração do servidor.
 	 */
-	public function getConfiguracaoServidor() {
+	public function getConfiguracaoServidor() : Config {
 		return $this->configuracaoServidor;
 	}
 	
@@ -64,7 +64,7 @@ class Biblioteca {
 	 * @access public
 	 * @return \Zend\Config\Config Objeto de configuração da biblioteca.
 	 */
-	public function getConfiguracaoBiblioteca() {
+	public function getConfiguracaoBiblioteca() : Config {
 		return $this->configuracaoBiblioteca;
 	}
 	
@@ -80,7 +80,7 @@ class Biblioteca {
 	 * @throws \Numenor\Excecao\ExcecaoArquivoConfiguracaoInvalido se o arquivo de configuração informado 
 	 * não existir, não puder ser aberto, ou estiver em um formato inválido.
 	 */
-	public static function init($configuracao = null) {
+	public static function init($configuracao = null) : self {
 		// Instancia a configuração do servidor.
 		$configuracaoServidor = new Config([
 				'diretorioRaiz' => $_SERVER['DOCUMENT_ROOT'] . '/',
@@ -101,7 +101,7 @@ class Biblioteca {
 			return new self($configuracaoServidor);
 		}
 		if (is_array($configuracao)) {
-			$biblioteca =  new self($configuracaoServidor, new Config($configuracao));			
+			$biblioteca =  new self($configuracaoServidor, new Config($configuracao));
 		} else {
 			try {
 				$arquivoConfiguracao = $configuracaoServidor->diretorioRaiz . $configuracao;

@@ -40,7 +40,7 @@ abstract class Asset {
 	 * @param boolean $concatenavel Infica se o asset pode ser concatenado com outros assets que possuem a mesma
 	 * propriedade.
 	 */
-	public function __construct($caminhoArquivo, $compactavel = true, $concatenavel = true) {
+	public function __construct(string $caminhoArquivo, bool $compactavel = true, bool $concatenavel = true) {
 		$this->caminhoArquivo = $caminhoArquivo;
 		$this->compactavel = $compactavel;
 		$this->concatenavel = $concatenavel;
@@ -52,7 +52,7 @@ abstract class Asset {
 	 * @access public
 	 * @return string A representação do objeto como string.
 	 */
-	public function __toString() {
+	public function __toString() : string {
 		return $this->caminhoArquivo;
 	}
 	
@@ -62,7 +62,7 @@ abstract class Asset {
 	 * @access public
 	 * @return string Caminho físico do arquivo do asset.
 	 */
-	public function getCaminhoArquivo() {
+	public function getCaminhoArquivo() : string {
 		return $this->caminhoArquivo;
 	}
 	
@@ -72,7 +72,7 @@ abstract class Asset {
 	 * @access public
 	 * @return boolean O asset é minificável?
 	 */
-	public function isCompactavel()  {
+	public function isCompactavel() : bool {
 		return $this->compactavel;
 	}
 	
@@ -82,7 +82,7 @@ abstract class Asset {
 	 * @access public
 	 * @return boolean O asset é concatenável?
 	 */
-	public function isConcatenavel() {
+	public function isConcatenavel() : bool {
 		return $this->concatenavel;
 	}	
 }

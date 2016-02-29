@@ -12,6 +12,9 @@
 namespace Numenor\Html;
 use MatthiasMullie\Minify\JS as MinifyJs;
 use Numenor\Excecao\ExcecaoAssetDuplicado;
+use Numenor\Excecao\ExcecaoAssetNaoExiste;
+use Numenor\Php\ArrayWrapper;
+use Numenor\Php\StringWrapper;
 class ControleJavascript extends Controle {
 	
 	/**
@@ -45,7 +48,7 @@ class ControleJavascript extends Controle {
 	 * @param string $diretorioOutput Diretório onde os arquivos processados serão salvos.
 	 * @param string $urlBase URL base de inclusão dos assets.
 	 */
-	public function __construct($arrayWrapper, $stringWrapper, $diretorioOutput, $urlBase) {
+	public function __construct(ArrayWrapper $arrayWrapper, StringWrapper $stringWrapper, string $diretorioOutput, string $urlBase) {
 		parent::__construct($arrayWrapper, $stringWrapper, $diretorioOutput, $urlBase);
 		$this->listaJs = [];
 		$this->listaArquivosIncluir = [];
@@ -58,7 +61,7 @@ class ControleJavascript extends Controle {
 	 * @param array $listaAssets Lista de assets analisados.
 	 * @return array Lista de arquivos de assets de inclusão remota.
 	 */
-	protected function gerarListaRemoto(array $listaAssets) {
+	protected function gerarListaRemoto(array $listaAssets) : array {
 		$lista = [];
 		foreach ($listaAssets as $asset) {
 			if ($asset instanceof JavascriptRemoto) {
@@ -74,7 +77,7 @@ class ControleJavascript extends Controle {
 	 * 
 	 * @access protected
 	 */
-	protected function minificar() {
+	protected function minificar() : array {
 		// Reseta a lista de arquivos a serem incluídos
 		$this->listaArquivosIncluir = [];
 		// Adiciona os scripts remotos
@@ -82,13 +85,28 @@ class ControleJavascript extends Controle {
 		if (count($listaRemoto) > 0) {
 			$this->listaArquivosIncluir = $listaRemoto;
 		}
+		if ($this->comportamentoPadrao === self::COMPORTAMENTO_PADRAO_DEV) {
+			// Se está configurado para ter o comportamento padrão de ambiente de desenvolvimento, todos os arquivos
+			// não-remotos são processados sem concatenação ou compactação
+			$listaConcatCompact = [];
+			$listaConcat = [];
+			$listaCompact = [];
+			$listaNormal = $this->arrayWrapper->mesclar($this->gerarListaNormal($this->listaJs), $this->gerarListaConcatCompact($this->listaJs));
+			$listaNormal = $this->arrayWrapper->mesclar($listaNormal, $this->gerarListaConcat($this->listaJs));
+			$listaNormal = $this->arrayWrapper->mesclar($listaNormal, $this->gerarListaCompact($this->listaJs));
+		} else {
+			// Caso contrário, processa normalmente os assets de acordo com seus tipos
+			$listaConcatCompact = $this->gerarListaConcatCompact($this->listaJs);
+			$listaConcat = $this->gerarListaConcat($this->listaJs);
+			$listaCompact = $this->gerarListaCompact($this->listaJs);
+			$listaNormal = $this->gerarListaNormal($this->listaJs);
+		}
 		// Adiciona os arquivos que devem ser minificados e concatenados em um só arquivo
-		$listaConcatCompact = $this->gerarListaConcatCompact($this->listaJs);
 		if (count($listaConcatCompact) > 0) {
 			$nomeConcatCompact = $this->gerarNome($listaConcatCompact);
 			$minificadorConcatCompact = clone $this->minificadorJs;
 			$outputConcatCompact = $this->diretorioOutput . $nomeConcatCompact . '.js';
-			if (!file_exists($outputConcatCompact)) {
+			if ($this->corportamentoPadrao === self::COMPORTAMENTO_PADRAO_HOMOLOG || !file_exists($outputConcatCompact)) {
 				foreach ($listaConcatCompact as $js) {
 					$minificadorConcatCompact->add($js);
 				}
@@ -98,28 +116,26 @@ class ControleJavascript extends Controle {
 		}
 		unset($minificadorConcatCompact);
 		// Adiciona os arquivos que devem ser concatenados em um só arquivo, sem minificação
-		$listaConcat = $this->gerarListaConcat($this->listaJs);
 		if (count($listaConcat) > 0) {
 			$nomeConcat = $this->gerarNome($listaConcat);
 			$outputConcat = $this->diretorioOutput . $nomeConcat . '.js';
-			if (!file_exists($outputConcat)) {
+			if ($this->corportamentoPadrao === self::COMPORTAMENTO_PADRAO_HOMOLOG || !file_exists($outputConcat)) {
 				foreach ($listaConcat as $js) {
 					file_put_contents(
-							$outputConcat, 
-							file_get_contents($js) . \PHP_EOL, 
+							$outputConcat,
+							file_get_contents($js) . \PHP_EOL,
 							\FILE_APPEND);
 				}
 			}
 			$this->listaArquivosIncluir[] = '<script src="' . $this->urlBase . $nomeConcat . '.js"></script>' . \PHP_EOL;
 		}
 		// Adiciona os arquivos que devem ser minificados, sem concatenação
-		$listaCompact = $this->gerarListaCompact($this->listaJs);
 		if (count($listaCompact) > 0) {
 			foreach ($listaCompact as $js) {
 				$minificadorCompact = clone $this->minificadorJs;
 				$nomeCompact = $this->gerarNome([$js]);
 				$outputCompact = $this->diretorioOutput . $nomeCompact . '.js';
-				if (!file_exists($outputCompact)) {
+				if ($this->corportamentoPadrao === self::COMPORTAMENTO_PADRAO_HOMOLOG || !file_exists($outputCompact)) {
 					$minificadorCompact->add($js);
 					$minificadorCompact->minify($outputCompact);
 				}
@@ -128,7 +144,6 @@ class ControleJavascript extends Controle {
 			}
 		}
 		// Adiciona os arquivos que devem ser processados sem minificação ou concatenação.
-		$listaNormal = $this->gerarListaNormal($this->listaJs);
 		if (count($listaNormal) > 0) {
 			foreach ($listaNormal as $js) {
 				if ($js instanceof JavascriptRemoto) {
@@ -147,8 +162,9 @@ class ControleJavascript extends Controle {
 	 * @param \Numenor\Html\Javascript $js Novo arquivo incluído na página.
 	 * @return \Numenor\Html\ControleJavascript Instância do próprio objeto para encadeamento.
 	 * @throws \Numenor\Excecao\ExcecaoAssetDuplicado se o asset informado já foi incluído anteriormente.
+	 * @throws \Numenor\Excecao\ExcecaoAssetNaoExiste se o arquivo do asset informado não existe.
 	 */
-	public function adicionarJs(Javascript $js) {
+	public function adicionarJs(Javascript $js) : self {
 		$indice = null;
 		try {
 			// Se o asset já existe, o método ArrayWrapper::encontrarItem retorna o índice do mesmo.
@@ -160,8 +176,11 @@ class ControleJavascript extends Controle {
 			// Por fim, verifica o valor de retorno da busca pelo asset.
 			// Se ele já existe, levanta-se a exceção
 			if (!is_null($indice)) {
-				throw new ExcecaoAssetDuplicado();
+				throw new ExcecaoAssetDuplicado($js);
 			}
+		}
+		if (!($js instanceof JavascriptRemoto) && !file_exists((string) $js)) {
+			throw new ExcecaoAssetNaoExiste($js);
 		}
 		$this->listaJs[] = $js;
 		return $this;
@@ -174,7 +193,7 @@ class ControleJavascript extends Controle {
 	 * @param MatthiasMullie\Minify\JS $minificador Instância do minificador.
 	 * @return \Numenor\Html\ControleJavascript Instância do próprio objeto para encadeamento.
 	 */
-	public function setMinificadorJs(MinifyJs $minificador) {
+	public function setMinificadorJs(MinifyJs $minificador) : self {
 		$this->minificadorJs = $minificador;
 		return $this;
 	}
