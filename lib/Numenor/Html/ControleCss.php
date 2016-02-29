@@ -132,8 +132,22 @@ class ControleCss extends Controle {
 	 * @access public
 	 * @param \Numenor\Html\Css $css Novo arquivo incluído na página.
 	 * @return \Numenor\Html\ControleCss Instância do próprio objeto para encadeamento.
+	 * @throws \Numenor\Excecao\ExcecaoAssetDuplicado se o asset informado já foi incluído anteriormente.
 	 */
 	public function adicionarCss(Css $css) {
+		try {
+			// Se o asset já existe, o método ArrayWrapper::encontrarItem retorna o índice do mesmo.
+			$indice = $this->arrayWrapper->encontrarItem($this->listaCss, $css);
+		} catch (\Throwable $e) {
+			// Se o asset não foi encontrado, o método ArrayWrapper::encontrarItem levanta uma exceção.
+			// Nesse caso é necessário ignorá-la.
+		} finally {
+			// Por fim, verifica o valor de retorno da busca pelo asset.
+			// Se ele já existe, levanta-se a exceção
+			if (!is_null($indice)) {
+				throw new ExcecaoAssetDuplicado();
+			}
+		}
 		$this->listaCss[] = $css;
 		return $this;
 	}
