@@ -77,7 +77,7 @@ class ControleJavascript extends Controle {
 	 * 
 	 * @access protected
 	 */
-	protected function minificar() : array {
+	protected function minificar() {
 		// Reseta a lista de arquivos a serem incluídos
 		$this->listaArquivosIncluir = [];
 		// Adiciona os scripts remotos
@@ -106,7 +106,10 @@ class ControleJavascript extends Controle {
 			$nomeConcatCompact = $this->gerarNome($listaConcatCompact);
 			$minificadorConcatCompact = clone $this->minificadorJs;
 			$outputConcatCompact = $this->diretorioOutput . $nomeConcatCompact . '.js';
-			if ($this->corportamentoPadrao === self::COMPORTAMENTO_PADRAO_HOMOLOG || !file_exists($outputConcatCompact)) {
+			if ($this->comportamentoPadrao === self::COMPORTAMENTO_PADRAO_HOMOLOG) {
+				file_exists($outputConcatCompact) ? unlink($outputConcatCompact) : null;
+			}
+			if (!file_exists($outputConcatCompact)) {
 				foreach ($listaConcatCompact as $js) {
 					$minificadorConcatCompact->add($js);
 				}
@@ -119,12 +122,15 @@ class ControleJavascript extends Controle {
 		if (count($listaConcat) > 0) {
 			$nomeConcat = $this->gerarNome($listaConcat);
 			$outputConcat = $this->diretorioOutput . $nomeConcat . '.js';
-			if ($this->corportamentoPadrao === self::COMPORTAMENTO_PADRAO_HOMOLOG || !file_exists($outputConcat)) {
+			if ($this->comportamentoPadrao === self::COMPORTAMENTO_PADRAO_HOMOLOG) {
+				file_exists($outputConcat) ? unlink($outputConcat) : null;
+			}
+			if (!file_exists($outputConcat)) {
 				foreach ($listaConcat as $js) {
 					file_put_contents(
-							$outputConcat,
-							file_get_contents($js) . \PHP_EOL,
-							\FILE_APPEND);
+						$outputConcat,
+						file_get_contents($js) . \PHP_EOL,
+						\FILE_APPEND);
 				}
 			}
 			$this->listaArquivosIncluir[] = '<script src="' . $this->urlBase . $nomeConcat . '.js"></script>' . \PHP_EOL;
@@ -135,7 +141,10 @@ class ControleJavascript extends Controle {
 				$minificadorCompact = clone $this->minificadorJs;
 				$nomeCompact = $this->gerarNome([$js]);
 				$outputCompact = $this->diretorioOutput . $nomeCompact . '.js';
-				if ($this->corportamentoPadrao === self::COMPORTAMENTO_PADRAO_HOMOLOG || !file_exists($outputCompact)) {
+				if ($this->comportamentoPadrao === self::COMPORTAMENTO_PADRAO_HOMOLOG) {
+					file_exists($outputCompact) ? unlink($outputCompact) : null;
+				}
+				if (!file_exists($outputCompact)) {
 					$minificadorCompact->add($js);
 					$minificadorCompact->minify($outputCompact);
 				}
@@ -149,7 +158,7 @@ class ControleJavascript extends Controle {
 				if ($js instanceof JavascriptRemoto) {
 					$this->listaArquivosIncluir[] = $js->gerarSnippetInclusao();
 				} else {
-					$this->listaArquivosIncluir[] = '<script src="'. $js . '"></script>' . \PHP_EOL;
+					$this->listaArquivosIncluir[] = '<script src="'. $this->urlBase . basename((string) $js) . '"></script>' . \PHP_EOL;
 				}
 			}
 		}

@@ -188,7 +188,7 @@ abstract class Controle {
 	 * @param string $comportamentoPadrao Valor do comportamento padrão do controlador.
 	 * @return \Numenor\Html\Controle Instância do próprio objeto para encadeamento.
 	 */
-	public function setComportamentoPadrão(string $comportamentoPadrao) : self {
+	public function setComportamentoPadrao(string $comportamentoPadrao) : self {
 		$this->comportamentoPadrao = $comportamentoPadrao;
 		return $this;
 	}

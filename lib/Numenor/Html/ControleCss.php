@@ -91,12 +91,14 @@ class ControleCss extends Controle {
 			$listaNormal = $this->gerarListaNormal($this->listaCss);
 		}
 		// Adiciona os arquivos que devem ser minificados e concatenados em um só arquivo
-		$listaConcatCompact = $this->gerarListaConcatCompact($this->listaCss);
 		if (count($listaConcatCompact) > 0) {
 			$nomeConcatCompact = $this->gerarNome($listaConcatCompact);
 			$minificadorConcatCompact = clone $this->minificadorCss;
 			$outputConcatCompact = $this->diretorioOutput . $nomeConcatCompact . '.css';
-			if ($this->corportamentoPadrao === self::COMPORTAMENTO_PADRAO_HOMOLOG || !file_exists($outputConcatCompact)) {
+			if ($this->comportamentoPadrao === self::COMPORTAMENTO_PADRAO_HOMOLOG) {
+				file_exists($outputConcatCompact) ? unlink($outputConcatCompact) : null;
+			}
+			if (!file_exists($outputConcatCompact)) {
 				foreach ($listaConcatCompact as $css) {
 					$minificadorConcatCompact->add($css);
 				}
@@ -106,11 +108,13 @@ class ControleCss extends Controle {
 		}
 		unset($minificadorConcatCompact);
 		// Adiciona os arquivos que devem ser concatenados em um só arquivo, sem minificação
-		$listaConcat = $this->gerarListaConcat($this->listaCss);
 		if (count($listaConcat) > 0) {
 			$nomeConcat = $this->gerarNome($listaConcat);
 			$outputConcat = $this->diretorioOutput . $nomeConcat . '.css';
-			if ($this->corportamentoPadrao === self::COMPORTAMENTO_PADRAO_HOMOLOG || !file_exists($outputConcat)) {
+			if ($this->comportamentoPadrao === self::COMPORTAMENTO_PADRAO_HOMOLOG) {
+				file_exists($outputConcat) ? unlink($outputConcat) : null;
+			}
+			if (!file_exists($outputConcat)) {
 				foreach ($listaConcat as $css) {
 					file_put_contents(
 							$outputConcat, 
@@ -121,13 +125,15 @@ class ControleCss extends Controle {
 			$this->listaArquivosIncluir[] = '<link rel="stylesheet" href="' . $this->urlBase . $nomeConcat . '.css">' . \PHP_EOL;
 		}
 		// Adiciona os arquivos que devem ser minificados, sem concatenação
-		$listaCompact = $this->gerarListaCompact($this->listaCss);
 		if (count($listaCompact) > 0) {
 			foreach ($listaCompact as $css) {
 				$minificadorCompact = clone $this->minificadorCss;
 				$nomeCompact = $this->gerarNome([$css]);
 				$outputCompact = $this->diretorioOutput . $nomeCompact . '.css';
-				if ($this->corportamentoPadrao === self::COMPORTAMENTO_PADRAO_HOMOLOG || !file_exists($outputCompact)) {
+				if ($this->comportamentoPadrao === self::COMPORTAMENTO_PADRAO_HOMOLOG) {
+					file_exists($outputCompact) ? unlink($outputCompact) : null;
+				}
+				if (!file_exists($outputCompact)) {
 					$minificadorCompact->add($css);
 					$minificadorCompact->minify($outputCompact);
 				}
@@ -136,10 +142,9 @@ class ControleCss extends Controle {
 			}
 		}
 		// Adiciona os arquivos que devem ser processados sem minificação ou concatenação.
-		$listaNormal = $this->gerarListaNormal($this->listaCss);
 		if (count($listaNormal) > 0) {
 			foreach ($listaNormal as $css) {
-				$this->listaArquivosIncluir[] = '<link rel="stylesheet" href="'. $css . '">' . \PHP_EOL;
+				$this->listaArquivosIncluir[] = '<link rel="stylesheet" href="'. $this->urlBase . basename((string) $css) . '">' . \PHP_EOL;
 			}
 		}
 	}
