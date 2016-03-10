@@ -158,7 +158,15 @@ class ControleJavascript extends Controle {
 				if ($js instanceof JavascriptRemoto) {
 					$this->listaArquivosIncluir[] = $js->gerarSnippetInclusao();
 				} else {
-					$this->listaArquivosIncluir[] = '<script src="'. $this->urlBase . basename((string) $js) . '"></script>' . \PHP_EOL;
+					$nomeNormal = $this->gerarNome([$js]);
+					$outputNormal = $this->diretorioOutput . $nomeNormal . '.js';
+					if ($this->comportamentoPadrao === self::COMPORTAMENTO_PADRAO_DEV || $this->comportamentoPadrao === self::COMPORTAMENTO_PADRAO_HOMOLOG) {
+						file_exists($outputNormal) ? unlink($outputNormal) : null;
+					}
+					if (!file_exists($outputNormal)) {
+						copy((string) $js, $outputNormal);
+					}
+					$this->listaArquivosIncluir[] = '<script src="'. $this->urlBase . $nomeNormal . '.js"></script>' . \PHP_EOL;
 				}
 			}
 		}

@@ -144,7 +144,19 @@ class ControleCss extends Controle {
 		// Adiciona os arquivos que devem ser processados sem minificação ou concatenação.
 		if (count($listaNormal) > 0) {
 			foreach ($listaNormal as $css) {
-				$this->listaArquivosIncluir[] = '<link rel="stylesheet" href="'. $this->urlBase . basename((string) $css) . '">' . \PHP_EOL;
+				if ($css instanceof CssRemoto) {
+					$this->listaArquivosIncluir[] = $css->gerarSnippetInclusao();
+				} else {
+					$nomeNormal = $this->gerarNome([$css]);
+					$outputNormal = $this->diretorioOutput . $nomeNormal . '.css';
+					if ($this->comportamentoPadrao === self::COMPORTAMENTO_PADRAO_DEV || $this->comportamentoPadrao === self::COMPORTAMENTO_PADRAO_HOMOLOG) {
+						file_exists($outputNormal) ? unlink($outputNormal) : null;
+					}
+					if (!file_exists($outputNormal)) {
+						copy((string) $css, $outputNormal);
+					}
+					$this->listaArquivosIncluir[] = '<link rel="stylesheet" href="'. $this->urlBase . basename((string) $css) . '">' . \PHP_EOL;
+				}
 			}
 		}
 	}
