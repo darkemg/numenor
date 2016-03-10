@@ -8,6 +8,7 @@
  * @package Numenor/Html
  */
 namespace Numenor\Html;
+use MatthiasMullie\PathConverter\Converter;
 use MatthiasMullie\Minify\CSS as MinifyCss;
 use Numenor\Php\ArrayWrapper;
 use Numenor\Php\StringWrapper;
@@ -21,12 +22,34 @@ class ControleCss extends Controle {
 	 */
 	protected $minificadorCss;
 	/**
+	 * Componente de conversão dos caminhos relativos dos assets CSS.
+	 * 
+	 * @access protected
+	 * @var \MatthiasMullie\PathConverter\Converter
+	 */
+	protected $conversorCaminho;
+	/**
 	 * Lista de arquivos CSS adicionados para processamento na página.
 	 *
 	 * @access protected
 	 * @var \Numenor\Html\Css[]
 	 */
 	protected $listaCss;
+	
+	/**
+	 * Método construtor da classe.
+	 * 
+	 * @access public
+	 * @param \Numenor\Php\ArrayWrapper $arrayWrapper Instância do objeto de encapsulamento das operações de array.
+	 * @param \Numenor\Php\StringWrapper $stringWrapper Instância do objeto de encapsulamento das operações de string.
+	 * @param string $diretorioOutput Diretório onde os arquivos processados serão salvos.
+	 * @param string $urlBase URL base de inclusão dos assets.
+	 */
+	public function __construct(ArrayWrapper $arrayWrapper, StringWrapper $stringWrapper, string $diretorioOutput, string $urlBase) {
+		parent::__construct($arrayWrapper, $stringWrapper, $diretorioOutput, $urlBase);
+		$this->listaCss = [];
+		$this->listaArquivosIncluir = [];
+	}
 	
 	/**
 	 * Gera a lista de arquivos de assets de inclusão remota.
@@ -46,18 +69,126 @@ class ControleCss extends Controle {
 	}
 	
 	/**
-	 * Método construtor da classe.
+	 * Corrige os caminhos relativos contidos em um arquivo CSS que não será processado pelo minificador.
 	 * 
-	 * @access public
-	 * @param \Numenor\Php\ArrayWrapper $arrayWrapper Instância do objeto de encapsulamento das operações de array.
-	 * @param \Numenor\Php\StringWrapper $stringWrapper Instância do objeto de encapsulamento das operações de string.
-	 * @param string $diretorioOutput Diretório onde os arquivos processados serão salvos.
-	 * @param string $urlBase URL base de inclusão dos assets.
+	 * Ao incluir um asset CSS, é necessário atualizar os caminhos relativos contidos nas instruções url() e @import,
+	 * já que infelizmente não é possível definir uma URL base para os mesmos.
+	 * 
+	 * Esta operação é feita automaticamente pelo minificador quando o arquivo é processado para minificação, mas para
+	 * arquivos concatenados e/ou normais não-remotos, é necessário efetuar esta operação normalmente.
+	 * 
+	 * O código deste método foi retirado da classe do minificador de CSS, de autoria de Matthias Mullie.
+	 * 
+	 * @access protected
+	 * @param string $conteudo O conteúdo do arquivo CSS que deve ser processado.
+	 * @return string Conteúdo do arquivo CSS com os caminhos relativos corrigidos.
+	 * @see \MatthiasMullie\Minify\CSS::move()
 	 */
-	public function __construct(ArrayWrapper $arrayWrapper, StringWrapper $stringWrapper, string $diretorioOutput, string $urlBase) {
-		parent::__construct($arrayWrapper, $stringWrapper, $diretorioOutput, $urlBase);
-		$this->listaCss = [];
-		$this->listaArquivosIncluir = [];
+	protected function corrigirCaminhoExterno(string $conteudo) : string {
+		/*
+		 * Comentário original de MatthiasMullie:
+		 * 
+		 * Relative path references will usually be enclosed by url(). @import
+		 * is an exception, where url() is not necessary around the path (but is
+		 * allowed).
+		 * This *could* be 1 regular expression, where both regular expressions
+		 * in this array are on different sides of a |. But we're using named
+		 * patterns in both regexes, the same name on both regexes. This is only
+		 * possible with a (?J) modifier, but that only works after a fairly
+		 * recent PCRE version. That's why I'm doing 2 separate regular
+		 * expressions & combining the matches after executing of both.
+		 */
+		$relativeRegexes = array(
+			// url(xxx)
+			'/
+            # open url()
+            url\(
+		
+                \s*
+		
+                # open path enclosure
+                (?P<quotes>["\'])?
+		
+                    # fetch path
+                    (?P<path>
+		
+                        # do not fetch data uris or external sources
+                        (?!(
+                            \s?
+                            ["\']?
+                            (data|https?):
+                        ))
+		
+                        .+?
+                    )
+		
+                # close path enclosure
+                (?(quotes)(?P=quotes))
+		
+                \s*
+		
+            # close url()
+            \)
+		
+            /ix',
+		
+			// @import "xxx"
+			'/
+            # import statement
+            @import
+		
+            # whitespace
+            \s+
+		
+                # we don\'t have to check for @import url(), because the
+                # condition above will already catch these
+		
+                # open path enclosure
+                (?P<quotes>["\'])
+		
+                    # fetch path
+                    (?P<path>
+		
+                        # do not fetch data uris or external sources
+                        (?!(
+                            ["\']?
+                            (data|https?):
+                        ))
+		
+                        .+?
+                    )
+		
+                # close path enclosure
+                (?P=quotes)
+		
+            /ix',
+		);		
+		// find all relative urls in css
+		$matches = array();
+		foreach ($relativeRegexes as $relativeRegex) {
+			if (preg_match_all($relativeRegex, $conteudo, $regexMatches, PREG_SET_ORDER)) {
+				$matches = array_merge($matches, $regexMatches);
+			}
+		}
+		$search = array();
+		$replace = array();
+		// loop all urls
+		foreach ($matches as $match) {
+			// determine if it's a url() or an @import match
+			$type = (strpos($match[0], '@import') === 0 ? 'import' : 'url');
+			// fix relative url
+			$url = $this->conversorCaminho->convert($match['path']);
+			// build replacement
+			$search[] = $match[0];
+			if ($type == 'url') {
+				$replace[] = 'url('.$url.')';
+			} elseif ($type == 'import') {
+				$replace[] = '@import "'.$url.'"';
+			}
+		}
+		// replace urls
+		$content = str_replace($search, $replace, $conteudo);
+		return $content;
 	}
 	
 	/**
@@ -118,7 +249,7 @@ class ControleCss extends Controle {
 				foreach ($listaConcat as $css) {
 					file_put_contents(
 							$outputConcat, 
-							file_get_contents($css) . \PHP_EOL, 
+							$this->corrigirCaminhoExterno(file_get_contents($css)) . \PHP_EOL, 
 							\FILE_APPEND);
 				}
 			}
@@ -153,7 +284,10 @@ class ControleCss extends Controle {
 						file_exists($outputNormal) ? unlink($outputNormal) : null;
 					}
 					if (!file_exists($outputNormal)) {
-						copy((string) $css, $outputNormal);
+						file_put_contents(
+							$outputNormal, 
+							$this->corrigirCaminhoExterno(file_get_contents($css)) . \PHP_EOL, 
+							\FILE_APPEND);
 					}
 					$this->listaArquivosIncluir[] = '<link rel="stylesheet" href="'. $this->urlBase . $nomeNormal . '.css">' . \PHP_EOL;
 				}
@@ -201,6 +335,19 @@ class ControleCss extends Controle {
 	 */
 	public function setMinificadorCss(MinifyCss $minificador) : self {
 		$this->minificadorCss = $minificador;
+		return $this;
+	}
+	
+	/**
+	 * Define o conversor de caminhos relativos utilizado pelo sistema para modificar os caminhos relativos definidos
+	 * nos arquivos CSS não-minificados.
+	 *  
+	 * @access public
+	 * @param \MatthiasMullie\PathConverter\Converter $conversor Instância do conversor.
+	 * @return \Numenor\Html\ControleCss Instância do próprio objeto para encadeamento.
+	 */
+	public function setConversorCaminho(Converter $conversor) : self {
+		$this->conversorCaminho = $conversor;
 		return $this;
 	}
 }
