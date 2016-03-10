@@ -155,7 +155,7 @@ class ControleCss extends Controle {
 					if (!file_exists($outputNormal)) {
 						copy((string) $css, $outputNormal);
 					}
-					$this->listaArquivosIncluir[] = '<link rel="stylesheet" href="'. $this->urlBase . basename((string) $css) . '">' . \PHP_EOL;
+					$this->listaArquivosIncluir[] = '<link rel="stylesheet" href="'. $this->urlBase . $nomeNormal . '.css">' . \PHP_EOL;
 				}
 			}
 		}
