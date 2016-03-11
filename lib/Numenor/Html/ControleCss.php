@@ -8,7 +8,6 @@
  * @package Numenor/Html
  */
 namespace Numenor\Html;
-use MatthiasMullie\PathConverter\Converter;
 use MatthiasMullie\Minify\CSS as MinifyCss;
 use Numenor\Php\ArrayWrapper;
 use Numenor\Php\StringWrapper;
@@ -25,7 +24,7 @@ class ControleCss extends Controle {
 	 * Componente de conversão dos caminhos relativos dos assets CSS.
 	 * 
 	 * @access protected
-	 * @var \MatthiasMullie\PathConverter\Converter
+	 * @var \Numenor\Html\ConversorCaminho
 	 */
 	protected $conversorCaminho;
 	/**
@@ -201,7 +200,7 @@ class ControleCss extends Controle {
 		// Reseta a lista de arquivos a serem incluídos
 		$this->listaArquivosIncluir = [];
 		// Adiciona os scripts remotos
-		$listaRemoto = $this->gerarListaRemoto($this->listaCss);
+		$listaRemoto = $this->gerarListaRemoto($this->listaCss); 
 		if (count($listaRemoto) > 0) {
 			$this->listaArquivosIncluir = $listaRemoto;
 		}
@@ -247,6 +246,8 @@ class ControleCss extends Controle {
 			}
 			if (!file_exists($outputConcat)) {
 				foreach ($listaConcat as $css) {
+					// Define a origem dos caminhos relativos
+					$this->conversorCaminho->setOrigem(dirname($css));
 					file_put_contents(
 							$outputConcat, 
 							$this->corrigirCaminhoExterno(file_get_contents($css)) . \PHP_EOL, 
@@ -280,6 +281,8 @@ class ControleCss extends Controle {
 				} else {
 					$nomeNormal = $this->gerarNome([$css]);
 					$outputNormal = $this->diretorioOutput . $nomeNormal . '.css';
+					// Define a origem dos caminhos relativos
+					$this->conversorCaminho->setOrigem(dirname($css));
 					if ($this->comportamentoPadrao === self::COMPORTAMENTO_PADRAO_DEV || $this->comportamentoPadrao === self::COMPORTAMENTO_PADRAO_HOMOLOG) {
 						file_exists($outputNormal) ? unlink($outputNormal) : null;
 					}
@@ -343,10 +346,13 @@ class ControleCss extends Controle {
 	 * nos arquivos CSS não-minificados.
 	 *  
 	 * @access public
-	 * @param \MatthiasMullie\PathConverter\Converter $conversor Instância do conversor.
+	 * @param \Numenor\Html\ConversorCaminho $conversor Instância do conversor.
 	 * @return \Numenor\Html\ControleCss Instância do próprio objeto para encadeamento.
 	 */
-	public function setConversorCaminho(Converter $conversor) : self {
+	public function setConversorCaminho(ConversorCaminho $conversor) : self {
+		// Configura o destino dos arquivos conversor de caminhos relativos para o diretório de output
+		// A origem deve ser configurada individualmente para cada arquivo processado
+		$conversor->setDestino($this->diretorioOutput);
 		$this->conversorCaminho = $conversor;
 		return $this;
 	}
