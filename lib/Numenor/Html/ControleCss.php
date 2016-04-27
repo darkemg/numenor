@@ -9,6 +9,8 @@
  */
 namespace Numenor\Html;
 use MatthiasMullie\Minify\CSS as MinifyCss;
+use Numenor\Excecao\ExcecaoAssetDuplicado;
+use Numenor\Excecao\ExcecaoAssetNaoExiste;
 use Numenor\Php\ArrayWrapper;
 use Numenor\Php\StringWrapper;
 class ControleCss extends Controle {
