@@ -9,6 +9,7 @@
  * @package Numenor/Excecao/ArrayWrapper
  */
 namespace Numenor\Excecao\Php\ArrayWrapper;
-abstract class ExcecaoArray extends \Numenor\Excecao\ExcecaoErroUso {
+abstract class ExcecaoArray extends \Numenor\Excecao\ExcecaoErroUso 
+{
 	
 }

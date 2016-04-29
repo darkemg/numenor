@@ -7,7 +7,8 @@
  * @package Numenor/Excecao/Php/ArrayWrapper
  */
 namespace Numenor\Excecao\Php\ArrayWrapper;
-class ExcecaoChaveInexistente extends ExcecaoArray {
+class ExcecaoChaveInexistente extends ExcecaoArray
+{
 	
 	/**
 	 * Método construtor da classe
@@ -15,9 +16,12 @@ class ExcecaoChaveInexistente extends ExcecaoArray {
 	 * @access public
 	 * @param \Exception $previous Exceção anterior (se a exceção atual tiver sido encadeada).
 	 */
-	public function __construct(\Exception $previous = null) {
-		parent::__construct('Não existe nenhum item no array que corresponda à chave informada.', 
+	public function __construct(\Exception $previous = null)
+	{
+		parent::__construct(
+		    'Não existe nenhum item no array que corresponda à chave informada.',
 			static::DEFAULT_CODE,
-			$previous);
+			$previous
+	    );
 	}
 }

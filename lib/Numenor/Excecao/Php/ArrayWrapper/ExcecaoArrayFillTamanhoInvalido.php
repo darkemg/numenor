@@ -7,7 +7,9 @@
  * @package Numenor/Excecao/Php/ArrayWrapper
  */
 namespace Numenor\Excecao\Php\ArrayWrapper;
-class ExcecaoArrayFillTamanhoInvalido extends ExcecaoArray {
+
+class ExcecaoArrayFillTamanhoInvalido extends ExcecaoArray
+{
 
 	/**
 	 * Método construtor da classe
@@ -15,9 +17,12 @@ class ExcecaoArrayFillTamanhoInvalido extends ExcecaoArray {
 	 * @access public
 	 * @param \Exception $previous Exceção anterior (se a exceção atual tiver sido encadeada)
 	 */
-	public function __construct(\Exception $previous = null) {
-		parent::__construct('O número de itens informado para o método ArrayWrapper::criar() não pode ser menor do que 1.', 
+	public function __construct(\Exception $previous = null)
+	{
+		parent::__construct(
+		    'O número de itens informado para o método ArrayWrapper::criar() não pode ser menor do que 1.',
 			static::DEFAULT_CODE,
-			$previous);
+			$previous
+		);
 	}
 }

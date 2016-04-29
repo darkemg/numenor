@@ -7,7 +7,9 @@
  * @package Numenor/Excecao/Php/ArrayWrapper
  */
 namespace Numenor\Excecao\Php\ArrayWrapper;
-class ExcecaoArrayCombineTamanhosIncompativeis extends ExcecaoArray {
+
+class ExcecaoArrayCombineTamanhosIncompativeis extends ExcecaoArray 
+{
 	
 	/**
 	 * Método construtor da classe
@@ -15,9 +17,12 @@ class ExcecaoArrayCombineTamanhosIncompativeis extends ExcecaoArray {
 	 * @access public
 	 * @param \Exception $previous Exceção anterior (se a exceção atual tiver sido encadeada)
 	 */
-	public function __construct(\Exception $previous = null) {
-		parent::__construct('O método ArrayWrapper::combinar() requer dois arrays com o mesmo tamanho.', 
+	public function __construct(\Exception $previous = null) 
+	{
+		parent::__construct(
+		    'O método ArrayWrapper::combinar() requer dois arrays com o mesmo tamanho.', 
 			static::DEFAULT_CODE, 
-			$previous);
+			$previous
+	    );
 	}
 }

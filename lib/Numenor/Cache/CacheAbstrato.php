@@ -8,7 +8,9 @@
  * @package Numenor/Cache
  */
 namespace Numenor\Cache;
-abstract class CacheAbstrato {
+
+abstract class CacheAbstrato
+{
 	
 	/**
 	 * Identificador de namespace do cache (para evitar colisão com outras instâncias).
@@ -40,7 +42,8 @@ abstract class CacheAbstrato {
 	 * @param string $namespace Identificador de namespace do cache
 	 * @param int $duracao Validade do cache, em segundos (0 = cache não expira)
 	 */ 
-	public function __construct(string $namespace, int $duracao) {
+	public function __construct(string $namespace, int $duracao)
+	{
 		$this->namespace = $namespace;
 		$this->duracao = $duracao;
 	}
@@ -52,7 +55,8 @@ abstract class CacheAbstrato {
 	 * @param string $key Chave de identificação do item do cache
 	 * @return mixed|null Item carregado do cache, ou NULL caso o item não exista
 	 */
-	public function getItem(string $key) {
+	public function getItem(string $key)
+	{
 		return $this->adapter->getItem($key);
 	}
 	
@@ -64,7 +68,8 @@ abstract class CacheAbstrato {
 	 * @return array|boolean Array associativo contendo os dados de metadata do item do cache,
 	 * ou FALSE caso o item não exista
 	 */
-	public function getMetadata(string $key) {
+	public function getMetadata(string $key)
+	{
 		return $this->adapter->getMetadata($key);
 	}
 	
@@ -76,7 +81,8 @@ abstract class CacheAbstrato {
 	 * @param mixed $value Valor armazenado
 	 * @return boolean O item foi armazenado no cache com sucesso?
 	 */
-	public function setItem(string $key, $value) : bool {
+	public function setItem(string $key, $value) : bool
+	{
 		return $this->adapter->setItem($key, $value);
 	}
 	
@@ -87,7 +93,8 @@ abstract class CacheAbstrato {
 	 * @param string $key Chave de identificação do item do cache
 	 * @return boolean O item existe e está ativo no cache?
 	 */
-	public function verificarItem(string $key) : bool {
+	public function verificarItem(string $key) : bool
+	{
 		return $this->adapter->hasItem($key);
 	}
 	
@@ -98,7 +105,8 @@ abstract class CacheAbstrato {
 	 * @param string $key Chave de identificação do item do cache
 	 * @return boolean O item deve sua validade renovada com sucesso?
 	 */
-	public function renovarItem(string $key) : bool {
+	public function renovarItem(string $key) : bool
+	{
 		return $this->adapter->touchItem($key);
 	}
 }

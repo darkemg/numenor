@@ -7,7 +7,9 @@
  * @package Numenor/Excecao/Php/ArrayWrapper
  */
 namespace Numenor\Excecao\Php\ArrayWrapper;
-class ExcecaoItemNaoEncontrado extends \Numenor\Excecao\ExcecaoErroLogico {
+
+class ExcecaoItemNaoEncontrado extends \Numenor\Excecao\ExcecaoErroLogico
+{
 	
 	/**
 	 * Método construtor da classe
@@ -15,9 +17,12 @@ class ExcecaoItemNaoEncontrado extends \Numenor\Excecao\ExcecaoErroLogico {
 	 * @access public
 	 * @param \Exception $previous Exceção anterior (se a exceção atual tiver sido encadeada)
 	 */
-	public function __construct(\Exception $previous = null) {
-		parent::__construct('O item informado não foi encontrado no array.', 
+	public function __construct(\Exception $previous = null)
+	{
+		parent::__construct(
+		    'O item informado não foi encontrado no array.', 
 			static::DEFAULT_CODE,
-			$previous);
+			$previous
+	    );
 	}
 }

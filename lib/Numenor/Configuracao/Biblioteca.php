@@ -9,6 +9,7 @@
  * @package Numenor/Configuracao
  */
 namespace Numenor\Configuracao;
+
 use Numenor\Autenticacao\Checksum;
 use Numenor\Cache\CacheDisco;
 use Numenor\Excecao\ExcecaoArquivoConfiguracaoInvalido;
@@ -17,7 +18,8 @@ use Zend\Config\Exception as ConfigException;
 use Zend\Config\Factory as ConfigFactory;
 use Numenor\Excecao\Numenor\Excecao;
 
-class Biblioteca {
+class Biblioteca
+{
 	
 	/**
 	 * Configurações oriundas do servidor. Por exemplo, diretório raiz da aplicação, versão do sistema operacional
@@ -43,7 +45,8 @@ class Biblioteca {
 	 * @param \Zend\Config\Config $configuracaoServidor Objeto de configuração do servidor.
 	 * @param \Zend\Config\Config $configuracaoBiblioteca Objeto de configuração da biblioteca.
 	 */
-	public function __construct(Config $configuracaoServidor = null, Config $configuracaoBiblioteca = null) {
+	public function __construct(Config $configuracaoServidor = null, Config $configuracaoBiblioteca = null) 
+	{
 		$this->configuracaoServidor = $configuracaoServidor;
 		$this->configuracaoBiblioteca = $configuracaoBiblioteca;
 	}
@@ -54,7 +57,8 @@ class Biblioteca {
 	 * @access public
 	 * @return \Zend\Config\Config Objeto de configuração do servidor.
 	 */
-	public function getConfiguracaoServidor() : Config {
+	public function getConfiguracaoServidor() : Config 
+	{
 		return $this->configuracaoServidor;
 	}
 	
@@ -64,7 +68,8 @@ class Biblioteca {
 	 * @access public
 	 * @return \Zend\Config\Config Objeto de configuração da biblioteca.
 	 */
-	public function getConfiguracaoBiblioteca() : Config {
+	public function getConfiguracaoBiblioteca() : Config 
+	{
 		return $this->configuracaoBiblioteca;
 	}
 	
@@ -80,14 +85,15 @@ class Biblioteca {
 	 * @throws \Numenor\Excecao\ExcecaoArquivoConfiguracaoInvalido se o arquivo de configuração informado 
 	 * não existir, não puder ser aberto, ou estiver em um formato inválido.
 	 */
-	public static function init($configuracao = null) : self {
+	public static function init($configuracao = null) : self 
+	{
 		// Instancia a configuração do servidor.
 		$configuracaoServidor = new Config([
-				'diretorioRaiz' => $_SERVER['DOCUMENT_ROOT'] . '/',
-				'enderecoIp' => $_SERVER['SERVER_ADDR'],
-				'https' => (boolean) $_SERVER['HTTPS'],
-				'ipUsuario' => $_SERVER['REMOTE_ADDR'],
-				'portaUsuario' => $_SERVER['REMOTE_PORT']
+			'diretorioRaiz' => $_SERVER['DOCUMENT_ROOT'] . '/',
+			'enderecoIp' => $_SERVER['SERVER_ADDR'],
+			'https' => (boolean) $_SERVER['HTTPS'],
+			'ipUsuario' => $_SERVER['REMOTE_ADDR'],
+			'portaUsuario' => $_SERVER['REMOTE_PORT']
 		]);
 		// Instancia a configuração da biblioteca, de acordo com a origem dos parâmetros enviados:
 		// - caso $configuracao seja nulo, então instancia a classe Zend\Config\Config diretamente sem nenhum conteúdo. 

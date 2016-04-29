@@ -8,7 +8,8 @@
  */
 namespace Numenor\Debug;
 
-class Output {
+class Output
+{
 	
 	/**
 	 * Exibe o debug no formato HTML cru.
@@ -19,7 +20,8 @@ class Output {
 	 * @param boolean $interromperScript Indica se o script deve ser interrompido após 
 	 * a exibição do valor. 
 	 */
-	public static function htmlRaw($valor, $interromperScript = false) {
+	public static function htmlRaw($valor, $interromperScript = false)
+	{
 		echo Formatacao::htmlRaw($valor);
 		if ($interromperScript) {
 			exit();
@@ -35,7 +37,8 @@ class Output {
 	 * @param boolean $interromperScript Indica se o script deve ser interrompido após
 	 * a exibição do valor.
 	 */
-	public static function htmlFancy($valor, $interromperScript = false) {
+	public static function htmlFancy($valor, $interromperScript = false)
+	{
 		echo Formatacao::htmlFancy($valor);
 		if ($interromperScript) {
 			exit();
@@ -51,7 +54,8 @@ class Output {
 	 * @param boolean $interromperScript Indica se o script deve ser interrompido após
 	 * a exibição do valor.
 	 */
-	public static function htmlComentario($valor, $interromperScript = false) {
+	public static function htmlComentario($valor, $interromperScript = false)
+	{
 		echo Formatacao::htmlComentario($valor);
 		if ($interromperScript) {
 			exit();
@@ -67,7 +71,8 @@ class Output {
 	 * @param boolean $interromperScript Indica se o script deve ser interrompido após
 	 * a exibição do valor.
 	 */
-	public static function raw($valor, $interromperScript = false) {
+	public static function raw($valor, $interromperScript = false)
+	{
 		echo Formatacao::raw($valor);
 		if ($interromperScript) {
 			exit();
@@ -87,10 +92,11 @@ class Output {
 	 * @param boolean $interromperScript Indica se o script deve ser interrompido após
 	 * a exibição do valor.
 	 */
-	public static function arquivoRaw($arquivo, $valor, $append = false, $interromperScript = false) {
+	public static function arquivoRaw($arquivo, $valor, $append = false, $interromperScript = false)
+	{
 		$fp = ($append)
-				? fopen($arquivo, 'a+')
-				: fopen($arquivo, 'w+');
+			? fopen($arquivo, 'a+')
+			: fopen($arquivo, 'w+');
 		fwrite($fp, Formatacao::raw($valor));
 		fclose($fp);
 		if ($interromperScript) {

@@ -8,7 +8,8 @@
  */
 namespace Numenor\Debug;
 
-class Formatacao {
+class Formatacao 
+{
 	
 	const TEMPLATE_HTML_RAW = '<pre>{{VALOR}}</pre>';
 	const TEMPLATE_HTML_FANCY = '<div class="output output-fancy">{{VALOR}}</div>';
@@ -27,7 +28,8 @@ class Formatacao {
 	 * @param string $valor Valor a ser formatado.
 	 * @return string O valor formatado no template.
 	 */
-	public static function htmlRaw($valor) {
+	public static function htmlRaw($valor) 
+	{
 		return str_replace('{{VALOR}}', print_r($valor, true), static::TEMPLATE_HTML_RAW);
 	}
 	
@@ -41,7 +43,8 @@ class Formatacao {
 	 * @param string $valor Valor a ser formatado.
 	 * @return string O valor formatado no template.
 	 */
-	public static function htmlFancy($valor) {
+	public static function htmlFancy($valor) 
+	{
 		return str_replace('{{VALOR}}', print_r($valor, true), static::TEMPLATE_HTML_FANCY);
 	}
 	
@@ -56,7 +59,8 @@ class Formatacao {
 	 * @param string $valor Valor a ser formatado.
 	 * @return string O valor formatado no template.
 	 */
-	public static function htmlComentario($valor) {
+	public static function htmlComentario($valor) 
+	{
 		return str_replace('{{VALOR}}', print_r($valor, true), static::TEMPLATE_HTML_COMENT);
 	}
 	
@@ -71,7 +75,8 @@ class Formatacao {
 	 * @param string $valor Valor a ser formatado.
 	 * @return string O valor formatado no template.
 	 */
-	public static function raw($valor) {
+	public static function raw($valor) 
+	{
 		return str_replace('{{VALOR}}', print_r($valor, true), static::TEMPLATE_RAW);
 	}
 }

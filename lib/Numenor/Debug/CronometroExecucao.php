@@ -10,7 +10,8 @@
  */
 namespace Numenor\Debug;
 
-class CronometroExecucao {
+class CronometroExecucao 
+{
 	
 	/**
 	 * Identificador do cronômetro.
@@ -53,7 +54,8 @@ class CronometroExecucao {
 	 * @param int $id Identificador do cronômetro.
 	 * @param string $nome Nome do cronômetro.
 	 */
-	public function __construct($id = null, string $nome = '') {
+	public function __construct($id = null, string $nome = '')
+	{
 		$this->id = $id;
 		$this->nome = $nome;
 	}
@@ -64,7 +66,8 @@ class CronometroExecucao {
 	 * @access public
 	 * @param string $descricao Descrição do momento de início do cronômetro, para referência.
 	 */
-	public function iniciar(string $descricao = '') {
+	public function iniciar(string $descricao = '')
+	{
 		$this->inicio = (object) [
 			'tempo' => microtime(true),
 			'descricao' => $descricao
@@ -78,7 +81,8 @@ class CronometroExecucao {
 	 * @access public
 	 * @param string $descricao Descrição da parcial do cronômetro, para referência.
 	 */
-	public function definirParcial(string $descricao = '') {
+	public function definirParcial(string $descricao = '')
+	{
 		$this->parciais[] = (object) [
 			'tempo' => microtime(true) - $this->inicio->tempo,
 			'descricao' => $descricao

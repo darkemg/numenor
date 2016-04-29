@@ -8,7 +8,9 @@
  * @package Numenor/Excecao/Php/ArrayWrapper
  */
 namespace Numenor\Excecao\Php\ArrayWrapper;
-class ExcecaoChaveInvalida extends ExcecaoArray {
+
+class ExcecaoChaveInvalida extends ExcecaoArray
+{
 	
 	/**
 	 * Método construtor da classe
@@ -16,9 +18,12 @@ class ExcecaoChaveInvalida extends ExcecaoArray {
 	 * @access public
 	 * @param \Exception $previous Exceção anterior (se a exceção atual tiver sido encadeada)
 	 */
-	public function __construct(\Exception $previous = null) {
-		parent::__construct('O método invocado requer que o parâmetro $chave seja de um tipo válido: {String}, {Integer}, ou um objeto representável como uma string.', 
+	public function __construct(\Exception $previous = null)
+	{
+		parent::__construct(
+		    'O método invocado requer que o parâmetro $chave seja de um tipo válido: {String}, {Integer}, ou um objeto representável como uma string.', 
 			static::DEFAULT_CODE,
-			$previous);
+			$previous
+	    );
 	}
 }
