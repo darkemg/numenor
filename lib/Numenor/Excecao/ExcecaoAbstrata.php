@@ -15,7 +15,8 @@
  */
 namespace Numenor\Excecao;
 
-abstract class ExcecaoAbstrata extends \Exception {
+abstract class ExcecaoAbstrata extends \Exception
+{
 	
 	const DEFAULT_CODE = 500;
 	

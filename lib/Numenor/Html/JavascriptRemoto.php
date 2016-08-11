@@ -9,7 +9,9 @@
  * @package Numenor/Html
  */
 namespace Numenor\Html;
-class JavascriptRemoto extends Javascript {
+
+class JavascriptRemoto extends Javascript
+{
 	
 	use Remoto;
 	
@@ -33,7 +35,8 @@ class JavascriptRemoto extends Javascript {
 	 * @param string $integrityCheck Informação para checagem de integridade do script remoto.
 	 * @param string $crossorigin Identificação do tipo de requisição crossorigin do script remoto.
 	 */
-	public function __construct(string $url, string $fallback = '', string $integrityCheck = '', string $crossorigin = 'anonymous') {
+	public function __construct(string $url, string $fallback = '', string $integrityCheck = '', string $crossorigin = 'anonymous')
+	{
 		parent::__construct('', false, false);
 		$this->url = $url;
 		$this->fallback = $fallback;
@@ -43,11 +46,14 @@ class JavascriptRemoto extends Javascript {
 	
 	/**
 	 * Método mágico de conversão do objeto para string.
+	 * 
+	 * Gera o elemento HTML para inclusão do arquivo JS no documento.
 	 *
 	 * @access public
 	 * @return string A representação do objeto como string.
 	 */
-	public function __toString() : string {
+	public function __toString() : string
+	{
 		$script = '<script src="'. $this->url .'"';
 		if (!empty($this->integrityCheck)) {
 			$script .= ' integrity="'. $this->integrityCheck . '"';

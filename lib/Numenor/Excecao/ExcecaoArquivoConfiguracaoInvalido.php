@@ -8,7 +8,8 @@
  */
 namespace Numenor\Excecao;
 
-class ExcecaoArquivoConfiguracaoInvalido extends ExcecaoErroUso {
+class ExcecaoArquivoConfiguracaoInvalido extends ExcecaoErroUso
+{
 	
 	/**
 	 * Método construtor da classe
@@ -16,7 +17,12 @@ class ExcecaoArquivoConfiguracaoInvalido extends ExcecaoErroUso {
 	 * @access public
 	 * @param \Exception $previous Exceção anterior (se a exceção atual tiver sido encadeada)
 	 */
-	public function __construct(\Exception $previous = null) {
-		parent::__construct('O arquivo de configuração informado não pode ser lido. Ele pode não existir, não estar acessível, ou não estar em um formato válido.', static::DEFAULT_CODE, $previous);
+	public function __construct(\Exception $previous = null)
+	{
+		parent::__construct(
+			'O arquivo de configuração informado não pode ser lido. Ele pode não existir, não estar acessível, ou não estar em um formato válido.',
+			static::DEFAULT_CODE,
+			$previous
+		);
 	}
 }

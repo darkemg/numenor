@@ -14,7 +14,9 @@
  * @package Numenor/Excecao
  */
 namespace Numenor\Excecao;
-class ExcecaoErroUso extends ExcecaoAbstrata {
+
+class ExcecaoErroUso extends ExcecaoAbstrata
+{
 	
 	/**
 	 * Tratamento genérico de exceção de erro de sistema.
@@ -22,7 +24,8 @@ class ExcecaoErroUso extends ExcecaoAbstrata {
 	 * @access public
 	 * @see \Numenor\Excecao\ExcecaoAbstrata::tratar()
 	 */
-	public function tratar() {
+	public function tratar()
+	{
 		// Erros de uso devem sempre encerrar a execução do script, pois o sistema entrou em um
 		// estado de erro por negligência do programador.
 		die();

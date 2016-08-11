@@ -9,7 +9,9 @@
  * @package Numenor/Html
  */
 namespace Numenor\Html;
-class CssRemoto extends Css {
+
+class CssRemoto extends Css
+{
 	
 	use Remoto;
 	
@@ -21,7 +23,8 @@ class CssRemoto extends Css {
 	 * @param string $integrityCheck Informação para checagem de integridade do asset.
 	 * @param string $crossorigin Identificação do tipo de requisição crossorigin do asset.
 	 */
-	public function __construct(string $url, string $integrityCheck = '', string $crossorigin = 'anonymous') {
+	public function __construct(string $url, string $integrityCheck = '', string $crossorigin = 'anonymous')
+	{
 		parent::__construct('', false, false);
 		$this->url = $url;
 		$this->integrityCheck = $integrityCheck;
@@ -30,11 +33,14 @@ class CssRemoto extends Css {
 	
 	/**
 	 * Método mágico de conversão do objeto para string.
+	 * 
+	 * Gera o elemento HTML para inclusão do arquivo CSS no documento.
 	 *
 	 * @access public
 	 * @return string A representação do objeto como string.
 	 */
-	public function __toString() : string {
+	public function __toString() : string
+	{
 		$link = '<link rel="stylesheet" href="'. $this->url .'"';
 		if (!empty($this->integrityCheck)) {
 			$link .= ' integrity="'. $this->integrityCheck . '"';

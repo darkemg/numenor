@@ -48,7 +48,7 @@ class CronometroExecucao
 	private $parciais = [];
 	
 	/**
-	 * Método construtor da classe
+	 * Método construtor da classe.
 	 * 
 	 * @access public
 	 * @param int $id Identificador do cronômetro.

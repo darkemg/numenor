@@ -8,7 +8,9 @@
  * @package Numenor/Excecao
  */
 namespace Numenor\Excecao;
-class ExcecaoCacheDiscoDirNaoDefinido extends ExcecaoErroUso {
+
+class ExcecaoCacheDiscoDirNaoDefinido extends ExcecaoErroUso
+{
 	
 	/**
 	 * Método construtor da classe
@@ -16,7 +18,12 @@ class ExcecaoCacheDiscoDirNaoDefinido extends ExcecaoErroUso {
 	 * @access public
 	 * @param \Exception $previous Exceção anterior (se a exceção atual tiver sido encadeada)
 	 */
-	public function __construct(\Exception $previous = null) {
-		parent::__construct('O diretório de cache para este adaptador não foi definido (nem no boostrap, nem na instanciação).', static::DEFAULT_CODE, $previous);
+	public function __construct(\Exception $previous = null)
+	{
+		parent::__construct(
+			'O diretório de cache para este adaptador não foi definido (nem no boostrap, nem na instanciação).',
+			static::DEFAULT_CODE,
+			$previous
+		);
 	}
 }

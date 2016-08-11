@@ -10,12 +10,15 @@
  * @package Numenor/Html
  */
 namespace Numenor\Html;
+
 use MatthiasMullie\Minify\JS as MinifyJs;
 use Numenor\Excecao\ExcecaoAssetDuplicado;
 use Numenor\Excecao\ExcecaoAssetNaoExiste;
 use Numenor\Php\ArrayWrapper;
 use Numenor\Php\StringWrapper;
-class ControleJavascript extends Controle {
+
+class ControleJavascript extends Controle
+{
 	
 	/**
 	 * Componente de minificação dos assets Javascript.
@@ -40,15 +43,10 @@ class ControleJavascript extends Controle {
 	protected $listaArquivosIncluir;
 	
 	/**
-	 * Método construtor da classe.
-	 *
-	 * @access public
-	 * @param \Numenor\Php\ArrayWrapper $arrayWrapper Instância do objeto de encapsulamento das operações de array.
-	 * @param \Numenor\Php\StringWrapper $stringWrapper Instância do objeto de encapsulamento das operações de string.
-	 * @param string $diretorioOutput Diretório onde os arquivos processados serão salvos.
-	 * @param string $urlBase URL base de inclusão dos assets.
+	 * {@inheritDoc}
 	 */
-	public function __construct(ArrayWrapper $arrayWrapper, StringWrapper $stringWrapper, string $diretorioOutput, string $urlBase) {
+	public function __construct(ArrayWrapper $arrayWrapper, StringWrapper $stringWrapper, string $diretorioOutput, string $urlBase)
+	{
 		parent::__construct($arrayWrapper, $stringWrapper, $diretorioOutput, $urlBase);
 		$this->listaJs = [];
 		$this->listaArquivosIncluir = [];
@@ -61,7 +59,8 @@ class ControleJavascript extends Controle {
 	 * @param array $listaAssets Lista de assets analisados.
 	 * @return array Lista de arquivos de assets de inclusão remota.
 	 */
-	protected function gerarListaRemoto(array $listaAssets) : array {
+	protected function gerarListaRemoto(array $listaAssets) : array
+	{
 		$lista = [];
 		foreach ($listaAssets as $asset) {
 			if ($asset instanceof JavascriptRemoto) {
@@ -77,7 +76,8 @@ class ControleJavascript extends Controle {
 	 * 
 	 * @access protected
 	 */
-	protected function minificar() {
+	protected function minificar()
+	{
 		// Reseta a lista de arquivos a serem incluídos
 		$this->listaArquivosIncluir = [];
 		// Adiciona os scripts remotos
@@ -181,7 +181,8 @@ class ControleJavascript extends Controle {
 	 * @throws \Numenor\Excecao\ExcecaoAssetDuplicado se o asset informado já foi incluído anteriormente.
 	 * @throws \Numenor\Excecao\ExcecaoAssetNaoExiste se o arquivo do asset informado não existe.
 	 */
-	public function adicionarJs(Javascript $js) : self {
+	public function adicionarJs(Javascript $js) : self
+	{
 		$indice = null;
 		try {
 			// Se o asset já existe, o método ArrayWrapper::encontrarItem retorna o índice do mesmo.
@@ -210,7 +211,8 @@ class ControleJavascript extends Controle {
 	 * @param MatthiasMullie\Minify\JS $minificador Instância do minificador.
 	 * @return \Numenor\Html\ControleJavascript Instância do próprio objeto para encadeamento.
 	 */
-	public function setMinificadorJs(MinifyJs $minificador) : self {
+	public function setMinificadorJs(MinifyJs $minificador) : self
+	{
 		$this->minificadorJs = $minificador;
 		return $this;
 	}

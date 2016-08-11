@@ -6,18 +6,21 @@
  * @package Numenor/Excecao
  */
 namespace Numenor\Excecao;
+
 use Numenor\Html\Asset;
-class ExcecaoAssetNaoExiste extends ExcecaoErroUso {
+
+class ExcecaoAssetNaoExiste extends ExcecaoErroUso
+{
 	
 	/**
 	 * Método construtor da classe
 	 * 
 	 * @access public
 	 * @param \Numenor\Html\Asset $asset Asset referenciado que causou o erro.
-	 * @param \Exception $previous Exceção anterior (se a exceção atual tiver sido encadeada).
-	 * 
+	 * @param \Exception $previous Exceção anterior (se a exceção atual tiver sido encadeada). 
 	 */
-	public function __construct(Asset $asset, \Exception $previous = null) {
+	public function __construct(Asset $asset, \Exception $previous = null)
+	{
 		parent::__construct('Asset inexistente; arquivo não encontrado: ' . $asset . '.', static::DEFAULT_CODE, $previous);
 	}
 }

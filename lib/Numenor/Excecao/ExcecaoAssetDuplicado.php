@@ -6,8 +6,11 @@
  * @package Numenor/Excecao
  */
 namespace Numenor\Excecao;
+
 use Numenor\Html\Asset;
-class ExcecaoAssetDuplicado extends ExcecaoErroUso {
+
+class ExcecaoAssetDuplicado extends ExcecaoErroUso
+{
 	
 	/**
 	 * Método construtor da classe
@@ -16,7 +19,12 @@ class ExcecaoAssetDuplicado extends ExcecaoErroUso {
 	 * @param \Numenor\Html\Asset $asset Asset referenciado que causou o erro.
 	 * @param \Exception $previous Exceção anterior (se a exceção atual tiver sido encadeada).
 	 */
-	public function __construct(Asset $asset, \Exception $previous = null) {
-		parent::__construct('Asset duplicado: ' . $asset->getCaminhoArquivo() . ' já foi adicionado ao controlador', static::DEFAULT_CODE, $previous);
+	public function __construct(Asset $asset, \Exception $previous = null)
+	{
+		parent::__construct(
+			'Asset duplicado: ' . $asset->getCaminhoArquivo() . ' já foi adicionado ao controlador',
+			static::DEFAULT_CODE,
+			$previous
+		);
 	}
 }

@@ -7,7 +7,9 @@
  * @package Numenor/Excecao/Php/String
  */
 namespace Numenor\Excecao\Php\StringWrapper;
-class ExcecaoHashInvalido extends \Numenor\Excecao\ExcecaoErroSistema {
+
+class ExcecaoHashInvalido extends \Numenor\Excecao\ExcecaoErroSistema
+{
 	
 	/**
 	 * Método construtor da classe
@@ -15,7 +17,8 @@ class ExcecaoHashInvalido extends \Numenor\Excecao\ExcecaoErroSistema {
 	 * @access public
 	 * @param \Exception $previous Exceção anterior (se a exceção atual tiver sido encadeada)
 	 */
-	public function __construct(\Exception $previous = null) {
+	public function __construct(\Exception $previous = null)
+	{
 		parent::__construct('Não foi possível gerar um hash para a senha informada.', static::DEFAULT_CODE, $previous);
 	}
 }

@@ -7,7 +7,9 @@
  * @package Numenor/Excecao
  */
 namespace Numenor\Excecao;
-class ExcecaoCacheDiscoDirEscrita extends ExcecaoErroUso {
+
+class ExcecaoCacheDiscoDirEscrita extends ExcecaoErroUso
+{
 
 	/**
 	 * Método construtor da classe
@@ -15,7 +17,12 @@ class ExcecaoCacheDiscoDirEscrita extends ExcecaoErroUso {
 	 * @access public
 	 * @param \Exception $previous Exceção anterior (se a exceção atual tiver sido encadeada)
 	 */
-	public function __construct(\Exception $previous = null) {
-		parent::__construct('O diretório de cache para este adaptador existe ou não possui permissão de escrita.', static::DEFAULT_CODE, $previous);
+	public function __construct(\Exception $previous = null)
+	{
+		parent::__construct(
+			'O diretório de cache para este adaptador existe ou não possui permissão de escrita.',
+			static::DEFAULT_CODE,
+			$previous
+		);
 	}
 }

@@ -8,12 +8,15 @@
  * @package Numenor/Html
  */
 namespace Numenor\Html;
+
 use MatthiasMullie\Minify\CSS as MinifyCss;
 use Numenor\Excecao\ExcecaoAssetDuplicado;
 use Numenor\Excecao\ExcecaoAssetNaoExiste;
 use Numenor\Php\ArrayWrapper;
 use Numenor\Php\StringWrapper;
-class ControleCss extends Controle {
+
+class ControleCss extends Controle
+{
 	
 	/**
 	 * Componente de minificação dos assets CSS.
@@ -38,15 +41,10 @@ class ControleCss extends Controle {
 	protected $listaCss;
 	
 	/**
-	 * Método construtor da classe.
-	 * 
-	 * @access public
-	 * @param \Numenor\Php\ArrayWrapper $arrayWrapper Instância do objeto de encapsulamento das operações de array.
-	 * @param \Numenor\Php\StringWrapper $stringWrapper Instância do objeto de encapsulamento das operações de string.
-	 * @param string $diretorioOutput Diretório onde os arquivos processados serão salvos.
-	 * @param string $urlBase URL base de inclusão dos assets.
+	 * {@inheritDoc}
 	 */
-	public function __construct(ArrayWrapper $arrayWrapper, StringWrapper $stringWrapper, string $diretorioOutput, string $urlBase) {
+	public function __construct(ArrayWrapper $arrayWrapper, StringWrapper $stringWrapper, string $diretorioOutput, string $urlBase)
+	{
 		parent::__construct($arrayWrapper, $stringWrapper, $diretorioOutput, $urlBase);
 		$this->listaCss = [];
 		$this->listaArquivosIncluir = [];
@@ -59,7 +57,8 @@ class ControleCss extends Controle {
 	 * @param array $listaAssets Lista de assets analisados.
 	 * @return array Lista de arquivos de assets de inclusão remota.
 	 */
-	protected function gerarListaRemoto(array $listaAssets) {
+	protected function gerarListaRemoto(array $listaAssets) : array
+	{
 		$lista = [];
 		foreach ($listaAssets as $asset) {
 			if ($asset instanceof CssRemoto) {
@@ -85,7 +84,8 @@ class ControleCss extends Controle {
 	 * @return string Conteúdo do arquivo CSS com os caminhos relativos corrigidos.
 	 * @see \MatthiasMullie\Minify\CSS::move()
 	 */
-	protected function corrigirCaminhoExterno(string $conteudo) : string {
+	protected function corrigirCaminhoExterno(string $conteudo) : string
+	{
 		/*
 		 * Comentário original de MatthiasMullie:
 		 * 
@@ -198,7 +198,8 @@ class ControleCss extends Controle {
 	 *
 	 * @access protected
 	 */
-	protected function minificar() {
+	protected function minificar()
+	{
 		// Reseta a lista de arquivos a serem incluídos
 		$this->listaArquivosIncluir = [];
 		// Adiciona os scripts remotos
@@ -309,7 +310,8 @@ class ControleCss extends Controle {
 	 * @throws \Numenor\Excecao\ExcecaoAssetDuplicado se o asset informado já foi incluído anteriormente.
 	 * @throws \Numenor\Excecao\ExcecaoAssetNaoExiste se o arquivo do asset informado não existe.
 	 */
-	public function adicionarCss(Css $css) : self {
+	public function adicionarCss(Css $css) : self
+	{
 		$indice = null;
 		try {
 			// Se o asset já existe, o método ArrayWrapper::encontrarItem retorna o índice do mesmo.
@@ -338,7 +340,8 @@ class ControleCss extends Controle {
 	 * @param \MatthiasMullie\Minify\CSS $minificador Instância do minificador.
 	 * @return \Numenor\Html\ControleCss Instância do próprio objeto para encadeamento.
 	 */
-	public function setMinificadorCss(MinifyCss $minificador) : self {
+	public function setMinificadorCss(MinifyCss $minificador) : self
+	{
 		$this->minificadorCss = $minificador;
 		return $this;
 	}
@@ -351,7 +354,8 @@ class ControleCss extends Controle {
 	 * @param \Numenor\Html\ConversorCaminho $conversor Instância do conversor.
 	 * @return \Numenor\Html\ControleCss Instância do próprio objeto para encadeamento.
 	 */
-	public function setConversorCaminho(ConversorCaminho $conversor) : self {
+	public function setConversorCaminho(ConversorCaminho $conversor) : self
+	{
 		// Configura o destino dos arquivos conversor de caminhos relativos para o diretório de output
 		// A origem deve ser configurada individualmente para cada arquivo processado
 		$conversor->setDestino($this->diretorioOutput);

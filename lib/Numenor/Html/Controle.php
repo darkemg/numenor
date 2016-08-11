@@ -11,10 +11,12 @@
  * @package Numenor/Html
  */
 namespace Numenor\Html;
+
 use Numenor\Php\ArrayWrapper;
 use Numenor\Php\StringWrapper;
 
-abstract class Controle {
+abstract class Controle
+{
 	
 	const COMPORTAMENTO_PADRAO_DEV = 'dev';
 	const COMPORTAMENTO_PADRAO_HOMOLOG = 'homolog';
@@ -87,7 +89,8 @@ abstract class Controle {
 	 * @param string $diretorioOutput Diretório onde os arquivos processados serão salvos.
 	 * @param string $urlBase URL base de inclusão dos assets.
 	 */
-	public function __construct(ArrayWrapper $arrayWrapper, StringWrapper $stringWrapper, string $diretorioOutput, string $urlBase) {
+	public function __construct(ArrayWrapper $arrayWrapper, StringWrapper $stringWrapper, string $diretorioOutput, string $urlBase)
+	{
 		$this->arrayWrapper = $arrayWrapper;
 		$this->stringWrapper = $stringWrapper;
 		$this->diretorioOutput = $diretorioOutput;
@@ -102,7 +105,8 @@ abstract class Controle {
 	 * @param array $listaAssets Lista de assets analisados.
 	 * @return array Lista de arquivos de assets que devem ser minificados e concatenados.
 	 */
-	protected function gerarListaConcatCompact(array $listaAssets) : array {
+	protected function gerarListaConcatCompact(array $listaAssets) : array
+	{
 		$lista = [];
 		foreach ($listaAssets as $asset) {
 			if ($asset->isCompactavel() && $asset->isConcatenavel()) {
@@ -119,7 +123,8 @@ abstract class Controle {
 	 * @param array $listaAssets Lista de assets analisados.
 	 * @return array Lista de arquivos de assets que devem ser concatenados.
 	 */
-	protected function gerarListaConcat(array $listaAssets) : array {
+	protected function gerarListaConcat(array $listaAssets) : array
+	{
 		$lista = [];
 		foreach ($listaAssets as $asset) {
 			if ($asset->isConcatenavel() && !$asset->isCompactavel()) {
@@ -136,7 +141,8 @@ abstract class Controle {
 	 * @param array $listaAssets Lista de assets analisados.
 	 * @return array Lista de arquivos de assets que devem ser minificados.
 	 */
-	protected function gerarListaCompact(array $listaAssets) : array {
+	protected function gerarListaCompact(array $listaAssets) : array
+	{
 		$lista = [];
 		foreach ($listaAssets as $asset) {
 			if ($asset->isCompactavel() && !$asset->isConcatenavel()) {
@@ -153,7 +159,8 @@ abstract class Controle {
 	 * @param array $listaAssets Lista de assets analisados.
 	 * @return array Lista de arquivos de assets que devem ser incluídos sem nenhum processamento adicional.
 	 */
-	protected function gerarListaNormal(array $listaAssets) : array {
+	protected function gerarListaNormal(array $listaAssets) : array
+	{
 		$lista = [];
 		foreach ($listaAssets as $asset) {
 			// Inclui os assets marcados como não concatenáveis, não compactáveis, e que não são remotos.
@@ -177,7 +184,8 @@ abstract class Controle {
 	 * @param array $listaAssets Lista de nomes dos assets.
 	 * @return string Hash gerado a partir dos nomes dos assets listados.
 	 */
-	protected function gerarNome(array $listaAssets) : string {
+	protected function gerarNome(array $listaAssets) : string
+	{
 		return hash('sha1', $this->stringWrapper->unir('', $listaAssets));
 	}
 	
@@ -188,7 +196,8 @@ abstract class Controle {
 	 * @param string $comportamentoPadrao Valor do comportamento padrão do controlador.
 	 * @return \Numenor\Html\Controle Instância do próprio objeto para encadeamento.
 	 */
-	public function setComportamentoPadrao(string $comportamentoPadrao) : self {
+	public function setComportamentoPadrao(string $comportamentoPadrao) : self
+	{
 		$this->comportamentoPadrao = $comportamentoPadrao;
 		return $this;
 	}
@@ -199,7 +208,8 @@ abstract class Controle {
 	 * @access public
 	 * @return string O snippet de inclusão dos arquivos processados.
 	 */
-	public function gerarCodigoInclusao() : string {
+	public function gerarCodigoInclusao() : string
+	{
 		$this->minificar();
 		return $this->stringWrapper->unir('', $this->listaArquivosIncluir);
 	}

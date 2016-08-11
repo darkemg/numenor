@@ -12,7 +12,8 @@
 namespace Numenor\Cache;
 use Zend\Cache\StorageFactory;
 
-class cacheMemoria extends CacheAbstrato {
+class cacheMemoria extends CacheAbstrato
+{
 	
 	/**
 	 * Limite de memória, em bytes, que o cache pode atingir.
@@ -25,14 +26,11 @@ class cacheMemoria extends CacheAbstrato {
 	private $limiteMemoria;
 	
 	/**
-	 * Método construtor da classe
-	 *
-	 * @access public
-	 * @param string $namespace Identificador de namespace do cache
-	 * @param int $duracao Validade do cache, em segundos (0 = cache não expira)
+	 * {@inheritDoc}
 	 * @param int $limiteMemoria Limite de memória, em bytes, que o cache pode fazer o script PHP atingir.
 	 */
-	public function __construct(string $namespace, int $duracao, int $limiteMemoria) {
+	public function __construct(string $namespace, int $duracao, int $limiteMemoria)
+	{
 		parent::__construct($namespace, $duracao);
 		$this->limiteMemoria = $limiteMemoria;
 		$this->adapter = StorageFactory::factory([

@@ -6,7 +6,9 @@
  * @package Numenor/Excecao/Php/String
  */
 namespace Numenor\Excecao\Php\StringWrapper;
-class ExcecaoDecodificacaoInvalida extends \Numenor\Excecao\ExcecaoErroSistema {
+
+class ExcecaoDecodificacaoInvalida extends \Numenor\Excecao\ExcecaoErroSistema
+{
 	
 	/**
 	 * Método construtor da classe
@@ -14,7 +16,8 @@ class ExcecaoDecodificacaoInvalida extends \Numenor\Excecao\ExcecaoErroSistema {
 	 * @access public
 	 * @param \Exception $previous Exceção anterior (se a exceção atual tiver sido encadeada)
 	 */
-	public function __construct(\Exception $previous = null) {
+	public function __construct(\Exception $previous = null)
+	{
 		parent::__construct('Erro na decodificação da string informada.', static::DEFAULT_CODE, $previous);
 	}
 }

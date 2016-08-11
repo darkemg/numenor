@@ -85,7 +85,7 @@ class Biblioteca
 	 * @throws \Numenor\Excecao\ExcecaoArquivoConfiguracaoInvalido se o arquivo de configuração informado 
 	 * não existir, não puder ser aberto, ou estiver em um formato inválido.
 	 */
-	public static function init($configuracao = null) : self 
+	public static function init($configuracao = null) : self
 	{
 		// Instancia a configuração do servidor.
 		$configuracaoServidor = new Config([

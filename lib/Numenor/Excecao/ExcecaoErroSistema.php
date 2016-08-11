@@ -12,7 +12,9 @@
  * @package Numenor/Excecao
  */
 namespace Numenor\Excecao;
-class ExcecaoErroSistema extends ExcecaoAbstrata {
+
+class ExcecaoErroSistema extends ExcecaoAbstrata
+{
 	
 	/**
 	 * Tratamento genérico de exceção de erro de sistema.
@@ -20,7 +22,8 @@ class ExcecaoErroSistema extends ExcecaoAbstrata {
 	 * @access public
 	 * @see \Numenor\Excecao\ExcecaoAbstrata::tratar()
 	 */
-	public function tratar() {
+	public function tratar()
+	{
 		// Erros de sistema devem sempre encerrar a execução do script, pois o sistema entrou em um
 		// estado impossível de recuperar
 		die();

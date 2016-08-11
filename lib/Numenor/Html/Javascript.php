@@ -7,17 +7,14 @@
  */
 namespace Numenor\Html;
 
-class Javascript extends Asset {
+class Javascript extends Asset
+{
 	
 	/**
-	 * Método construtor da classe.
-	 * 
-	 * @access public
-	 * @param string $caminhoArquivo Caminho físico do arquivo Javascript
-	 * @param boolean $compactavel Indica se o arquivo Javascript deve ser minificado.
-	 * @param boolean $concatenavel Indica se o arquivo Javascript deve ser concatenado.
+	 * {@inheritDoc}.
 	 */
-	public function __construct(string $caminhoArquivo, bool $compactavel = true, bool $concatenavel = true) {
+	public function __construct(string $caminhoArquivo, bool $compactavel = true, bool $concatenavel = true)
+	{
 		parent::__construct($caminhoArquivo, $compactavel, $concatenavel);
 	}
 }

@@ -36,7 +36,7 @@ abstract class CacheAbstrato
 	protected $adapter;
 	
 	/**
-	 * Método construtor da classe
+	 * Método construtor da classe.
 	 *
 	 * @access public
 	 * @param string $namespace Identificador de namespace do cache

@@ -8,7 +8,8 @@
  */
 namespace Numenor\Excecao;
 
-class ExcecaoChecksumSemChave extends ExcecaoErroUso {
+class ExcecaoChecksumSemChave extends ExcecaoErroUso
+{
 	
 	/**
 	 * Método construtor da classe
@@ -16,7 +17,12 @@ class ExcecaoChecksumSemChave extends ExcecaoErroUso {
 	 * @access public
 	 * @param \Exception $previous Exceção anterior (se a exceção atual tiver sido encadeada)
 	 */
-	public function __construct(\Exception $previous = null) {
-		parent::__construct('A chave do gerador de checksums ainda não foi definida. Você deve informá-la através do método Checksum::setChave', static::DEFAULT_CODE, $previous);
+	public function __construct(\Exception $previous = null)
+	{
+		parent::__construct(
+			'A chave do gerador de checksums ainda não foi definida. Você deve informá-la através do método Checksum::setChave',
+			static::DEFAULT_CODE,
+			$previous
+		);
 	}
 }

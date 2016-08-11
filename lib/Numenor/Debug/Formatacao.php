@@ -13,7 +13,7 @@ class Formatacao
 	
 	const TEMPLATE_HTML_RAW = '<pre>{{VALOR}}</pre>';
 	const TEMPLATE_HTML_FANCY = '<div class="output output-fancy">{{VALOR}}</div>';
-	const TEMPLATE_HTML_COMENT = '<!-- ' . \PHP_EOL . '{{VALOR}}' . \PHP_EOL . ' -->';
+	const TEMPLATE_HTML_COMMENT = '<!-- ' . \PHP_EOL . '{{VALOR}}' . \PHP_EOL . ' -->';
 	const TEMPLATE_RAW = '================================' . \PHP_EOL . '{{VALOR}}' . \PHP_EOL; 
 	
 	/**
@@ -61,7 +61,7 @@ class Formatacao
 	 */
 	public static function htmlComentario($valor) 
 	{
-		return str_replace('{{VALOR}}', print_r($valor, true), static::TEMPLATE_HTML_COMENT);
+		return str_replace('{{VALOR}}', print_r($valor, true), static::TEMPLATE_HTML_COMMENT);
 	}
 	
 	/**

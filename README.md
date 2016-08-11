@@ -28,3 +28,8 @@ Para os namespaces, classes, atributos, métodos, nomes de variáveis e chaves d
 - A exceção para a regra acima é para métodos getters e setters, que são prefixados com o termo _get_ e _set_. É o padrão utilizado mesmo em português.
 - Procuro sempre escolher o nome que melhor descreva o que um determinado elemento é ou faz, ao invés de optar por abreviações. Douglas Crockford costuma dizer que a maior parte do tempo gasto em programação não é com digitação de código, é olhando para o mesmo tentando entender como funciona e o que deu errado. Quanto mais auto-explicativo um nome utilizado, mais fácil é de entender a aplicação como um todo e menos tempo é gasto na parte mais frustrante e demorada do desenvolvimento.
 - Por outro lado, evito ao máximo criar nomes excessivamente declarativos, exceto ao criar classes novas de exceções. Exceções são um caso à parte porque o nome delas deve ajudar a documentar o erro ocorrido. A mensagem de erro nem sempre pode dizer exatamente qual é o erro ocorrido (especialmente nos casos em que a exceção levantada deve ser comunicada ao usuário como uma mensagem de erro amigável).
+
+### PSR-2 (versão 2.1.3+)
+A partir da versão 2.1.3, os arquivos da biblioteca foram compatibilizados com as recomendações do padrão PSR-2. Isto não faz nenhuma diferença
+na funcionalidade da biblioteca, é claro, mas serve como experiência para lidar com os padrões de código mais aceitos do PHP. E os céus sabem
+como o PHP precisa de _algum_ padrão para se ancorar e não virar uma grande bagunça.

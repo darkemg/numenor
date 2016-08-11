@@ -24,8 +24,11 @@
  * @package Numenor/Php
  */
 namespace Numenor\Php;
+
 use Numenor\Excecao\Php\ArrayWrapper as ExcecaoArrayWrapper;
-class ArrayWrapper {
+
+class ArrayWrapper
+{
 	
 	const ORDER_ASC = 'ASC';
 	const ORDER_DESC = 'DESC';
@@ -39,10 +42,9 @@ class ArrayWrapper {
 	 * @param mixed $chave A chave a ser validada.
 	 * @return boolean TRUE se a chave é de um tipo válido, FALSE caso contrário.
 	 */
-	protected function validarTipoChave($chave) : bool {
-		return (!is_int($chave)
-				&& !is_string($chave)
-				&& is_object($chave) && !method_exists($chave, '__toString'));
+	protected function validarTipoChave($chave) : bool
+	{
+		return (!is_int($chave) && !is_string($chave) && is_object($chave) && !method_exists($chave, '__toString'));
 	}
 	
 	/**
@@ -52,7 +54,8 @@ class ArrayWrapper {
 	 * @param array $array O array.
 	 * @return array Lista de chaves do array.
 	 */
-	public function getChaves(array $array) : array {
+	public function getChaves(array $array) : array
+	{
 		return array_keys($array);
 	}
 	
@@ -72,7 +75,8 @@ class ArrayWrapper {
 	 * @param mixed $valor O valor para o qual se quer as chaves.
 	 * @return array Lista de chaves que possuem o valor informado.
 	 */
-	public function getChave(array $array, $valor) : array {
+	public function getChave(array $array, $valor) : array
+	{
 		return array_keys($array, $valor, true);
 	}
 	
@@ -85,7 +89,8 @@ class ArrayWrapper {
 	 * @return mixed|array O item escolhido aleatoriamente, caso $numeroItens seja um; um array com $numeroItens 
 	 * escolhidos aleatoriamente, caso contrário.
 	 */
-	public function getItemAleatorio(array $array, int $numeroItens = 1) {
+	public function getItemAleatorio(array $array, int $numeroItens = 1)
+	{
 		return array_rand($array, $numeroItens);
 	}
 	
@@ -134,7 +139,8 @@ class ArrayWrapper {
 	 * e não é do tipo {String}, ou não pode ser convertido para uma string.
 	 * @return array Lista de todos os valores da coluna correspondente.
 	 */
-	public function getValorColuna(array $array, string $colunaChave, string $chaveIndice = '') : array {
+	public function getValorColuna(array $array, string $colunaChave, string $chaveIndice = '') : array
+	{
 		if ($this->validarTipoChave($colunaChave)) {
 			throw new ExcecaoArrayWrapper\ExcecaoChaveInvalida();
 		}
@@ -153,7 +159,8 @@ class ArrayWrapper {
 	 * @return mixed A chave correspondente ao item encontrado no array.
 	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ExcecaoItemNaoEncontrado se o item não existe no array.
 	 */
-	public function encontrarItem(array $array, $item) {
+	public function encontrarItem(array $array, $item)
+	{
 		$indiceItem = array_search($item, $array, true);
 		if ($indiceItem === false) {
 			throw new ExcecaoArrayWrapper\ExcecaoItemNaoEncontrado();
@@ -171,7 +178,8 @@ class ArrayWrapper {
 	 * válido (string ou inteiro). 
 	 * @return boolean TRUE caso a chave exista no array, FALSE caso contrário.
 	 */
-	public function verificarChave(array $array, $chave) : bool {
+	public function verificarChave(array $array, $chave) : bool
+	{
 		return array_key_exists($chave, $array);
 	}
 	
@@ -182,7 +190,8 @@ class ArrayWrapper {
 	 * @param array $array O array.
 	 * @param mixed $item O item a ser adicionado no final do array.
 	 */
-	public function inserirFinal(array &$array, $item) {
+	public function inserirFinal(array &$array, $item)
+	{
 		$array[] = $item;
 	}
 	
@@ -193,7 +202,8 @@ class ArrayWrapper {
 	 * @param array $array O array.
 	 * @return mixed O item removido do final do array.
 	 */
-	public function removerFinal(array &$array) {
+	public function removerFinal(array &$array)
+	{
 		return array_pop($array);
 	}
 	
@@ -205,8 +215,9 @@ class ArrayWrapper {
 	 * @param array $array O array.
 	 * @param mixed $item O item a ser adicionado no início do array.
 	 */
-	public function inserirInicio(array &$array, $item) {
-		array_unshift($array, $item);		
+	public function inserirInicio(array &$array, $item)
+	{
+		array_unshift($array, $item);
 	}
 	
 	/**
@@ -217,7 +228,8 @@ class ArrayWrapper {
 	 * @param array $array O array.
 	 * @return mixed O item removido do início do array.
 	 */
-	public function removerInicio(array &$array) {
+	public function removerInicio(array &$array)
+	{
 		return array_shift($array);
 	}
 	
@@ -233,7 +245,8 @@ class ArrayWrapper {
 	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ChaveInvalida se a chave não puder ser convertida para um tipo
 	 * válido (string ou inteiro).
 	 */
-	public function inserir(array &$array, $item, $chave) {
+	public function inserir(array &$array, $item, $chave)
+	{
 		if (!$this->validarTipoChave($chave)) {
 			throw new ExcecaoArrayWrapper\ExcecaoChaveInvalida();
 		}
@@ -251,7 +264,8 @@ class ArrayWrapper {
 	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ExcecaoChaveInexistente se a chave não existir no array.
 	 * @return mixed Item removido do array.
 	 */
-	public function remover(array &$array, $chave) {
+	public function remover(array &$array, $chave)
+	{
 		if (!isset($array[$chave])) {
 			throw new ExcecaoArrayWrapper\ExcecaoChaveInexistente();
 		}
@@ -278,7 +292,8 @@ class ArrayWrapper {
 	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ExcecaoArrayFillTamanhoInvalido se $quantidadeItens for um valor menor 
 	 * do que 1.
 	 */
-	public static function criar(int $inicio, int $quantidadeItens, $item) : array {
+	public static function criar(int $inicio, int $quantidadeItens, $item) : array
+	{
 		if ($inicio < 0) {
 			throw new ExcecaoArrayWrapper\ExcecaoArrayFillIndiceInvalido();
 		}
@@ -297,7 +312,8 @@ class ArrayWrapper {
 	 * @param boolean $preservarChaves Indica se os pedaços devem preservar as suas chaves originais.
 	 * @return array Array multidimensional contendo os pedaços do array.
 	 */
-	public function dividir(array $array, int $tamanho, bool $preservarChaves = false) : array {
+	public function dividir(array $array, int $tamanho, bool $preservarChaves = false) : array
+	{
 		return array_chunk($array, $tamanho, $preservarChaves);
 	}
 	
@@ -312,7 +328,8 @@ class ArrayWrapper {
 	 * mesmo tamanho.
 	 * @return array Combinação dos dois arrays informados.
 	 */
-	public function combinar(array $chaves, array $valores) {
+	public function combinar(array $chaves, array $valores)
+	{
 		if (sizeof($chaves) != sizeof($valores)) {
 			throw new ExcecaoArray\ExcecaoArrayCombineTamanhosIncompativeis();
 		}
@@ -332,7 +349,8 @@ class ArrayWrapper {
 	 * @param mixed $valor Valor a ser inserido nas novas posições do array.
 	 * @return array O array preenchido com os novos valores.
 	 */
-	public function preencher(array $array, int $novoTamanho, $valor) : array {
+	public function preencher(array $array, int $novoTamanho, $valor) : array
+	{
 		if (($novoTamanho > 0 && $novoTamanho <= sizeof($array))
 				|| ($novoTamanho < 0 && abs($novoTamanho) <= sizeof($array))) {
 			throw new ExcecaoArrayWrapper\ExcecaoArrayPadTamanhoInvalido();
@@ -354,7 +372,8 @@ class ArrayWrapper {
 	 * convertido para um tipo que possa ser usado como chave do array invertido (string ou inteiro).
 	 * @return array Array com as chaves e valores invertidos.
 	 */
-	public function flip(array $array) : array {
+	public function flip(array $array) : array
+	{
 		$values = array_values($array);
 		$isValid = true;
 		foreach ($values as $item) {
@@ -373,7 +392,8 @@ class ArrayWrapper {
 	 * @param array $array O array.
 	 * @return array Valores do array como chaves, e a frequência de ocorrência como valores.
 	 */
-	public function contarValores(array $array) : array {
+	public function contarValores(array $array) : array
+	{
 		return array_count_values($array);
 	}
 	
@@ -387,7 +407,8 @@ class ArrayWrapper {
 	 * @param \Numenor\Php\StringWrapper $stringWrapper Instância do objeto de encapsulamento das operações de strings. 
 	 * @return array O array com as chaves alteradas.
 	 */
-	public function chaveMinuscula(array $array, StringWrapper $stringWrapper) : array {
+	public function chaveMinuscula(array $array, StringWrapper $stringWrapper) : array
+	{
 		$retorno = array();
 		foreach ($array as $chave => $valor) {
 			$retorno[$stringWrapper->lowerCase($chave)] = $valor;
@@ -405,7 +426,8 @@ class ArrayWrapper {
 	 * @param \Numenor\Php\StringWrapper $stringWrapper Instância do objeto de encapsulamento das operações de strings.
 	 * @return array O array com as chaves alteradas.
 	 */
-	public function chaveMaiuscula(array $array, StringWrapper $stringWrapper) : array {
+	public function chaveMaiuscula(array $array, StringWrapper $stringWrapper) : array
+	{
 		$retorno = array();
 		foreach ($array as $chave => $valor) {
 			$retorno[$stringWrapper->upperCase($chave)] = $valor;
@@ -432,7 +454,8 @@ class ArrayWrapper {
 	 * @param array $array2 Segundo array.
 	 * @return array Intersecção dos dois arrays comparados.
 	 */
-	public function interseccao(array $array1, array $array2) : array {
+	public function interseccao(array $array1, array $array2) : array
+	{
 		return array_intersect($array1, $array2);
 	}
 	
@@ -456,7 +479,8 @@ class ArrayWrapper {
 	 * @param array $array2 Segundo array.
 	 * @return array Intersecção da chaves dos dois arrays comparados.
 	 */
-	public function interseccaoChaves(array $array1, array $array2) : array {
+	public function interseccaoChaves(array $array1, array $array2) : array
+	{
 		return array_intersect_key($array1, $array2);
 	}
 	
@@ -478,7 +502,8 @@ class ArrayWrapper {
 	 * @param array $array2 Segundo array.
 	 * @return array Array contendo a intersecção dos dois arrays comparados.
 	 */
-	public function intersecacaoAssociativa(array $array1, array $array2) : array {
+	public function intersecacaoAssociativa(array $array1, array $array2) : array
+	{
 		return array_intersect_assoc($array1, $array2);
 	}
 	
@@ -500,7 +525,8 @@ class ArrayWrapper {
 	 * @param array $array2 Segundo array.
 	 * @return array Array contendo a diferença entre os dois arrays comparados.
 	 */
-	public function diferenca(array $array1, array $array2) : array {
+	public function diferenca(array $array1, array $array2) : array
+	{
 		return array_diff($array1, $array2);
 	}
 	
@@ -522,7 +548,8 @@ class ArrayWrapper {
 	 * @param array $array2 Segundo array.
 	 * @return array Array contendo a diferença entre os dois arrays comparados.
 	 */
-	public function diferencaAssociativa(array $array1, array $array2) : array {
+	public function diferencaAssociativa(array $array1, array $array2) : array
+	{
 		return array_diff_assoc($array1, $array2);
 	}
 	
@@ -539,7 +566,8 @@ class ArrayWrapper {
 	 * @param array $array O array.
 	 * @return number O produto dos valores do array.
 	 */
-	public function produto(array $array) {
+	public function produto(array $array)
+	{
 		return array_product($array);
 	}
 	
@@ -557,7 +585,8 @@ class ArrayWrapper {
 	 * @throws \Numenor\Excecao\ExcecaoArrayFilterFlagInvalida se o parâmetro $flag for informado com um valor inválido. 
 	 * @return array O array filtrado.
 	 */
-	public function filtrar(array $array, callable $funcaoFiltro, int $flag = 0) : array {
+	public function filtrar(array $array, callable $funcaoFiltro, int $flag = 0) : array
+	{
 		if ($flag && $flag != ARRAY_FILTER_USE_KEY && $flag != ARRAY_FILTER_USE_BOTH) {
 			throw new ExcecaoArray\ExcecaoArrayFilterFlagInvalida();
 		}
@@ -573,7 +602,8 @@ class ArrayWrapper {
 	 * correspondente ao item do array sendo percorrido.
 	 * @return array O array alterado.
 	 */
-	public function aplicarCallback(array $array, callable $callback) : array {
+	public function aplicarCallback(array $array, callable $callback) : array
+	{
 		return array_map($callback, $array); 
 	}
 	
@@ -590,7 +620,8 @@ class ArrayWrapper {
 	 * @param array $array2 Segundo array.
 	 * @return array O array resultante da mescla dos dois arrays.
 	 */
-	public function mesclar(array $array1, array $array2) : array {
+	public function mesclar(array $array1, array $array2) : array
+	{
 		return array_merge($array1, $array2);
 	}
 	
@@ -621,7 +652,8 @@ class ArrayWrapper {
 	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ExcecaoTipoOrdemInvalida se o tipo de ordenação não corresponde a um 
 	 * dos tipos de ordenação aceitos. 
 	 */
-	public function ordenar(array $array, string $ordem = self::ASC, int $tipoOrdenacao = \SORT_STRING) : array {
+	public function ordenar(array $array, string $ordem = self::ASC, int $tipoOrdenacao = \SORT_STRING) : array
+	{
 		if (!in_array($ordem, array(self::ASC, self::DESC))) {
 			throw new ExcecaoArrayWrapper\ExcecaoOrdemInvalida();
 		}
@@ -665,11 +697,12 @@ class ArrayWrapper {
 	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ExcecaoTipoOrdemInvalida se o tipo de ordenação não corresponde a um 
 	 * dos tipos de ordenação aceitos.
 	 */
-	public function ordenarAssociativo(array $array, string $ordem = self::ASC, int $tipoOrdenacao = SORT_STRING) : array {
+	public function ordenarAssociativo(array $array, string $ordem = self::ASC, int $tipoOrdenacao = SORT_STRING) : array
+	{
 		if (!in_array($ordem, array(self::ASC, self::DESC))) {
 			throw new ExcecaoArrayWrapper\ExcecaoOrdemInvalida();
 		}
-		if (!in_array($tipoOrdenacao, array(SORT_REGULAR, SORT_NUMERIC, SORT_STRING, SORT_LOCALE_STRING, SORT_NATURAL))) {
+		if (!in_array($tipoOrdenacao, array(\SORT_REGULAR, \SORT_NUMERIC, \SORT_STRING, \SORT_LOCALE_STRING, \SORT_NATURAL))) {
 			throw new ExcecaoArrayWrapper\ExcecaoTipoOrdemInvalida();
 		}
 		$copia = $array;
@@ -708,11 +741,12 @@ class ArrayWrapper {
 	 * @throws \Numenor\Excecao\Php\ArrayWrapper\ExcecaoTipoOrdemInvalida se o tipo de ordenação não corresponde a um 
 	 * dos tipos de ordenação aceitos. 
 	 */
-	public function ordenarChave(array $array, string $ordem = self::ASC, int $tipoOrdenacao = SORT_STRING) : array {
+	public function ordenarChave(array $array, string $ordem = self::ASC, int $tipoOrdenacao = SORT_STRING) : array
+	{
 		if (!in_array($ordem, array(self::ASC, self::DESC))) {
 			throw new ExcecaoArrayWrapper\ExcecaoOrdemInvalida();
 		}
-		if (!in_array($tipoOrdenacao, array(SORT_REGULAR, SORT_NUMERIC, SORT_STRING, SORT_LOCALE_STRING, SORT_NATURAL))) {
+		if (!in_array($tipoOrdenacao, array(\SORT_REGULAR, \SORT_NUMERIC, \SORT_STRING, \SORT_LOCALE_STRING, \SORT_NATURAL))) {
 			throw new ExcecaoArrayWrapper\ExcecaoTipoOrdemInvalida();
 		}
 		$copia = $array;

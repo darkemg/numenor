@@ -7,7 +7,8 @@
  */
 namespace Numenor\Excecao;
 
-class ExcecaoChecksumChaveInvalida extends ExcecaoErroUso {
+class ExcecaoChecksumChaveInvalida extends ExcecaoErroUso
+{
 	
 	/**
 	 * Método construtor da classe
@@ -15,7 +16,8 @@ class ExcecaoChecksumChaveInvalida extends ExcecaoErroUso {
 	 * @access public
 	 * @param \Exception $previous Exceção anterior (se a exceção atual tiver sido encadeada)
 	 */
-	public function __construct(\Exception $previous = null) {
+	public function __construct(\Exception $previous = null)
+	{
 		parent::__construct('A chave informada para o gerador de checksums é inválida', 401, $previous);
 	}
 }

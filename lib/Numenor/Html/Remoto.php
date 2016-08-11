@@ -6,7 +6,9 @@
  * @package Numenor/Html
  */
 namespace Numenor\Html;
-trait Remoto {
+
+trait Remoto
+{
 	
 	/**
 	 * URL remota de origem do arquivo do asset.
@@ -37,7 +39,8 @@ trait Remoto {
 	 * @access public
 	 * @return string URL de origem do asset.
 	 */
-	public function getCaminhoArquivo() : string {
+	public function getCaminhoArquivo() : string
+	{
 		return $this->url;
 	}
 	
@@ -47,7 +50,8 @@ trait Remoto {
 	 * @access public
 	 * @return string O snippet de código para inclusão do arquivo na página.
 	 */
-	public function gerarSnippetInclusao() : string {
+	public function gerarSnippetInclusao() : string
+	{
 		$snippet = (string) $this;
 		return $snippet;
 	}

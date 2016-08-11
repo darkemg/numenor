@@ -16,8 +16,11 @@
  * @see \MatthiasMullie\PathConverter\Converter
  */
 namespace Numenor\Html;
+
 use MatthiasMullie\PathConverter\Converter;
-class ConversorCaminho extends Converter {
+
+class ConversorCaminho extends Converter
+{
 	
 	/**
 	 * Método construtor da classe.
@@ -26,7 +29,8 @@ class ConversorCaminho extends Converter {
 	 * @param string $origem O diretório de origem dos links.
 	 * @param string $destino O diretório de destino dos links.
 	 */
-	public function __construct(string $origem = '', string $destino = '') {
+	public function __construct(string $origem = '', string $destino = '')
+	{
 		parent::__construct($origem, $destino);
 	}
 	
@@ -37,7 +41,8 @@ class ConversorCaminho extends Converter {
 	 * @param string $origem O diretório de origem dos links.
 	 * @returns \Numenor\Html\ConversorCaminho Instância do próprio objeto para encadeamento
 	 */
-	public function setOrigem(string $origem) : self {
+	public function setOrigem(string $origem) : self
+	{
 		$origem = $this->normalize($origem);
         $origem = $this->dirname($origem);
 		$this->from = $origem;
@@ -51,7 +56,8 @@ class ConversorCaminho extends Converter {
 	 * @param string $origem O diretório de origem dos links.
 	 * @returns \Numenor\Html\ConversorCaminho Instância do próprio objeto para encadeamento
 	 */
-	public function setDestino(string $destino) : self {
+	public function setDestino(string $destino) : self
+	{
 		$destino = $this->normalize($destino);
 		$destino = $this->dirname($destino);
 		$this->to = $destino;

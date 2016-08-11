@@ -15,7 +15,8 @@ use Numenor\Excecao\ExcecaoCacheDiscoDirEscrita;
 use Numenor\Excecao\ExcecaoCacheDiscoDirNaoDefinido;
 use Zend\Cache\StorageFactory;
 
-class CacheDisco extends CacheAbstrato {
+class CacheDisco extends CacheAbstrato
+{
 	
 	/**
 	 * Diretório padrão de armazenamento dos arquivos de cache.
@@ -58,22 +59,19 @@ class CacheDisco extends CacheAbstrato {
 	 */
 	private $nivel;
 	
-	/**
-	 * Método construtor da classe
-	 * 
-	 * @access public
-	 * @param string $namespace Identificador de namespace do cache
-	 * @param int $duracao Validade do cache, em segundos (0 = cache não expira)
-	 * @param string|null $diretorio Diretório onde os arquivos de cache serão armazenados
-	 * @param int $nivel Em quantos subníveis de diretórios os arquivos de cache serão divididos (1 = não há subdivisão)
+	/** 
+	 * {@inheritDoc}
+	 * @param string|null $diretorio Diretório onde os arquivos de cache serão armazenados.
+	 * @param int $nivel Em quantos subníveis de diretórios os arquivos de cache serão divididos (1 = não há subdivisão).
 	 * @param string $modo Modo de acesso do cache ('r' = somente leitura, 'w' = somente escrita, 'rw' = leitura e e
-	 * scrita) 
+	 * scrita).
 	 * @throws \Numenor\Excecao\ExcecaoCacheDiscoDirNaoDefinido se tanto o parâmetro $diretorio quanto a propriedade 
-	 * estática self::$diretorioPadrao não estiverem definidos
+	 * estática self::$diretorioPadrao não estiverem definidos.
 	 * @throws \Numenor\Excecao\ExcecaoCacheDiscoDirEscrita se o diretório de cache informado não existir ou não tiver 
-	 * permissão de escrita
+	 * permissão de escrita.
 	 */
-	public function __construct(string $namespace, int $duracao, string $diretorio = '', int $nivel = 1, string $modo = 'rw') {
+	public function __construct(string $namespace, int $duracao, string $diretorio = '', int $nivel = 1, string $modo = 'rw')
+	{
 		parent::__construct($namespace, $duracao);
 		$this->diretorio = $diretorio !== ''
 			? $diretorio 
@@ -138,9 +136,10 @@ class CacheDisco extends CacheAbstrato {
 	 * @static
 	 * @param string $diretorioPadrao Diretório de armazenamento do cache em disco
 	 * @throws \Numenor\Excecao\ExcecaoCacheDiscoDirEscrita se o diretório padrão informado não existir ou não tiver 
-	 * permissão de escrita 
+	 * permissão de escrita.
 	 */
-	public static function setDiretorioPadrao(string $diretorioPadrao) {
+	public static function setDiretorioPadrao(string $diretorioPadrao)
+	{
 		if (!is_writable($diretorioPadrao)) {
 			throw new ExcecaoCacheDiscoDirEscrita();
 		}

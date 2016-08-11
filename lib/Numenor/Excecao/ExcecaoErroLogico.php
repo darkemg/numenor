@@ -10,7 +10,9 @@
  * @package Numenor/Excecao
  */
 namespace Numenor\Excecao;
-class ExcecaoErroLogico extends ExcecaoAbstrata {
+
+class ExcecaoErroLogico extends ExcecaoAbstrata
+{
 	
 	const DEFAULT_CODE = 200;
 	
@@ -20,7 +22,8 @@ class ExcecaoErroLogico extends ExcecaoAbstrata {
 	 * @access public
 	 * @see \Numenor\Excecao\ExcecaoAbstrata::tratar()
 	 */
-	public function tratar() {
+	public function tratar()
+	{
 		// Exceções lógicas devem ser tratadas de maneira amigável, pois podem ter sido levantadas por uma
 		// ação incorreta por parte do usuário
 	}
