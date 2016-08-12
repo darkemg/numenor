@@ -1,13 +1,13 @@
 <?php
+namespace Numenor\Excecao\Php\StringWrapper;
+
 /**
  * Exceção levantada pelo sistema quando a função password_hash() retorna um valor inválido, indicando que
  * houve erro na geração do hash.
  *
  * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Excecao/Php/String
+ * @package Numenor\Excecao\Php\StringWrapper
  */
-namespace Numenor\Excecao\Php\StringWrapper;
-
 class ExcecaoHashInvalido extends \Numenor\Excecao\ExcecaoErroSistema
 {
 	

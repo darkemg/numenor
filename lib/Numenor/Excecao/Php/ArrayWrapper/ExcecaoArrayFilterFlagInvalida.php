@@ -1,13 +1,13 @@
 <?php
+namespace Numenor\Excecao\Php\ArrayWrapper;
+
 /**
  * Exceção levantada pelo sistema quando o método \Numenor\Php\ArrayWrapper::filter() é invocado com o
  * parâmetro $flag inválido (nenhum dos seguintes valores: 0, ARRAY_FILTER_USE_KEY, ARRAY_FILTER_USE_BOTH)
  *
  * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Excecao/Php/ArrayWrapper
+ * @package Numenor\Excecao\Php\ArrayWrapper
  */
-namespace Numenor\Excecao\Php\ArrayWrapper;
-
 class ExcecaoArrayFilterFlagInvalida extends ExcecaoArray
 {
 

@@ -1,13 +1,13 @@
 <?php
+namespace Numenor\Excecao;
+
 /**
  * Exceção levantada pelo sistema quando o adaptador de cache da classe CacheDisco é criado, mas o diretório
  * de cache informado não possui permissão de escrita
  *
  * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Excecao
+ * @package Numenor\Excecao
  */
-namespace Numenor\Excecao;
-
 class ExcecaoCacheDiscoDirEscrita extends ExcecaoErroUso
 {
 

@@ -6,7 +6,7 @@
  * manualmente.
  * 
  * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Configuracao
+ * @package Numenor\Configuracao
  */
 namespace Numenor\Configuracao;
 

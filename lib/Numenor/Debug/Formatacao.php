@@ -1,19 +1,42 @@
 <?php
-/**
- * Prepara um texto genérico para ser formatado de acordo com templates específicos
- * para debug de informações.
- *
- * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Debug
- */
 namespace Numenor\Debug;
 
-class Formatacao 
+/**
+ * Prepara um texto genérico para ser formatado de acordo com templates específicos para debug de informações.
+ * 
+ * AAAA.
+ * 
+ * @author Darke M. Goulart <darkemg@users.noreply.github.com>
+ * @package Numenor\Debug
+ */
+class Formatacao
 {
 	
+	/**
+	 * Template para formatação do debug como HTML cru.
+	 * 
+	 * @var string
+	 */
 	const TEMPLATE_HTML_RAW = '<pre>{{VALOR}}</pre>';
+	/**
+	 * Template para formatação do debug como HTML "enfeitado" (inserido dentro de uma div com classe CSS específica).
+	 *
+	 * @var string
+	 */
 	const TEMPLATE_HTML_FANCY = '<div class="output output-fancy">{{VALOR}}</div>';
+	/**
+	 * Template para formatação do debug como um comentário HTML (de modo que possa ser visto apenas ao inspecionar o
+	 * código-fonte do documento).
+	 *
+	 * @var string
+	 */
 	const TEMPLATE_HTML_COMMENT = '<!-- ' . \PHP_EOL . '{{VALOR}}' . \PHP_EOL . ' -->';
+	/**
+	 * Template para formatação do debug como um texto cru, prefixado por uma linha de separação (indicado para escrita
+	 * em arquivos de texto).
+	 *
+	 * @var string
+	 */
 	const TEMPLATE_RAW = '================================' . \PHP_EOL . '{{VALOR}}' . \PHP_EOL; 
 	
 	/**

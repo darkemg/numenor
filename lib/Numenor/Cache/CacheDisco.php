@@ -1,20 +1,20 @@
 <?php
-/**
- * Classe de controle do adaptador de cache Zend\Cache\Storage\Adapter\Filesystem, que utiliza o sistema de arquivos do 
- * servidor para armazenar o cache em disco.
- * 
- * Embora este adaptador de cache seja o mais comumente utilizado pela conveniência (os registros do cache ficam 
- * armazenados em disco, e não é necessário instalar nenhuma extensão para que funcione), tenha em mente que operações 
- * de I/O (leitura/escrita em disco) podem ser demoradas em caso de demanda simultânea muito grande.
- * 
- * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Cache
- */
 namespace Numenor\Cache;
+
 use Numenor\Excecao\ExcecaoCacheDiscoDirEscrita;
 use Numenor\Excecao\ExcecaoCacheDiscoDirNaoDefinido;
 use Zend\Cache\StorageFactory;
 
+/**
+ * Classe de controle do adaptador de cache em disco do framework Zend2.
+ *
+ * Embora este adaptador de cache seja o mais comumente utilizado pela conveniência (os registros do cache ficam
+ * armazenados em disco, e não é necessário instalar nenhuma extensão para que funcione), tenha em mente que operações
+ * de I/O (leitura/escrita em disco) podem ser demoradas em caso de demanda simultânea muito grande.
+ *
+ * @author Darke M. Goulart <darkemg@users.noreply.github.com>
+ * @package Numenor\Cache
+ */
 class CacheDisco extends CacheAbstrato
 {
 	
@@ -29,7 +29,9 @@ class CacheDisco extends CacheAbstrato
 	 */
 	private static $diretorioPadrao;
 	/**
-	 * Modo de acesso ao cache ('r' = somente leitura, 'w' = somente escrita, 'rw' = leitura e escrita).
+	 * Modo de acesso ao cache.
+	 * 
+	 * ('r' = somente leitura, 'w' = somente escrita, 'rw' = leitura e escrita).
 	 * 
 	 * @access private
 	 * @var string
@@ -59,15 +61,19 @@ class CacheDisco extends CacheAbstrato
 	 */
 	private $nivel;
 	
-	/** 
-	 * {@inheritDoc}
-	 * @param string|null $diretorio Diretório onde os arquivos de cache serão armazenados.
+	/**
+	 * Método construtor da classe.
+	 * 
+	 * @access public
+	 * @param string $namespace Identificador de namespace do cache.
+	 * @param int $duracao Validade do cache, em segundos (0 = cache não expira).
+	 * @param string $diretorio Diretório onde os arquivos de cache serão armazenados.
 	 * @param int $nivel Em quantos subníveis de diretórios os arquivos de cache serão divididos (1 = não há subdivisão).
 	 * @param string $modo Modo de acesso do cache ('r' = somente leitura, 'w' = somente escrita, 'rw' = leitura e e
 	 * scrita).
-	 * @throws \Numenor\Excecao\ExcecaoCacheDiscoDirNaoDefinido se tanto o parâmetro $diretorio quanto a propriedade 
+	 * @throws \Numenor\Excecao\ExcecaoCacheDiscoDirNaoDefinido se tanto o parâmetro $diretorio quanto a propriedade
 	 * estática self::$diretorioPadrao não estiverem definidos.
-	 * @throws \Numenor\Excecao\ExcecaoCacheDiscoDirEscrita se o diretório de cache informado não existir ou não tiver 
+	 * @throws \Numenor\Excecao\ExcecaoCacheDiscoDirEscrita se o diretório de cache informado não existir ou não tiver
 	 * permissão de escrita.
 	 */
 	public function __construct(string $namespace, int $duracao, string $diretorio = '', int $nivel = 1, string $modo = 'rw')

@@ -1,12 +1,5 @@
 <?php
-/**
- * Classe de controle para inclusão de arquivos CSS em páginas HTML.
- *
- * Arquivos CSS podem ser concatenados, minificados e gzipados para melhorar o desempenho da página onde são carregados.
- *
- * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Html
- */
+
 namespace Numenor\Html;
 
 use MatthiasMullie\Minify\CSS as MinifyCss;
@@ -15,6 +8,14 @@ use Numenor\Excecao\ExcecaoAssetNaoExiste;
 use Numenor\Php\ArrayWrapper;
 use Numenor\Php\StringWrapper;
 
+/**
+ * Classe de controle para inclusão de arquivos CSS em páginas HTML.
+ *
+ * Arquivos CSS podem ser concatenados, minificados e gzipados para melhorar o desempenho da página onde são carregados.
+ *
+ * @author Darke M. Goulart <darkemg@users.noreply.github.com>
+ * @package Numenor\Html
+ */
 class ControleCss extends Controle
 {
 	

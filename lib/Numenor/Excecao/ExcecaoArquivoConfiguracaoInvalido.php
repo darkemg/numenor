@@ -1,13 +1,13 @@
 <?php
+namespace Numenor\Excecao;
+
 /**
  * Exceção levantada pelo sistema quando o arquivo de configuração da biblioteca informado não existe, não
  * possui permissão de leitura ou não estpa em um dos formatos aceitos pelo leitor de arquivos de configuração.
  *
  * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Excecao
+ * @package Numenor\Excecao
  */
-namespace Numenor\Excecao;
-
 class ExcecaoArquivoConfiguracaoInvalido extends ExcecaoErroUso
 {
 	

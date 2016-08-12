@@ -1,41 +1,41 @@
 <?php
-/**
- * Wrapper para as funções de string da biblioteca padrão do PHP.
- * 
- * Na minha opinião (e na de muitos desenvolvedores, para falar a verdade), um dos piores aspectos do desenvolvimento em
- * PHP é a nomenclatura das funções da biblioteca padrão. Muitas funções recebem nomes absolutamente idiotas por razões 
- * históricas (basicamente, "o nome da função C que executa isso é esse, vamos usar o mesmo nome"), o que acabou não só 
- * trazendo antigos hábitos de nomenclatura para dentro de uma linguagem que se pretende moderna, como ainda introduziu 
- * alguns novos maus hábitos de nomenclatura novos. E isso sem falar em problemas com ordem de parâmetros inconsistente,
- * comportamentos inconsistentes entre funções que deveriam ser parecidas, etc.
- * 
- * O caso das funções de string é bastante emblemático, pois há exemplos de praticamente todos esses problemas. O site 
- * PHP Sadness (http://phpsadness.com) faz um bom trabalho de listar os casos, mas basta olhar para coisas como nl2br(), 
- * parse_str() e explode() e notar que não há padrão algum na forma como essas funções são nomeadas, ou seus parâmetros 
- * ordenados em comparação com outras funções semelhantes.
- * 
- * Esta classe visa prover uma interface normalizada e uniforme para estas funções de string, de modo que o
- * desenvolvedor possa facilmente autocompletá-las utilizando uma IDE minimamente decente sem ter que ficar lembrando ou
- * consultando a documentação do PHP para lembrar exatamente como determinada função funciona. Eu acredito que os 
- * beneficios de clareza e legibilidade superem o custo de overhead de uma chamada a mais de função para executar a 
- * operação.
- * 
- * No desenvolvimento desta parte da biblioteca, meu objetivo foi manter um equilíbrio entre o padrão minimalista de
- * nomes do PHP nativo e a ridícula verbosidade de nomes estilo Java. Abreviações, quando fazem sentido, foram 
- * mantidas.
- * 
- * Quando possível, a versão mb_* (multibyte) de uma função foi preferida à versão normal que só funciona com conjuntos
- * de caracteres restritos, porque suporte a Unicode deveria ser uma preocupação crucial da linguagem. Da mesma forma,
- * funções que precisam de algum tratamento no input para produzir um output adequado em Unicode já implementam estes
- * tratamentos.
- * 
- * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Php
- */
 namespace Numenor\Php;
 
 use Numenor\Excecao\Php\StringWrapper as ExcecaoString;
 
+/**
+ * Wrapper para as funções de string da biblioteca padrão do PHP.
+ *
+ * Na minha opinião (e na de muitos desenvolvedores, para falar a verdade), um dos piores aspectos do desenvolvimento em
+ * PHP é a nomenclatura das funções da biblioteca padrão. Muitas funções recebem nomes absolutamente idiotas por razões
+ * históricas (basicamente, "o nome da função C que executa isso é esse, vamos usar o mesmo nome"), o que acabou não só
+ * trazendo antigos hábitos de nomenclatura para dentro de uma linguagem que se pretende moderna, como ainda introduziu
+ * alguns novos maus hábitos de nomenclatura novos. E isso sem falar em problemas com ordem de parâmetros inconsistente,
+ * comportamentos inconsistentes entre funções que deveriam ser parecidas, etc.
+ *
+ * O caso das funções de string é bastante emblemático, pois há exemplos de praticamente todos esses problemas. O site
+ * PHP Sadness (http://phpsadness.com) faz um bom trabalho de listar os casos, mas basta olhar para coisas como nl2br(),
+ * parse_str() e explode() e notar que não há padrão algum na forma como essas funções são nomeadas, ou seus parâmetros
+ * ordenados em comparação com outras funções semelhantes.
+ *
+ * Esta classe visa prover uma interface normalizada e uniforme para estas funções de string, de modo que o
+ * desenvolvedor possa facilmente autocompletá-las utilizando uma IDE minimamente decente sem ter que ficar lembrando ou
+ * consultando a documentação do PHP para lembrar exatamente como determinada função funciona. Eu acredito que os
+ * beneficios de clareza e legibilidade superem o custo de overhead de uma chamada a mais de função para executar a
+ * operação.
+ *
+ * No desenvolvimento desta parte da biblioteca, meu objetivo foi manter um equilíbrio entre o padrão minimalista de
+ * nomes do PHP nativo e a ridícula verbosidade de nomes estilo Java. Abreviações, quando fazem sentido, foram
+ * mantidas.
+ *
+ * Quando possível, a versão mb_* (multibyte) de uma função foi preferida à versão normal que só funciona com conjuntos
+ * de caracteres restritos, porque suporte a Unicode deveria ser uma preocupação crucial da linguagem. Da mesma forma,
+ * funções que precisam de algum tratamento no input para produzir um output adequado em Unicode já implementam estes
+ * tratamentos.
+ *
+ * @author Darke M. Goulart <darkemg@users.noreply.github.com>
+ * @package Numenor\Php
+ */
 class StringWrapper
 {
 	

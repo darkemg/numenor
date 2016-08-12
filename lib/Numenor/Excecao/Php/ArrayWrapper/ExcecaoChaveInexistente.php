@@ -1,12 +1,13 @@
 <?php
+namespace Numenor\Excecao\Php\ArrayWrapper;
+
 /**
  * Exceção levantada pelo sistema quando um método da classe \Numenor\Php\ArrayWrapper é invocado com uma chave que não
  * existe no array.
  *
  * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Excecao/Php/ArrayWrapper
+ * @package Numenor\Excecao\Php\ArrayWrapper
  */
-namespace Numenor\Excecao\Php\ArrayWrapper;
 class ExcecaoChaveInexistente extends ExcecaoArray
 {
 	

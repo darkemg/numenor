@@ -1,17 +1,23 @@
 <?php
+namespace Numenor\Html;
+
 /**
  * Classe representando um arquivo CSS incluído em uma página HTML.
  *
  * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Html
+ * @package Numenor\Html
  */
-namespace Numenor\Html;
-
 class Css extends Asset
 {
 	
 	/**
-	 * {@inheritDoc}
+	 * Método construtor da classe.
+	 * 
+	 * @access public
+	 * @param string $caminhoArquivo URL do arquivo do asset.
+	 * @param boolean $compactavel Indica se o asset pode ser compactado através de um minificador. 
+	 * @param boolean $concatenavel Infica se o asset pode ser concatenado com outros assets que possuem a mesma
+	 * propriedade.
 	 */
 	public function __construct(string $caminhoArquivo, bool $compactavel = true, bool $concatenavel = true)
 	{

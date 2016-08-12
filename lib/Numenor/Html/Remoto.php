@@ -1,12 +1,13 @@
 <?php
-/**
- * Trait de arquivos de asset remoto.
- * 
- * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Html
- */
+
 namespace Numenor\Html;
 
+/**
+ * Trait de arquivos de asset remoto.
+ *
+ * @author Darke M. Goulart <darkemg@users.noreply.github.com>
+ * @package Numenor\Html
+ */
 trait Remoto
 {
 	

@@ -1,16 +1,16 @@
 <?php
+namespace Numenor\Debug;
+
 /**
  * Cronômetro para controle do tempo de execução de uma aplicação PHP.
- * 
- * Permite a criação de um ponto inicial e parciais em determinados pontos de uma aplicação, indicando quanto tempo o 
+ *
+ * Permite a criação de um ponto inicial e parciais em determinados pontos de uma aplicação, indicando quanto tempo o
  * script levou para ser executado até aquele ponto.
  *
  * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Debug
+ * @package Numenor\Debug
  */
-namespace Numenor\Debug;
-
-class CronometroExecucao 
+class CronometroExecucao
 {
 	
 	/**

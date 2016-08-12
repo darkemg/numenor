@@ -1,13 +1,13 @@
 <?php
-/**
- * Exceção levantada pelo sistema quando o método \Numenor\Php\ArrayWrapper::preencher() é invocado com o parâmetro 
- * $novoTamanho inválido (um número cujo valor absoluto é menor ou igual ao tamanho atual do array).         
- *
- * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Excecao/Php/ArrayWrapper
- */
 namespace Numenor\Excecao\Php\ArrayWrapper;
 
+/**
+ * Exceção levantada pelo sistema quando o método \Numenor\Php\ArrayWrapper::preencher() é invocado com o parâmetro
+ * $novoTamanho inválido (um número cujo valor absoluto é menor ou igual ao tamanho atual do array).
+ *
+ * @author Darke M. Goulart <darkemg@users.noreply.github.com>
+ * @package Numenor\Excecao\Php\ArrayWrapper
+ */
 class ExcecaoArrayPadTamanhoInvalido extends ExcecaoArray
 {
 

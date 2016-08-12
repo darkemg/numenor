@@ -1,13 +1,13 @@
 <?php
+namespace Numenor\Debug;
+
 /**
  * Realiza a saída de informações de debug, formatadas de acordo com o template
  * correspondente ao formato escolhido.
  *
  * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Debug
+ * @package Numenor\Debug
  */
-namespace Numenor\Debug;
-
 class Output
 {
 	

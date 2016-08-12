@@ -1,14 +1,4 @@
 <?php
-/**
- * Classe de controle para inclusão de arquivos Javascript em páginas HTML.
- *
- * Arquivos JS podem ser concatenados, minificados e gzipados para melhorar o desempenho da página onde são carregados.
- * Também é possível controlar a inclusão de arquivos de script originados em servidores externos (CDNs), que não são
- * pré-processados da mesma maneira que os scripts armazenados localmente no servidor.
- *
- * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Html
- */
 namespace Numenor\Html;
 
 use MatthiasMullie\Minify\JS as MinifyJs;
@@ -17,6 +7,16 @@ use Numenor\Excecao\ExcecaoAssetNaoExiste;
 use Numenor\Php\ArrayWrapper;
 use Numenor\Php\StringWrapper;
 
+/**
+ * Classe de controle para inclusão de arquivos Javascript em páginas HTML.
+ *
+ * Arquivos JS podem ser concatenados, minificados e gzipados para melhorar o desempenho da página onde são carregados.
+ * Também é possível controlar a inclusão de arquivos de script originados em servidores externos (CDNs), que não são
+ * pré-processados da mesma maneira que os scripts armazenados localmente no servidor.
+ *
+ * @author Darke M. Goulart <darkemg@users.noreply.github.com>
+ * @package Numenor\Html
+ */
 class ControleJavascript extends Controle
 {
 	

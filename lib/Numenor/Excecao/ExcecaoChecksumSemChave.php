@@ -1,13 +1,13 @@
 <?php
+namespace Numenor\Excecao;
+
 /**
  * Exceção levantada pelo sistema quando a geração de um checksum é solicitada sem que a chave tenha sido
  * definida anteriormente.
  *
  * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Excecao
+ * @package Numenor\Excecao
  */
-namespace Numenor\Excecao;
-
 class ExcecaoChecksumSemChave extends ExcecaoErroUso
 {
 	

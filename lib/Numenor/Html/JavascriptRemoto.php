@@ -1,4 +1,6 @@
 <?php
+namespace Numenor\Html;
+
 /**
  * Classe representando um arquivo Javascript remoto incluído em uma página HTML.
  *
@@ -6,10 +8,8 @@
  * executado caso o arquivo não possa ser incluído a partir da origem remota.
  *
  * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Html
+ * @package Numenor\Html
  */
-namespace Numenor\Html;
-
 class JavascriptRemoto extends Javascript
 {
 	

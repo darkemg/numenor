@@ -1,7 +1,11 @@
 <?php
+namespace Numenor\Php;
+
+use Numenor\Excecao\Php\ArrayWrapper as ExcecaoArrayWrapper;
+
 /**
  * Wrapper para array e suas funções da biblioteca padrão do PHP.
- * 
+ *
  * Na minha opinião (e na de muitos desenvolvedores, para falar a verdade), um dos piores aspectos do
  * desenvolvimento em PHP é a nomenclatura das funções da biblioteca padrão. Muitas funções recebem nomes
  * absolutamente idiotas por razões históricas (basicamente, "o nome da função C que executa isso é esse,
@@ -9,24 +13,20 @@
  * uma linguagem que se pretende moderna, como ainda introduziu alguns novos maus hábitos de nomenclatura
  * novos. E isso sem falar em problemas com ordem de parâmetros inconsistente, comportamentos inconsistentes
  * entre funções que deveriam ser parecidas, etc.
- * 
+ *
  * Esta classe visa prover uma interface normalizada e uniforme para estas funções de array, de modo que o
  * desenvolvedor possa facilmente autocompletá-las utilizando uma IDE minimamente decente sem ter que ficar
  * lembrando ou consultando a documentação do PHP para lembrar exatamente como determinada função funciona. Eu
  * acredito que os beneficios de clareza e legibilidade superem o custo de overhead de uma chamada a mais de
  * função para executar a operação.
- * 
+ *
  * No desenvolvimento desta parte da biblioteca, meu objetivo foi manter um equilíbrio entre o padrão minimalista de
  * nomes do PHP nativo e a ridícula verbosidade de nomes estilo Java. Abreviações, quando fazem sentido, foram
  * mantidas.
  *
  * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Php
+ * @package Numenor\Php
  */
-namespace Numenor\Php;
-
-use Numenor\Excecao\Php\ArrayWrapper as ExcecaoArrayWrapper;
-
 class ArrayWrapper
 {
 	

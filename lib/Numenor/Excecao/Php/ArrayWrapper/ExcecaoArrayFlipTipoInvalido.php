@@ -1,14 +1,14 @@
 <?php
+namespace Numenor\Excecao\Php\ArrayWrapper;
+
 /**
  * Exceção levantada pelo sistema quando o método \Numenor\Php\ArrayWrapper::flip() é invocado em um array cujos valores
- * não podem ser convertidos para string ou inteiros (os tipos de valores aceitos como chaves de um array pela função 
+ * não podem ser convertidos para string ou inteiros (os tipos de valores aceitos como chaves de um array pela função
  * array_flip()).
  *
  * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Excecao/Php/ArrayWrapper
+ * @package Numenor\Excecao\Php\ArrayWrapper
  */
-namespace Numenor\Excecao\Php\ArrayWrapper;
-
 class ExcecaoArrayFlipTipoInvalido extends ExcecaoArray
 {
 

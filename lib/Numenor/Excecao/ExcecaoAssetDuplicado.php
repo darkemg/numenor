@@ -1,14 +1,14 @@
 <?php
-/**
- * Exceção levantada pelo sistema quando um asset já existente é adicionado à controladora de assets.
- *
- * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Excecao
- */
 namespace Numenor\Excecao;
 
 use Numenor\Html\Asset;
 
+/**
+ * Exceção levantada pelo sistema quando um asset já existente é adicionado à controladora de assets.
+ *
+ * @author Darke M. Goulart <darkemg@users.noreply.github.com>
+ * @package Numenor\Excecao
+ */
 class ExcecaoAssetDuplicado extends ExcecaoErroUso
 {
 	

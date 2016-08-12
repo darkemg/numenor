@@ -1,14 +1,14 @@
 <?php
+namespace Numenor\Excecao\Php\ArrayWrapper;
+
 /**
- * Exceção levantada pelo sistema quando um método de ordenação da classe \Numenor\Php\ArrayWrapper é invocado com o 
- * parâmetro $tipoOrdem de um valor não reconhecido (uma das constantes SORT_REGULAR, SORT_NUMERIC, SORT_STRING, 
+ * Exceção levantada pelo sistema quando um método de ordenação da classe \Numenor\Php\ArrayWrapper é invocado com o
+ * parâmetro $tipoOrdem de um valor não reconhecido (uma das constantes SORT_REGULAR, SORT_NUMERIC, SORT_STRING,
  * SORT_STRING_LOCALE ou SORT_NATURAL).
  *
  * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Excecao/Php/ArrayWrapper
+ * @package Numenor\Excecao\Php\ArrayWrapper
  */
-namespace Numenor\Excecao\Php\ArrayWrapper;
-
 class ExcecaoTipoOrdemInvalida extends ExcecaoArray
 {
 	

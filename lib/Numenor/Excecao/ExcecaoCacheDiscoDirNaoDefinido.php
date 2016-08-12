@@ -1,14 +1,15 @@
 <?php
+
+namespace Numenor\Excecao;
+
 /**
  * Exceção levantada pelo sistema quando o adaptador de cache da classe CacheDisco é criado, mas o diretório
  * de cache não foi definido (seja pelo bootstrap da aplicação, seja pelo parâmetro $diretorio no construtor do
  * adaptador de cache)
- * 
+ *
  * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Excecao
+ * @package Numenor\Excecao
  */
-namespace Numenor\Excecao;
-
 class ExcecaoCacheDiscoDirNaoDefinido extends ExcecaoErroUso
 {
 	

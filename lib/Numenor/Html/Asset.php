@@ -1,13 +1,13 @@
 <?php
+namespace Numenor\Html;
+
 /**
  * Classe abstrata representando um assets para inclusão em uma página HTML.
  *
  * @abstract
  * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Html
+ * @package Numenor\Html
  */
-namespace Numenor\Html;
-
 abstract class Asset
 {
 	

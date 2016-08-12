@@ -1,34 +1,38 @@
 <?php
+namespace Numenor\Cache;
+
 /**
- * Classe abstrata de controle do adaptador de cache do framework Zend2, implementando os métodos comuns de acesso a
- * propriedades e operações definidas para todos os adaptadores de cache do framework.
+ * Classe abstrata de controle do adaptador de cache do framework Zend2.
+ *
+ * Implementa métodos comuns de acesso a propriedades e operações definidas para todos os adaptadores de cache do
+ * framework.
  *
  * @abstract
  * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Cache
+ * @package Numenor\Cache
  */
-namespace Numenor\Cache;
-
 abstract class CacheAbstrato
 {
 	
 	/**
-	 * Identificador de namespace do cache (para evitar colisão com outras instâncias).
+	 * Identificador de namespace do cache (para evitar colisão com outras instâncias)
 	 * 
 	 * @access protected
 	 * @var string
 	 */
 	protected $namespace;
 	/**
-	 * Duração da validade do cache, em segundos. O valor 0 indica que o cache não expira por duração (mas pode expirar
-	 * por outras razões, de acordo com as regras do adaptador de cache escolhido).
+	 * Duração da validade do cache, em segundos
+	 * 
+	 * O valor 0 indica que o cache não expira por duração (mas pode expirar por outras razões, de acordo com as regras
+	 * do adaptador de cache escolhido).
 	 * 
 	 * @access protected
 	 * @var int
 	 */
 	protected $duracao;
 	/**
-	 * Instância do objeto adaptador de cache.
+	 * Instância do objeto adaptador de cache
 	 * 
 	 * @access protected
 	 * @var \Zend\Cache\Storage\Adapter
@@ -36,7 +40,7 @@ abstract class CacheAbstrato
 	protected $adapter;
 	
 	/**
-	 * Método construtor da classe.
+	 * Método construtor da classe
 	 *
 	 * @access public
 	 * @param string $namespace Identificador de namespace do cache
@@ -49,7 +53,7 @@ abstract class CacheAbstrato
 	}
 	
 	/**
-	 * Recupera um item do cache, identificado pela chave.
+	 * Recupera um item do cache, identificado pela chave
 	 *
 	 * @access public
 	 * @param string $key Chave de identificação do item do cache

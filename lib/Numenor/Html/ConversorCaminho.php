@@ -1,4 +1,8 @@
 <?php
+namespace Numenor\Html;
+
+use MatthiasMullie\PathConverter\Converter;
+
 /**
  * Conversor de diretórios relativos contidos em arquivos CSS.
  *
@@ -12,13 +16,9 @@
  * processar diversos arquivos separadamente.
  *
  * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Html
+ * @package Numenor\Html
  * @see \MatthiasMullie\PathConverter\Converter
  */
-namespace Numenor\Html;
-
-use MatthiasMullie\PathConverter\Converter;
-
 class ConversorCaminho extends Converter
 {
 	

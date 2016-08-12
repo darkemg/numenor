@@ -1,13 +1,13 @@
 <?php
+namespace Numenor\Excecao\Php\ArrayWrapper;
+
 /**
- * Exceção levantada pelo sistema quando o método \Numenor\Php\ArrayWrapper::criar() é invocado com o parâmetro 
+ * Exceção levantada pelo sistema quando o método \Numenor\Php\ArrayWrapper::criar() é invocado com o parâmetro
  * $startIndex negativo.
  *
  * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Excecao/Php/ArrayWrapper
+ * @package Numenor\Excecao\Php\ArrayWrapper
  */
-namespace Numenor\Excecao\Php\ArrayWrapper;
-
 class ExcecaoArrayFillIndiceInvalido extends ExcecaoArray
 {
 

@@ -1,12 +1,12 @@
 <?php
+namespace Numenor\Excecao\Php\StringWrapper;
+
 /**
  * Exceção levantada pelo sistema quando ocorre um erro na decodificação de um texto codificado.
  *
  * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Excecao/Php/String
+ * @package Numenor\Excecao\Php\StringWrapper
  */
-namespace Numenor\Excecao\Php\StringWrapper;
-
 class ExcecaoDecodificacaoInvalida extends \Numenor\Excecao\ExcecaoErroSistema
 {
 	

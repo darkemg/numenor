@@ -1,20 +1,20 @@
 <?php
-/**
- * Classe abstrata de controle para inclusão de assets em páginas HTML.
- *
- * Além de gerar o snippet de código adequado para a inclusão dos assets em uma página HTML, as subclasses desta classe
- * providenciam métodos para minificação e concatenação de assets de texto (como JS e CSS), bem como a geração de 
- * sprites para imagens.
- * 
- * @abstract
- * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Html
- */
 namespace Numenor\Html;
 
 use Numenor\Php\ArrayWrapper;
 use Numenor\Php\StringWrapper;
 
+/**
+ * Classe abstrata de controle para inclusão de assets em páginas HTML.
+ *
+ * Além de gerar o snippet de código adequado para a inclusão dos assets em uma página HTML, as subclasses desta classe
+ * providenciam métodos para minificação e concatenação de assets de texto (como JS e CSS), bem como a geração de
+ * sprites para imagens.
+ *
+ * @abstract
+ * @author Darke M. Goulart <darkemg@users.noreply.github.com>
+ * @package Numenor\Html
+ */
 abstract class Controle
 {
 	

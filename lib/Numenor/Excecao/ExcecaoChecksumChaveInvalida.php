@@ -1,12 +1,12 @@
 <?php
+namespace Numenor\Excecao;
+
 /**
  * Exceção levantada pelo sistema quando a chave informada para a classe Checksum é nula ou inválida.
  *
  * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Excecao
+ * @package Numenor\Excecao
  */
-namespace Numenor\Excecao;
-
 class ExcecaoChecksumChaveInvalida extends ExcecaoErroUso
 {
 	

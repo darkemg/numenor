@@ -1,14 +1,14 @@
 <?php
-/**
- * Exceção levantada pelo sistema um asset é adicionado à controladora sem que exista o arquivo físico referenciado.
- *
- * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Excecao
- */
 namespace Numenor\Excecao;
 
 use Numenor\Html\Asset;
 
+/**
+ * Exceção levantada pelo sistema um asset é adicionado à controladora sem que exista o arquivo físico referenciado.
+ *
+ * @author Darke M. Goulart <darkemg@users.noreply.github.com>
+ * @package Numenor\Excecao
+ */
 class ExcecaoAssetNaoExiste extends ExcecaoErroUso
 {
 	

@@ -1,13 +1,13 @@
 <?php
+namespace Numenor\Excecao\Php\ArrayWrapper;
+
 /**
- * Exceção levantada pelo sistema quando um método de ordenação da classe \Numenor\Php\ArrayWrapper é invocado com o 
+ * Exceção levantada pelo sistema quando um método de ordenação da classe \Numenor\Php\ArrayWrapper é invocado com o
  * parâmetro $ordenacao de um valor não reconhecido ('ASC' ou 'DESC').
  *
  * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor/Excecao/Php/ArrayWrapper
+ * @package Numenor\Excecao\Php\ArrayWrapper
  */
-namespace Numenor\Excecao\Php\ArrayWrapper;
-
 class ExcecaoOrdemInvalida extends ExcecaoArray
 {
 	
