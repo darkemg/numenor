@@ -18,6 +18,11 @@ namespace Numenor\Excecao;
 abstract class ExcecaoAbstrata extends \Exception
 {
 	
+	/**
+	 * Código de erro padrão relacionado com a exceção.
+	 * 
+	 * @var int
+	 */
 	const DEFAULT_CODE = 500;
 	
 	/**

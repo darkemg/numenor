@@ -1,0 +1,2256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>API Documentation</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">API Documentation</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/Numenor.html">\Numenor</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">88</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-926573550"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-926573550" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-577831469"></a>
+                                <a href="../namespaces/Numenor.html" style="margin-left: 30px; padding-left: 0">Numenor</a>
+            </div>
+            <div id="namespace-577831469" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1977478201"></a>
+                                <a href="../namespaces/Numenor.Autenticacao.html" style="margin-left: 30px; padding-left: 0">Autenticacao</a>
+            </div>
+            <div id="namespace-1977478201" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Numenor.Autenticacao.Checksum.html">Checksum</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1041213418"></a>
+                                <a href="../namespaces/Numenor.Cache.html" style="margin-left: 30px; padding-left: 0">Cache</a>
+            </div>
+            <div id="namespace-1041213418" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Numenor.Cache.CacheAbstrato.html">CacheAbstrato</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Cache.CacheDisco.html">CacheDisco</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Cache.CacheMemoria.html">CacheMemoria</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-699560236"></a>
+                                <a href="../namespaces/Numenor.Configuracao.html" style="margin-left: 30px; padding-left: 0">Configuracao</a>
+            </div>
+            <div id="namespace-699560236" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Numenor.Configuracao.Biblioteca.html">Biblioteca</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-522492158"></a>
+                                <a href="../namespaces/Numenor.Debug.html" style="margin-left: 30px; padding-left: 0">Debug</a>
+            </div>
+            <div id="namespace-522492158" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Numenor.Debug.CronometroExecucao.html">CronometroExecucao</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Debug.Formatacao.html">Formatacao</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Debug.Output.html">Output</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1426909748"></a>
+                                <a href="../namespaces/Numenor.Excecao.html" style="margin-left: 30px; padding-left: 0">Excecao</a>
+            </div>
+            <div id="namespace-1426909748" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1797339357"></a>
+                                <a href="../namespaces/Numenor.Excecao.Php.html" style="margin-left: 30px; padding-left: 0">Php</a>
+            </div>
+            <div id="namespace-1797339357" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-895213706"></a>
+                                <a href="../namespaces/Numenor.Excecao.Php.ArrayWrapper.html" style="margin-left: 30px; padding-left: 0">ArrayWrapper</a>
+            </div>
+            <div id="namespace-895213706" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoArray.html">ExcecaoArray</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoArrayCombineTamanhosIncompativeis.html">ExcecaoArrayCombineTamanhosIncompativeis</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoArrayFillIndiceInvalido.html">ExcecaoArrayFillIndiceInvalido</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoArrayFillTamanhoInvalido.html">ExcecaoArrayFillTamanhoInvalido</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoArrayFilterFlagInvalida.html">ExcecaoArrayFilterFlagInvalida</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoArrayFlipTipoInvalido.html">ExcecaoArrayFlipTipoInvalido</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoArrayPadTamanhoInvalido.html">ExcecaoArrayPadTamanhoInvalido</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoChaveInexistente.html">ExcecaoChaveInexistente</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoChaveInvalida.html">ExcecaoChaveInvalida</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoItemNaoEncontrado.html">ExcecaoItemNaoEncontrado</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoOrdemInvalida.html">ExcecaoOrdemInvalida</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoTipoOrdemInvalida.html">ExcecaoTipoOrdemInvalida</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1141861144"></a>
+                                <a href="../namespaces/Numenor.Excecao.Php.StringWrapper.html" style="margin-left: 30px; padding-left: 0">StringWrapper</a>
+            </div>
+            <div id="namespace-1141861144" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.StringWrapper.ExcecaoDecodificacaoInvalida.html">ExcecaoDecodificacaoInvalida</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.StringWrapper.ExcecaoHashInvalido.html">ExcecaoHashInvalido</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoAbstrata.html">ExcecaoAbstrata</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoAlgoritmoHashInvalido.html">ExcecaoAlgoritmoHashInvalido</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoArquivoConfiguracaoInvalido.html">ExcecaoArquivoConfiguracaoInvalido</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoAssetDuplicado.html">ExcecaoAssetDuplicado</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoAssetNaoExiste.html">ExcecaoAssetNaoExiste</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoCacheDiscoDirEscrita.html">ExcecaoCacheDiscoDirEscrita</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoCacheDiscoDirNaoDefinido.html">ExcecaoCacheDiscoDirNaoDefinido</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoChecksumChaveInvalida.html">ExcecaoChecksumChaveInvalida</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoChecksumSemChave.html">ExcecaoChecksumSemChave</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoErroLogico.html">ExcecaoErroLogico</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoErroSistema.html">ExcecaoErroSistema</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoErroUso.html">ExcecaoErroUso</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1342358743"></a>
+                                <a href="../namespaces/Numenor.Html.html" style="margin-left: 30px; padding-left: 0">Html</a>
+            </div>
+            <div id="namespace-1342358743" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                            <li class="trait"><a href="../classes/Numenor.Html.Remoto.html">Remoto</a></li>
+                                                                            <li class="class"><a href="../classes/Numenor.Html.Asset.html">Asset</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Html.Controle.html">Controle</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Html.ControleCss.html">ControleCss</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Html.ControleJavascript.html">ControleJavascript</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Html.ConversorCaminho.html">ConversorCaminho</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Html.Css.html">Css</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Html.CssRemoto.html">CssRemoto</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Html.Javascript.html">Javascript</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Html.JavascriptRemoto.html">JavascriptRemoto</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1650282920"></a>
+                                <a href="../namespaces/Numenor.Php.html" style="margin-left: 30px; padding-left: 0">Php</a>
+            </div>
+            <div id="namespace-1650282920" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Numenor.Php.ArrayWrapper.html">ArrayWrapper</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Php.StringWrapper.html">StringWrapper</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/Numenor.Php.html">\Numenor\Php</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\Numenor\Php</small>ArrayWrapper</h1>
+                    <p><em>Wrapper para array e suas funções da biblioteca padrão do PHP.</em></p>
+                    <p>Na minha opinião (e na de muitos desenvolvedores, para falar a verdade), um dos piores aspectos do
+desenvolvimento em PHP é a nomenclatura das funções da biblioteca padrão. Muitas funções recebem nomes
+absolutamente idiotas por razões históricas (basicamente, &quot;o nome da função C que executa isso é esse,
+vamos usar o mesmo nome&quot;), o que acabou não só trazendo antigos hábitos de nomenclatura para dentro de
+uma linguagem que se pretende moderna, como ainda introduziu alguns novos maus hábitos de nomenclatura
+novos. E isso sem falar em problemas com ordem de parâmetros inconsistente, comportamentos inconsistentes
+entre funções que deveriam ser parecidas, etc.</p>
+<p>Esta classe visa prover uma interface normalizada e uniforme para estas funções de array, de modo que o
+desenvolvedor possa facilmente autocompletá-las utilizando uma IDE minimamente decente sem ter que ficar
+lembrando ou consultando a documentação do PHP para lembrar exatamente como determinada função funciona. Eu
+acredito que os beneficios de clareza e legibilidade superem o custo de overhead de uma chamada a mais de
+função para executar a operação.</p>
+<p>No desenvolvimento desta parte da biblioteca, meu objetivo foi manter um equilíbrio entre o padrão minimalista de
+nomes do PHP nativo e a ridícula verbosidade de nomes estilo Java. Abreviações, quando fazem sentido, foram
+mantidas.</p>
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_getChaves" class="">getChaves()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_getChave" class="">getChave()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_getItemAleatorio" class="">getItemAleatorio()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_getValorColuna" class="">getValorColuna()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_encontrarItem" class="">encontrarItem()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_verificarChave" class="">verificarChave()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_inserirFinal" class="">inserirFinal()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_removerFinal" class="">removerFinal()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_inserirInicio" class="">inserirInicio()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_removerInicio" class="">removerInicio()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_inserir" class="">inserir()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_remover" class="">remover()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_criar" class="">criar()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_dividir" class="">dividir()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_combinar" class="">combinar()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_preencher" class="">preencher()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_flip" class="">flip()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_contarValores" class="">contarValores()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_chaveMinuscula" class="">chaveMinuscula()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_chaveMaiuscula" class="">chaveMaiuscula()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_interseccao" class="">interseccao()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_interseccaoChaves" class="">interseccaoChaves()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_intersecacaoAssociativa" class="">intersecacaoAssociativa()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_diferenca" class="">diferenca()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_diferencaAssociativa" class="">diferencaAssociativa()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_produto" class="">produto()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_filtrar" class="">filtrar()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_aplicarCallback" class="">aplicarCallback()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_mesclar" class="">mesclar()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_ordenar" class="">ordenar()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_ordenarAssociativo" class="">ordenarAssociativo()</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_ordenarChave" class="">ordenarChave()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No public properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#constant_ORDER_ASC" class="">ORDER_ASC</a><br />
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#constant_ORDER_DESC" class="">ORDER_DESC</a><br />
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <a href="../classes/Numenor.Php.ArrayWrapper.html#method_validarTipoChave" class="">validarTipoChave()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No protected properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <em>No private methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No private properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/Php.ArrayWrapper.html"><div class="path-wrapper">Php\ArrayWrapper.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Numenor\Php</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                    <div class="namespace-wrapper">\Numenor\Php\ArrayWrapper</div>
+                            </dd>
+
+                        
+                        
+                        
+                        
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr>
+                            <th>
+                                author
+                            </th>
+                            <td>
+                                                                    <p>Darke M. Goulart <a href="mailto:darkemg@users.noreply.github.com">darkemg@users.noreply.github.com</a></p>
+                                                            </td>
+                        </tr>
+                                        </table>
+                </aside>
+            </div>
+
+                                    <a id="constants" name="constants"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Constants</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ORDER_ASC" name="constant_ORDER_ASC" class="anchor"></a>
+            <article id="constant_ORDER_ASC" class="constant">
+                <h3 class="">ORDER_ASC</h3>
+                <pre class="signature">ORDER_ASC</pre>
+                <p><em>Identificador de ordenação crescente.</em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ORDER_DESC" name="constant_ORDER_DESC" class="anchor"></a>
+            <article id="constant_ORDER_DESC" class="constant">
+                <h3 class="">ORDER_DESC</h3>
+                <pre class="signature">ORDER_DESC</pre>
+                <p><em>Identificador de ordenação decrescente.</em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                            
+                        
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getChaves" name="method_getChaves" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getChaves()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getChaves(array  <span class="argument">$array</span>) : array</pre>
+                <p><em>Retorna todas as chaves do array.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array </td>
+                                <td><p>O array.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>Lista de chaves do array.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getChave" name="method_getChave" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getChave()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getChave(array  <span class="argument">$array</span>, mixed  <span class="argument">$valor</span>) : array</pre>
+                <p><em>Retorna todas as chaves do array que possuam o valor informado.</em></p>
+                <p>Ao contrário do funcionamento normal da função array_keys(), a comparação é sempre feita de forma estrita
+(operador ===).</p>
+<p><code>
+\Numenor\Php\ArrayWrapper::getChave(array('A', 'B', 'C', 'first' =&gt; 'A', 'second' =&gt; 'B'), 'A');
+// [0, 'first']
+</code></p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array </td>
+                                <td><p>O array.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$valor </td>
+                                <td><p>O valor para o qual se quer as chaves.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>Lista de chaves que possuem o valor informado.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getItemAleatorio" name="method_getItemAleatorio" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getItemAleatorio()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getItemAleatorio(array  <span class="argument">$array</span>, integer  <span class="argument">$numeroItens = 1</span>) : mixed|array</pre>
+                <p><em>Retorna um ou mais itens do array escolhidos aleatoriamente.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array </td>
+                                <td><p>O array.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$numeroItens </td>
+                                <td><p>Número de itens desejados. O padrão é 1 (apenas um item).</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    mixed|array
+                                            &mdash; <p>O item escolhido aleatoriamente, caso $numeroItens seja um; um array com $numeroItens
+escolhidos aleatoriamente, caso contrário.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getValorColuna" name="method_getValorColuna" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getValorColuna()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getValorColuna(array  <span class="argument">$array</span>, string  <span class="argument">$colunaChave</span>, string  <span class="argument">$chaveIndice = &#039;&#039;</span>) : array</pre>
+                <p><em>Retorna todos os valores de uma única coluna de um array multidimensional, como se fosse uma tabela.</em></p>
+                <p><code>
+$array = [
+[
+'id' =&gt; 2135,
+'first_name' =&gt; 'John',
+'last_name' =&gt; 'Doe',
+],
+[
+'id' =&gt; 3245,
+'first_name' =&gt; 'Sally',
+'last_name' =&gt; 'Smith',
+],
+[
+'id' =&gt; 5342,
+'first_name' =&gt; 'Jane',
+'last_name' =&gt; 'Jones',
+],
+[
+'id' =&gt; 5623,
+'first_name' =&gt; 'Peter',
+'last_name' =&gt; 'Doe',
+]
+];
+\Numenor\Php\ArrayWrapper::getValorColuna($array, 'first_name');
+// ['John', 'Sally', 'Jane', 'Peter']
+\Numenor\Php\ArrayWrapper::getValorColuna($array, 'first_name', 'id');
+// [2135 =&gt; 'John', 3245 =&gt; 'Sally', 5342 =&gt; 'Jane', 5623 =&gt; 'Peter']
+</code></p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array </td>
+                                <td><p>O array.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$colunaChave </td>
+                                <td><p>Nome da chave representando a coluna dos valores desejados.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$chaveIndice </td>
+                                <td><p>Nome da chave da coluna cujos valores serão usados como chave dos array
+resultante.</p></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\Numenor\Excecao\ArrayWrapper\ExcecaoArrayColumnNumeroParametros</dt>
+                            <dd><p>se o número de parâmetros informados
+é inferior ao mínimo necessário (1).</p></dd>
+                                                    <dt>\Numenor\Excecao\ArrayWrapper\ExcecaoArrayColumnChaveInvalida</dt>
+                            <dd><p>se o parâmetro $columnKey não é do tipo
+{String}, ou não pode ser convertido para uma string.</p></dd>
+                                                    <dt>\Numenor\Excecao\ArrayWrapper\ExcecaoArrayColumnIndiceInvalido</dt>
+                            <dd><p>se o parâmetro $indexKey foi informado
+e não é do tipo {String}, ou não pode ser convertido para uma string.</p></dd>
+                                                                    </dl>
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>Lista de todos os valores da coluna correspondente.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_encontrarItem" name="method_encontrarItem" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">encontrarItem()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">encontrarItem(array  <span class="argument">$array</span>, mixed  <span class="argument">$item</span>) : mixed</pre>
+                <p><em>Busca um item no array, retornando a chave correspondente ao item se encontrado.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array </td>
+                                <td><p>O array.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$item </td>
+                                <td><p>O item buscado.</p></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\Numenor\Excecao\Php\ArrayWrapper\ExcecaoItemNaoEncontrado</dt>
+                            <dd><p>se o item não existe no array.</p></dd>
+                                                                    </dl>
+                
+                                    <h4>Returns</h4>
+                    mixed
+                                            &mdash; <p>A chave correspondente ao item encontrado no array.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_verificarChave" name="method_verificarChave" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">verificarChave()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">verificarChave(array  <span class="argument">$array</span>, string|integer  <span class="argument">$chave</span>) : boolean</pre>
+                <p><em>Verifica a existência de uma chave no array.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array </td>
+                                <td><p>O array.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string|integer</td>
+                                <td>$chave </td>
+                                <td><p>Chave a ser verificada no array</p></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\Numenor\Excecao\Php\ArrayWrapper\ChaveInvalida</dt>
+                            <dd><p>se a chave não puder ser convertida para um tipo
+válido (string ou inteiro).</p></dd>
+                                                                    </dl>
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>TRUE caso a chave exista no array, FALSE caso contrário.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_inserirFinal" name="method_inserirFinal" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">inserirFinal()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">inserirFinal(array  <span class="argument">$array</span>, mixed  <span class="argument">$item</span>) </pre>
+                <p><em>Insere um item no final do array.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array </td>
+                                <td><p>O array.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$item </td>
+                                <td><p>O item a ser adicionado no final do array.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_removerFinal" name="method_removerFinal" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">removerFinal()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">removerFinal(array  <span class="argument">$array</span>) : mixed</pre>
+                <p><em>Remove e retorna o item do final do array.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array </td>
+                                <td><p>O array.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    mixed
+                                            &mdash; <p>O item removido do final do array.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_inserirInicio" name="method_inserirInicio" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">inserirInicio()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">inserirInicio(array  <span class="argument">$array</span>, mixed  <span class="argument">$item</span>) </pre>
+                <p><em>Insere um item no início do array, incrementando todas as chaves numéricas dos outros itens. As chaves strings
+não são alteradas.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array </td>
+                                <td><p>O array.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$item </td>
+                                <td><p>O item a ser adicionado no início do array.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_removerInicio" name="method_removerInicio" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">removerInicio()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">removerInicio(array  <span class="argument">$array</span>) : mixed</pre>
+                <p><em>Remove um item do início do array, decrementando todas as chaves numéricas dos outros itens. As chaves strings
+não são alteradas.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array </td>
+                                <td><p>O array.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    mixed
+                                            &mdash; <p>O item removido do início do array.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_inserir" name="method_inserir" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">inserir()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">inserir(array  <span class="argument">$array</span>, mixed  <span class="argument">$item</span>, integer|string  <span class="argument">$chave</span>) </pre>
+                <p><em>Insere um item no array com a chave indicada.</em></p>
+                <p>Se a chave já existir, substitui o valor.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array </td>
+                                <td><p>O array.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$item </td>
+                                <td><p>O item a ser inserido no array.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer|string</td>
+                                <td>$chave </td>
+                                <td><p>A chave onde o item deve ser inserido.</p></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\Numenor\Excecao\Php\ArrayWrapper\ChaveInvalida</dt>
+                            <dd><p>se a chave não puder ser convertida para um tipo
+válido (string ou inteiro).</p></dd>
+                                                                    </dl>
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_remover" name="method_remover" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">remover()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">remover(array  <span class="argument">$array</span>, integer|string  <span class="argument">$chave</span>) : mixed</pre>
+                <p><em>Remove um item do array com a chave indicada.</em></p>
+                <p>O array é reindexado após a remoção, atualizando suas chaves numéricas. As chaves string não são afetadas.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array </td>
+                                <td><p>O array.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer|string</td>
+                                <td>$chave </td>
+                                <td><p>A chave do item a ser removido.</p></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\Numenor\Excecao\Php\ArrayWrapper\ExcecaoChaveInexistente</dt>
+                            <dd><p>se a chave não existir no array.</p></dd>
+                                                                    </dl>
+                
+                                    <h4>Returns</h4>
+                    mixed
+                                            &mdash; <p>Item removido do array.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_criar" name="method_criar" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">criar()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">criar(integer  <span class="argument">$inicio</span>, integer  <span class="argument">$quantidadeItens</span>, mixed  <span class="argument">$item</span>) : array</pre>
+                <p><em>Cria um array preenchido com um único valor repetido $quantidadeItens vezes.</em></p>
+                <p>Ao contrário da função array_fill(), foi optado por não permitir que o índice seja negativo, nem que o número
+de itens seja menor do que 1.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$inicio </td>
+                                <td><p>Índice inicial do array gerado.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$quantidadeItens </td>
+                                <td><p>Número de itens do array gerado.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$item </td>
+                                <td><p>Valor colocado em todas as posições do array.</p></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\Numenor\Excecao\Php\ArrayWrapper\ExcecaoArrayFillIndiceInvalido</dt>
+                            <dd><p>se o $inicio informado for negativo.</p></dd>
+                                                    <dt>\Numenor\Excecao\Php\ArrayWrapper\ExcecaoArrayFillTamanhoInvalido</dt>
+                            <dd><p>se $quantidadeItens for um valor menor
+do que 1.</p></dd>
+                                                                    </dl>
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>O array gerado.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            static
+                        </th>
+                        <td>
+                                                                                            
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_dividir" name="method_dividir" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">dividir()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">dividir(array  <span class="argument">$array</span>, integer  <span class="argument">$tamanho</span>, boolean  <span class="argument">$preservarChaves = false</span>) : array</pre>
+                <p><em>Divide o array em pedaços menores.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array </td>
+                                <td><p>O array.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$tamanho </td>
+                                <td><p>Tamanho máximo dos pedaços do array. O último pedaço pode ser menor do que o tamanho indicado.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$preservarChaves </td>
+                                <td><p>Indica se os pedaços devem preservar as suas chaves originais.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>Array multidimensional contendo os pedaços do array.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_combinar" name="method_combinar" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">combinar()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">combinar(array  <span class="argument">$chaves</span>, array  <span class="argument">$valores</span>) : array</pre>
+                <p><em>Combina dois arrays em um único array, utilizando os valores do primeiro array informado como chaves e os valores
+do segundo array informado como valores no array resultante.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$chaves </td>
+                                <td><p>Array de chaves.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$valores </td>
+                                <td><p>Array de valores.</p></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\Numenor\Excecao\Php\ExcecaoArrayCombineTamanhosIncompativeis</dt>
+                            <dd><p>se os dois arrays informados não têm o
+mesmo tamanho.</p></dd>
+                                                                    </dl>
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>Combinação dos dois arrays informados.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_preencher" name="method_preencher" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">preencher()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">preencher(array  <span class="argument">$array</span>, integer  <span class="argument">$novoTamanho</span>, mixed  <span class="argument">$valor</span>) : array</pre>
+                <p><em>Preenche o array com um valor informado até o tamanho informado.</em></p>
+                <p>Se o $novoTamanho for um número positivo, os itens são acrescentados no final do array.</p>
+<p>Se o $novoTamanho for um número negativo, os itens são acrescentados no início do array.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array </td>
+                                <td><p>O array.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$novoTamanho </td>
+                                <td><p>Novo tamanho desejado para o array.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$valor </td>
+                                <td><p>Valor a ser inserido nas novas posições do array.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>O array preenchido com os novos valores.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_flip" name="method_flip" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">flip()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">flip(array  <span class="argument">$array</span>) : array</pre>
+                <p><em>Inverte o array de forma que as chaves tornem-se valores e vice-versa.</em></p>
+                <p>Como a função array_flip() não interrompe a execução caso os valores do array não possam ser usados como chave,
+apenas emite um warning, foi acrescentado um laço extra para verificar todos os itens do array e levantar uma
+exceção caso isso ocorra. Por essa razão, a implementação deste método pode não ser indicada para processamento
+de alta performance.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array </td>
+                                <td><p>O array.</p></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\Numenor\Excecao\ExcecaoArrayFlipTipoInvalido</dt>
+                            <dd><p>se qualquer um dos valores do array não poder ser
+convertido para um tipo que possa ser usado como chave do array invertido (string ou inteiro).</p></dd>
+                                                                    </dl>
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>Array com as chaves e valores invertidos.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_contarValores" name="method_contarValores" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">contarValores()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">contarValores(array  <span class="argument">$array</span>) : array</pre>
+                <p><em>Conta todos os valores do array e retorna a frequência de ocorrência de cada um deles.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array </td>
+                                <td><p>O array.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>Valores do array como chaves, e a frequência de ocorrência como valores.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_chaveMinuscula" name="method_chaveMinuscula" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">chaveMinuscula()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">chaveMinuscula(array  <span class="argument">$array</span>, \Numenor\Php\StringWrapper  <span class="argument">$stringWrapper</span>) : array</pre>
+                <p><em>Retorna uma cópia do array com os caracteres das suas chaves alterados para letras minúsculas.</em></p>
+                <p>Funciona para chaves com codificação UTF-8.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array </td>
+                                <td><p>O array.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td><a href="../classes/Numenor.Php.StringWrapper.html">\Numenor\Php\StringWrapper</a></td>
+                                <td>$stringWrapper </td>
+                                <td><p>Instância do objeto de encapsulamento das operações de strings.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>O array com as chaves alteradas.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_chaveMaiuscula" name="method_chaveMaiuscula" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">chaveMaiuscula()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">chaveMaiuscula(array  <span class="argument">$array</span>, \Numenor\Php\StringWrapper  <span class="argument">$stringWrapper</span>) : array</pre>
+                <p><em>Retorna uma cópia do array com os caracteres das suas chaves alterados para letras maiúsculas.</em></p>
+                <p>Funciona para chaves com codificação UTF-8.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array </td>
+                                <td><p>O array.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td><a href="../classes/Numenor.Php.StringWrapper.html">\Numenor\Php\StringWrapper</a></td>
+                                <td>$stringWrapper </td>
+                                <td><p>Instância do objeto de encapsulamento das operações de strings.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>O array com as chaves alteradas.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_interseccao" name="method_interseccao" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">interseccao()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">interseccao(array  <span class="argument">$array1</span>, array  <span class="argument">$array2</span>) : array</pre>
+                <p><em>Retorna a intersecção entre dois arrays, ou seja, todos os elementos que estão presentes em ambos os arrays,
+preservando as chaves dos mesmos.</em></p>
+                <p>Caso um elemento tenha chaves diferentes nos dois arrays, a chave mantida é a chave do primeiro array.
+Ao contrário da função array_intersect(), este método trabalha com apenas dois arrays de cada vez.</p>
+<p><code>
+$array1 = array('A', 'B', 'C');
+$array2 = array('first' =&gt; 'A', 'second' =&gt; 'D', 'third' =&gt; 'C');
+\Numenor\Php\ArrayWrapper::interseccao($array1, $array2);
+// ['A', 'C']
+</code></p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array1 </td>
+                                <td><p>Primeiro array.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array2 </td>
+                                <td><p>Segundo array.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>Intersecção dos dois arrays comparados.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_interseccaoChaves" name="method_interseccaoChaves" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">interseccaoChaves()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">interseccaoChaves(array  <span class="argument">$array1</span>, array  <span class="argument">$array2</span>) : array</pre>
+                <p><em>Retorna a intersecção de chaves entre dois arrays, ou seja, todos as chaves que estão presentes em ambos os
+arrays, preservando os valores dos mesmos.</em></p>
+                <p>Caso uma chave tenha valores diferentes nos dois arrays, o valor mantido é o valor do primeiro array.</p>
+<p>Ao contrário da função array_intersect_key(), este método trabalha com apenas dois arrays de cada vez.</p>
+<p><code>
+$array1 = array('A', 'second' =&gt; 'B', 'third' =&gt; 'C');
+$array2 = array('first' =&gt; 'A', 'second' =&gt; 'D', 'final' =&gt; 'C');
+\Numenor\Php\ArrayWrapper::interseccaoChaves($array1, $array2);
+// ['A', 'second' =&gt; 'B']
+</code></p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array1 </td>
+                                <td><p>Primeiro array.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array2 </td>
+                                <td><p>Segundo array.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>Intersecção da chaves dos dois arrays comparados.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_intersecacaoAssociativa" name="method_intersecacaoAssociativa" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">intersecacaoAssociativa()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">intersecacaoAssociativa(array  <span class="argument">$array1</span>, array  <span class="argument">$array2</span>) : array</pre>
+                <p><em>Retorna a intersecção entre o dois arrays, ou seja, todos os elementos que estão presentes em ambos os arrays,
+considerando tanto os valores quanto as chaves do mesmo.</em></p>
+                <p>Ao contrário da função array_intersect_assoc(), este método trabalha com apenas dois arrays de cada vez.</p>
+<p><code>
+$array1 = array('A', 'B', 'C');
+$array2 = array('A', 'second' =&gt; 'D', 'third' =&gt; 'C');
+\Numenor\Php\ArrayWrapper::interseccaoAssociativa($array1, $array2);
+// ['A']
+</code></p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array1 </td>
+                                <td><p>Primeiro array.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array2 </td>
+                                <td><p>Segundo array.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>Array contendo a intersecção dos dois arrays comparados.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_diferenca" name="method_diferenca" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">diferenca()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">diferenca(array  <span class="argument">$array1</span>, array  <span class="argument">$array2</span>) : array</pre>
+                <p><em>Retorna a diferença entre o primeiro e o segundo array, ou seja, todos os elementos do primeiro array que não
+estão presentes no segundo array.</em></p>
+                <p>Ao contrário da função array_diff(), este método trabalha com apenas dois arrays de cada vez.</p>
+<p><code>
+$array1 = array('A', 'B', 'C');
+$array2 = array('first' =&gt; 'A', 'second' =&gt; 'D', 'third' =&gt; 'C');
+\Numenor\Php\ArrayWrapper::diferenca($array1, $array2);
+// ['B']
+</code></p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array1 </td>
+                                <td><p>Primeiro array.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array2 </td>
+                                <td><p>Segundo array.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>Array contendo a diferença entre os dois arrays comparados.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_diferencaAssociativa" name="method_diferencaAssociativa" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">diferencaAssociativa()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">diferencaAssociativa(array  <span class="argument">$array1</span>, array  <span class="argument">$array2</span>) : array</pre>
+                <p><em>Retorna a diferença entre o array instanciado e o array informado, ou seja, todos os elementos do primeiro array
+que não estão presentes no segundo array, considerando tanto os valores quanto as chaves do mesmo.</em></p>
+                <p>Ao contrário da função array_diff_assoc(), este método trabalha com apenas dois arrays de cada vez.</p>
+<p><code>
+$array1 = array('A', 'B', 'C');
+$array2 = array('A', 'second' =&gt; 'D', 'third' =&gt; 'C');
+\Numenor\Php\ArrayWrapper::diferencaAssociativa($array1, $array2);
+// ['B', 'C']
+</code></p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array1 </td>
+                                <td><p>Primeiro array.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array2 </td>
+                                <td><p>Segundo array.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>Array contendo a diferença entre os dois arrays comparados.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_produto" name="method_produto" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">produto()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">produto(array  <span class="argument">$array</span>) : \Numenor\Php\number</pre>
+                <p><em>Calcula o produto de todos os valores do array.</em></p>
+                <p><code>
+$array = array(2, 4, 6);
+\Numenor\Php\ArrayWrapper::produto($array);
+// 48
+</code></p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array </td>
+                                <td><p>O array.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \Numenor\Php\number
+                                            &mdash; <p>O produto dos valores do array.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_filtrar" name="method_filtrar" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">filtrar()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">filtrar(array  <span class="argument">$array</span>, callable  <span class="argument">$funcaoFiltro</span>, integer  <span class="argument">$flag</span>) : array</pre>
+                <p><em>Filtra o array através de uma função de callback.</em></p>
+                <p>A função de callback é chamada para cada item do array; se ela retornar true, o item é incluído no array filtrado.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array </td>
+                                <td><p>O array.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>callable</td>
+                                <td>$funcaoFiltro </td>
+                                <td><p>Função aplicada em cada item do array filtrado.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$flag </td>
+                                <td><p>Flag determinando quais parâmetros são enviados para a função de callback. Se não for informado,
+o valor do item é informado; caso seja informado, deve ser uma das seguintes constantes: ARRAY_FILTER_USE_KEY
+(envia a chave do valor como único parâmetro) ou ARRAY_FILTER_USE_BOTH (envia o valor e a chave como parâmetros).</p></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\Numenor\Excecao\ExcecaoArrayFilterFlagInvalida</dt>
+                            <dd><p>se o parâmetro $flag for informado com um valor inválido.</p></dd>
+                                                                    </dl>
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>O array filtrado.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_aplicarCallback" name="method_aplicarCallback" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">aplicarCallback()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">aplicarCallback(array  <span class="argument">$array</span>, callable  <span class="argument">$callback</span>) : array</pre>
+                <p><em>Aplica uma função de callback em cada item do array.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array </td>
+                                <td><p>O array.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>callable</td>
+                                <td>$callback </td>
+                                <td><p>Função de callback aplicada em cada item do array. A função deve aceitar um parâmetro,
+correspondente ao item do array sendo percorrido.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>O array alterado.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_mesclar" name="method_mesclar" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">mesclar()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">mesclar(array  <span class="argument">$array1</span>, array  <span class="argument">$array2</span>) : array</pre>
+                <p><em>Mescla dois arrays.</em></p>
+                <p>Caso uma mesma chave esteja presente em ambos os arrays, então o array resultante terá o valor do segundo array
+nesta chave.</p>
+<p>Ao contrário da função array_merge(), este método trabalha com apenas dois arrays de cada vez.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array1 </td>
+                                <td><p>Primeiro array.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array2 </td>
+                                <td><p>Segundo array.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>O array resultante da mescla dos dois arrays.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_ordenar" name="method_ordenar" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">ordenar()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">ordenar(array  <span class="argument">$array</span>, string  <span class="argument">$ordem = self::ASC</span>, integer  <span class="argument">$tipoOrdenacao = \SORT_STRING</span>) : array</pre>
+                <p><em>Ordena o array, utilizando a implementação nativa do PHP para o algoritmo Quicksort.</em></p>
+                <p>Ao contrário da maioria das funções de array da biblioteca padrão, a função sort() não retorna uma cópia do array
+informado; ao invés disso, o parâmetro é passado por referência, e a função retorna um valor booleano. Para fins
+de padronização, este método retorna uma cópia do array.</p>
+<p>ATENÇÃO: as chaves do array ordenado não são preservadas; o array é reindexado com chaves numéricas, o que pode
+ou não ser o comportamento desejado.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array </td>
+                                <td><p>O array.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$ordem </td>
+                                <td><p>Indica se a ordenação deve ser em ordem crescente ou decrescente.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$tipoOrdenacao </td>
+                                <td><p>Indica o tipo de comparação feita entre os valores:</p>
+<ul>
+<li>SORT_REGULAR não faz conversão de tipo entre os valores (podendo levar a resultados inesperados se os
+tipos dos valores são diferentes),</li>
+<li>SORT_NUMERIC converte os valores para números para fazer a ordenação</li>
+<li>SORT_STRING converte os valores para texto</li>
+<li>SORT_LOCALE_STRING é igual a SORT_STRING, mas usando o locale definido na configuração do PHP</li>
+<li>SORT_NATURAL faz a ordenação como &quot;string em ordem natural&quot;, ou seja, algo como &quot;1, 2, 10, 11&quot;.</li>
+</ul></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\Numenor\Excecao\Php\ArrayWrapper\ExcecaoOrdemInvalida</dt>
+                            <dd><p>se a ordem não corresponde a uma das ordens
+aceitas (crescente ou
+decrescente).</p></dd>
+                                                    <dt>\Numenor\Excecao\Php\ArrayWrapper\ExcecaoTipoOrdemInvalida</dt>
+                            <dd><p>se o tipo de ordenação não corresponde a um
+dos tipos de ordenação aceitos.</p></dd>
+                                                                    </dl>
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>O array ordenado.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_ordenarAssociativo" name="method_ordenarAssociativo" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">ordenarAssociativo()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">ordenarAssociativo(array  <span class="argument">$array</span>, string  <span class="argument">$ordem = self::ASC</span>, integer  <span class="argument">$tipoOrdenacao = SORT_STRING</span>) : array</pre>
+                <p><em>Ordena o array, utilizando a implementação nativa do PHP para o algoritmo Quicksort, e mantendo a associação
+entre chaves e valores.</em></p>
+                <p>Ao contrário da maioria das funções de array da biblioteca padrão, a função sort() não retorna uma cópia do array
+informado; ao invés disso, o parâmetro é passado por referência, e a função retorna um valor booleano.</p>
+<p>Para fins de padronização, este método retorna uma cópia do array.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array </td>
+                                <td><p>O array.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$ordem </td>
+                                <td><p>Indica se a ordenação deve ser em ordem crescente ou decrescente.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$tipoOrdenacao </td>
+                                <td><p>Indica o tipo de comparação feita entre os valores:</p>
+<ul>
+<li>SORT_REGULAR não faz conversão de tipo entre os valores (podendo levar a resultados inesperados se os
+tipos dos valores são diferentes),</li>
+<li>SORT_NUMERIC converte os valores para números para fazer a ordenação</li>
+<li>SORT_STRING converte os valores para texto</li>
+<li>SORT_LOCALE_STRING é igual a SORT_STRING, mas usando o locale definido na configuração do PHP</li>
+<li>SORT_NATURAL faz a ordenação como &quot;string em ordem natural&quot;, ou seja, algo como &quot;1, 2, 10, 11&quot;.</li>
+</ul></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\Numenor\Excecao\Php\ArrayWrapper\ExcecaoOrdemInvalida</dt>
+                            <dd><p>se a ordem não corresponde a uma das ordens
+aceitas (crescente ou decrescente).</p></dd>
+                                                    <dt>\Numenor\Excecao\Php\ArrayWrapper\ExcecaoTipoOrdemInvalida</dt>
+                            <dd><p>se o tipo de ordenação não corresponde a um
+dos tipos de ordenação aceitos.</p></dd>
+                                                                    </dl>
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>O array ordenado, com as suas chaves preservadas.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_ordenarChave" name="method_ordenarChave" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">ordenarChave()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">ordenarChave(array  <span class="argument">$array</span>, string  <span class="argument">$ordem = self::ASC</span>, integer  <span class="argument">$tipoOrdenacao = SORT_STRING</span>) : array</pre>
+                <p><em>Ordena o array pelas suas chaves, utilizando a implementação nativa do PHP para o algoritmo Quicksort.</em></p>
+                <p>Ao contrário da maioria das funções de array da biblioteca padrão, a função ksort() não retorna uma cópia do
+array informado; ao invés disso, o parâmetro é passado por referência, e a função retorna um valor booleano.</p>
+<p>Para fins de padronização, este método retorna uma cópia do array.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array </td>
+                                <td><p>O array.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$ordem </td>
+                                <td><p>Indica se a ordenação deve ser em ordem crescente ou decrescente.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$tipoOrdenacao </td>
+                                <td><p>Indica o tipo de comparação feita entre os valores:</p>
+<ul>
+<li>SORT_REGULAR não faz conversão de tipo entre os valores (podendo levar a resultados inesperados se os
+tipos dos valores são diferentes),</li>
+<li>SORT_NUMERIC converte os valores para números para fazer a ordenação</li>
+<li>SORT_STRING converte os valores para texto</li>
+<li>SORT_LOCALE_STRING é igual a SORT_STRING, mas usando o locale definido na configuração do PHP</li>
+<li>SORT_NATURAL faz a ordenação como &quot;string em ordem natural&quot;, ou seja, algo como &quot;1, 2, 10, 11&quot;.</li>
+</ul></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\Numenor\Excecao\Php\ArrayWrapper\ExcecaoOrdemInvalida</dt>
+                            <dd><p>se a ordem não corresponde a uma das ordens
+aceitas (crescente ou decrescente).</p></dd>
+                                                    <dt>\Numenor\Excecao\Php\ArrayWrapper\ExcecaoTipoOrdemInvalida</dt>
+                            <dd><p>se o tipo de ordenação não corresponde a um
+dos tipos de ordenação aceitos.</p></dd>
+                                                                    </dl>
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>O array ordenado pelas chaves.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_validarTipoChave" name="method_validarTipoChave" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">validarTipoChave()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">validarTipoChave(mixed  <span class="argument">$chave</span>) : boolean</pre>
+                <p><em>Valida o tipo de uma chave de array.</em></p>
+                <p>Uma chave é considerada válida se ela for um inteiro, uma string, ou um objeto representável como uma string
+(ou seja, um objeto que implemente o método __toString).</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$chave </td>
+                                <td><p>A chave a ser validada.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>TRUE se a chave é de um tipo válido, FALSE caso contrário.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">ArrayWrapper.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/Php\ArrayWrapper.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/Numenor.html">\Numenor</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on August 13th, 2016 at 21:29.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>

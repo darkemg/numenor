@@ -18,8 +18,23 @@ use Numenor\Php\StringWrapper;
 abstract class Controle
 {
 	
+	/**
+	 * Define que o comportamento padrão da inclusão de assets será de ambiente de desenvolvimento.
+	 * 
+	 * @var string
+	 */
 	const COMPORTAMENTO_PADRAO_DEV = 'dev';
+	/**
+	 * Define que o comportamento padrão da inclusão de assets será de ambiente de homologação.
+	 *
+	 * @var string
+	 */
 	const COMPORTAMENTO_PADRAO_HOMOLOG = 'homolog';
+	/**
+	 * Define que o comportamento padrão da inclusão de assets será de ambiente de produção.
+	 * 
+	 * @var string
+	 */
 	const COMPORTAMENTO_PADRAO_PROD = 'prod';
 	
 	/**
@@ -39,7 +54,7 @@ abstract class Controle
 	/**
 	 * Diretório onde os arquivos processados (minificados, concatenados, gzipados, etc.) serão salvos.
 	 * 
-	 * Este diretório DEVE ter o acesso público liberado (normalmente, algo como <DIR_ROOT>/public/assets/<TIPO>/), ou
+	 * Este diretório DEVE ter o acesso público liberado (normalmente, algo como [DIR_ROOT]/public/assets/[TIPO]/), ou
 	 * os arquivos não funcionarão ao serem incluídos como assets na página.
 	 * 
 	 * @access protected
@@ -49,7 +64,7 @@ abstract class Controle
 	/**
 	 * URL base de inclusão dos assets.
 	 * 
-	 * Este valor será utilizado para gerar os snippets de inclusão dos assets (tags <script>, <link>, <img>, etc.), e
+	 * Este valor será utilizado para gerar os snippets de inclusão dos assets (tags [script], [link], [img], etc.), e
 	 * normalmente reflete o diretório de output dos assets processados.
 	 * 
 	 * @access protected

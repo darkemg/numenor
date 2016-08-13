@@ -30,7 +30,17 @@ use Numenor\Excecao\Php\ArrayWrapper as ExcecaoArrayWrapper;
 class ArrayWrapper
 {
 	
+	/**
+	 * Identificador de ordenação crescente.
+	 * 
+	 * @var string
+	 */
 	const ORDER_ASC = 'ASC';
+	/**
+	 * Identificador de ordenação decrescente.
+	 *
+	 * @var string
+	 */
 	const ORDER_DESC = 'DESC';
 	
 	/**
@@ -131,11 +141,11 @@ class ArrayWrapper
 	 * @param string $colunaChave Nome da chave representando a coluna dos valores desejados.
 	 * @param string $chaveIndice Nome da chave da coluna cujos valores serão usados como chave dos array
 	 * resultante.
-	 * @throws \Numenor\Excecap\ArrayWrapper\ExcecaoArrayColumnNumeroParametros se o número de parâmetros informados
+	 * @throws \Numenor\Excecao\ArrayWrapper\ExcecaoArrayColumnNumeroParametros se o número de parâmetros informados
 	 * é inferior ao mínimo necessário (1).
-	 * @throws \Numenor\Excecap\ArrayWrapper\ExcecaoArrayColumnChaveInvalida se o parâmetro $columnKey não é do tipo
+	 * @throws \Numenor\Excecao\ArrayWrapper\ExcecaoArrayColumnChaveInvalida se o parâmetro $columnKey não é do tipo
 	 * {String}, ou não pode ser convertido para uma string.
-	 * @throws \Numenor\Excecap\ArrayWrapper\ExcecaoArrayColumnIndiceInvalido se o parâmetro $indexKey foi informado
+	 * @throws \Numenor\Excecao\ArrayWrapper\ExcecaoArrayColumnIndiceInvalido se o parâmetro $indexKey foi informado
 	 * e não é do tipo {String}, ou não pode ser convertido para uma string.
 	 * @return array Lista de todos os valores da coluna correspondente.
 	 */

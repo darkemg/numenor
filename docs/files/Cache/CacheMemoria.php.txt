@@ -1,0 +1,55 @@
+<?php
+namespace Numenor\Cache;
+use Zend\Cache\StorageFactory;
+
+/**
+ * Classe de controle do adaptador de cache em memória do framework Zend2
+ *
+ * Este tipo de cache salva o registro como um array na memória do servidor.
+ *
+ * Devido a este comportamento, o cache é volátil; é persistido apenas até o final da execução do script, como qualquer
+ * variável do PHP, sendo recomendado apenas para armazenar dados que não necessitem de persistência, mas que sejam
+ * custosos de serem gerados repetidas vezes.
+ *
+ * @author Darke M. Goulart <darkemg@users.noreply.github.com>
+ * @package Numenor\Cache
+ */
+class CacheMemoria extends CacheAbstrato
+{
+	
+	/**
+	 * Limite de memória, em bytes, que o cache pode atingir
+	 * 
+	 * Este valor não é apenas o valor do cache em si, e sim a soma de toda a memória consumida pelo script PHP.
+	 * 
+	 * @access private
+	 * @var int
+	 */
+	private $limiteMemoria;
+	
+	/**
+	 * {@inheritDoc}
+	 * @param int $limiteMemoria Limite de memória, em bytes, que o cache pode fazer o script PHP atingir.
+	 */
+	public function __construct(string $namespace, int $duracao, int $limiteMemoria)
+	{
+		parent::__construct($namespace, $duracao);
+		$this->limiteMemoria = $limiteMemoria;
+		$this->adapter = StorageFactory::factory([
+			'adapter' => [
+				'name' => 'memory',
+				'options' => [
+					'namespace' => $this->namespace,
+					'ttl' => $this->duracao,
+					'namespace_separator' => '$',
+					'memory_limit' => $limiteMemoria
+				]
+			],
+			'plugins' => [
+				'exception_handler' => [
+					'throw_exceptions' => true
+				]
+			]
+		]);
+	}	
+}

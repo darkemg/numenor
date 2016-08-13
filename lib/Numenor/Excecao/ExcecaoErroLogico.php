@@ -14,6 +14,11 @@ namespace Numenor\Excecao;
 class ExcecaoErroLogico extends ExcecaoAbstrata
 {
 	
+	/**
+	 * Código de erro padrão relacionado com a exceção.
+	 * 
+	 * @var int
+	 */
 	const DEFAULT_CODE = 200;
 	
 	/**

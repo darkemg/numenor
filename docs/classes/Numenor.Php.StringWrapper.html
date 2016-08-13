@@ -1,0 +1,2040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>API Documentation</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">API Documentation</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/Numenor.html">\Numenor</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">88</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-233020684"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-233020684" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-973397822"></a>
+                                <a href="../namespaces/Numenor.html" style="margin-left: 30px; padding-left: 0">Numenor</a>
+            </div>
+            <div id="namespace-973397822" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-772462733"></a>
+                                <a href="../namespaces/Numenor.Autenticacao.html" style="margin-left: 30px; padding-left: 0">Autenticacao</a>
+            </div>
+            <div id="namespace-772462733" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Numenor.Autenticacao.Checksum.html">Checksum</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-158901682"></a>
+                                <a href="../namespaces/Numenor.Cache.html" style="margin-left: 30px; padding-left: 0">Cache</a>
+            </div>
+            <div id="namespace-158901682" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Numenor.Cache.CacheAbstrato.html">CacheAbstrato</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Cache.CacheDisco.html">CacheDisco</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Cache.CacheMemoria.html">CacheMemoria</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1063951802"></a>
+                                <a href="../namespaces/Numenor.Configuracao.html" style="margin-left: 30px; padding-left: 0">Configuracao</a>
+            </div>
+            <div id="namespace-1063951802" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Numenor.Configuracao.Biblioteca.html">Biblioteca</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1868142871"></a>
+                                <a href="../namespaces/Numenor.Debug.html" style="margin-left: 30px; padding-left: 0">Debug</a>
+            </div>
+            <div id="namespace-1868142871" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Numenor.Debug.CronometroExecucao.html">CronometroExecucao</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Debug.Formatacao.html">Formatacao</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Debug.Output.html">Output</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-53219724"></a>
+                                <a href="../namespaces/Numenor.Excecao.html" style="margin-left: 30px; padding-left: 0">Excecao</a>
+            </div>
+            <div id="namespace-53219724" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-381787795"></a>
+                                <a href="../namespaces/Numenor.Excecao.Php.html" style="margin-left: 30px; padding-left: 0">Php</a>
+            </div>
+            <div id="namespace-381787795" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1910499087"></a>
+                                <a href="../namespaces/Numenor.Excecao.Php.ArrayWrapper.html" style="margin-left: 30px; padding-left: 0">ArrayWrapper</a>
+            </div>
+            <div id="namespace-1910499087" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoArray.html">ExcecaoArray</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoArrayCombineTamanhosIncompativeis.html">ExcecaoArrayCombineTamanhosIncompativeis</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoArrayFillIndiceInvalido.html">ExcecaoArrayFillIndiceInvalido</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoArrayFillTamanhoInvalido.html">ExcecaoArrayFillTamanhoInvalido</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoArrayFilterFlagInvalida.html">ExcecaoArrayFilterFlagInvalida</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoArrayFlipTipoInvalido.html">ExcecaoArrayFlipTipoInvalido</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoArrayPadTamanhoInvalido.html">ExcecaoArrayPadTamanhoInvalido</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoChaveInexistente.html">ExcecaoChaveInexistente</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoChaveInvalida.html">ExcecaoChaveInvalida</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoItemNaoEncontrado.html">ExcecaoItemNaoEncontrado</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoOrdemInvalida.html">ExcecaoOrdemInvalida</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoTipoOrdemInvalida.html">ExcecaoTipoOrdemInvalida</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-84116943"></a>
+                                <a href="../namespaces/Numenor.Excecao.Php.StringWrapper.html" style="margin-left: 30px; padding-left: 0">StringWrapper</a>
+            </div>
+            <div id="namespace-84116943" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.StringWrapper.ExcecaoDecodificacaoInvalida.html">ExcecaoDecodificacaoInvalida</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.StringWrapper.ExcecaoHashInvalido.html">ExcecaoHashInvalido</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoAbstrata.html">ExcecaoAbstrata</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoAlgoritmoHashInvalido.html">ExcecaoAlgoritmoHashInvalido</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoArquivoConfiguracaoInvalido.html">ExcecaoArquivoConfiguracaoInvalido</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoAssetDuplicado.html">ExcecaoAssetDuplicado</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoAssetNaoExiste.html">ExcecaoAssetNaoExiste</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoCacheDiscoDirEscrita.html">ExcecaoCacheDiscoDirEscrita</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoCacheDiscoDirNaoDefinido.html">ExcecaoCacheDiscoDirNaoDefinido</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoChecksumChaveInvalida.html">ExcecaoChecksumChaveInvalida</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoChecksumSemChave.html">ExcecaoChecksumSemChave</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoErroLogico.html">ExcecaoErroLogico</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoErroSistema.html">ExcecaoErroSistema</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoErroUso.html">ExcecaoErroUso</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-172392370"></a>
+                                <a href="../namespaces/Numenor.Html.html" style="margin-left: 30px; padding-left: 0">Html</a>
+            </div>
+            <div id="namespace-172392370" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                            <li class="trait"><a href="../classes/Numenor.Html.Remoto.html">Remoto</a></li>
+                                                                            <li class="class"><a href="../classes/Numenor.Html.Asset.html">Asset</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Html.Controle.html">Controle</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Html.ControleCss.html">ControleCss</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Html.ControleJavascript.html">ControleJavascript</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Html.ConversorCaminho.html">ConversorCaminho</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Html.Css.html">Css</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Html.CssRemoto.html">CssRemoto</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Html.Javascript.html">Javascript</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Html.JavascriptRemoto.html">JavascriptRemoto</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-749082003"></a>
+                                <a href="../namespaces/Numenor.Php.html" style="margin-left: 30px; padding-left: 0">Php</a>
+            </div>
+            <div id="namespace-749082003" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Numenor.Php.ArrayWrapper.html">ArrayWrapper</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Php.StringWrapper.html">StringWrapper</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/Numenor.Php.html">\Numenor\Php</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\Numenor\Php</small>StringWrapper</h1>
+                    <p><em>Wrapper para as funções de string da biblioteca padrão do PHP.</em></p>
+                    <p>Na minha opinião (e na de muitos desenvolvedores, para falar a verdade), um dos piores aspectos do desenvolvimento em
+PHP é a nomenclatura das funções da biblioteca padrão. Muitas funções recebem nomes absolutamente idiotas por razões
+históricas (basicamente, &quot;o nome da função C que executa isso é esse, vamos usar o mesmo nome&quot;), o que acabou não só
+trazendo antigos hábitos de nomenclatura para dentro de uma linguagem que se pretende moderna, como ainda introduziu
+alguns novos maus hábitos de nomenclatura novos. E isso sem falar em problemas com ordem de parâmetros inconsistente,
+comportamentos inconsistentes entre funções que deveriam ser parecidas, etc.</p>
+<p>O caso das funções de string é bastante emblemático, pois há exemplos de praticamente todos esses problemas. O site
+PHP Sadness (<a href="http://phpsadness.com">http://phpsadness.com</a>) faz um bom trabalho de listar os casos, mas basta olhar para coisas como nl2br(),
+parse_str() e explode() e notar que não há padrão algum na forma como essas funções são nomeadas, ou seus parâmetros
+ordenados em comparação com outras funções semelhantes.</p>
+<p>Esta classe visa prover uma interface normalizada e uniforme para estas funções de string, de modo que o
+desenvolvedor possa facilmente autocompletá-las utilizando uma IDE minimamente decente sem ter que ficar lembrando ou
+consultando a documentação do PHP para lembrar exatamente como determinada função funciona. Eu acredito que os
+beneficios de clareza e legibilidade superem o custo de overhead de uma chamada a mais de função para executar a
+operação.</p>
+<p>No desenvolvimento desta parte da biblioteca, meu objetivo foi manter um equilíbrio entre o padrão minimalista de
+nomes do PHP nativo e a ridícula verbosidade de nomes estilo Java. Abreviações, quando fazem sentido, foram
+mantidas.</p>
+<p>Quando possível, a versão mb_* (multibyte) de uma função foi preferida à versão normal que só funciona com conjuntos
+de caracteres restritos, porque suporte a Unicode deveria ser uma preocupação crucial da linguagem. Da mesma forma,
+funções que precisam de algum tratamento no input para produzir um output adequado em Unicode já implementam estes
+tratamentos.</p>
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#method___construct" class="">__construct()</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#method_binarioParaHexadecimal" class="">binarioParaHexadecimal()</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#method_hexadecimalParaBinary" class="">hexadecimalParaBinary()</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#method_caracterAscii" class="">caracterAscii()</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#method_asciiCaracter" class="">asciiCaracter()</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#method_hashSenha" class="">hashSenha()</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#method_separar" class="">separar()</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#method_unir" class="">unir()</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#method_substituir" class="">substituir()</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#method_regexBusca" class="">regexBusca()</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#method_regexSubstituir" class="">regexSubstituir()</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#method_regexSubstituirCallback" class="">regexSubstituirCallback()</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#method_codificarHtmlEntities" class="">codificarHtmlEntities()</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#method_decodificarHtmlEntities" class="">decodificarHtmlEntities()</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#method_codificarBase64" class="">codificarBase64()</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#method_decodificarBase64" class="">decodificarBase64()</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#method_trim" class="">trim()</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#method_reduzir" class="">reduzir()</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#method_primeiraLetraMinuscula" class="">primeiraLetraMinuscula()</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#method_primeiraLetraMaiuscula" class="">primeiraLetraMaiuscula()</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#method_converterMinusculas" class="">converterMinusculas()</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#method_converterMaiusculas" class="">converterMaiusculas()</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#method_converterPalavrasMaiusculas" class="">converterPalavrasMaiusculas()</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#method_quebrarLinha" class="">quebrarLinha()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No public properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#constant_REGEX_MULTILINE" class="">REGEX_MULTILINE</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#constant_REGEX_IGNORE_WS" class="">REGEX_IGNORE_WS</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#constant_REGEX_CASE_INSENSITIVE" class="">REGEX_CASE_INSENSITIVE</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#constant_REGEX_POSIX" class="">REGEX_POSIX</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#constant_REGEX_MODE_JAVA" class="">REGEX_MODE_JAVA</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#constant_REGEX_MODE_GNU" class="">REGEX_MODE_GNU</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#constant_REGEX_MODE_GREP" class="">REGEX_MODE_GREP</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#constant_REGEX_MODE_EMACS" class="">REGEX_MODE_EMACS</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#constant_REGEX_MODE_RUBY" class="">REGEX_MODE_RUBY</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#constant_REGEX_MODE_PERL" class="">REGEX_MODE_PERL</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#constant_REGEX_MODE_POSIXBASIC" class="">REGEX_MODE_POSIXBASIC</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#constant_REGEX_MODE_POSIXEXTENDED" class="">REGEX_MODE_POSIXEXTENDED</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#constant_TRIM_LEFT" class="">TRIM_LEFT</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#constant_TRIM_RIGHT" class="">TRIM_RIGHT</a><br />
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#constant_TRIM_BOTH" class="">TRIM_BOTH</a><br />
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <a href="../classes/Numenor.Php.StringWrapper.html#method_removerDelimitadorRegex" class="">removerDelimitadorRegex()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No protected properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <em>No private methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No private properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/Php.StringWrapper.html"><div class="path-wrapper">Php\StringWrapper.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Numenor\Php</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                    <div class="namespace-wrapper">\Numenor\Php\StringWrapper</div>
+                            </dd>
+
+                        
+                        
+                        
+                        
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr>
+                            <th>
+                                author
+                            </th>
+                            <td>
+                                                                    <p>Darke M. Goulart <a href="mailto:darkemg@users.noreply.github.com">darkemg@users.noreply.github.com</a></p>
+                                                            </td>
+                        </tr>
+                                        </table>
+                </aside>
+            </div>
+
+                                    <a id="constants" name="constants"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Constants</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_REGEX_MULTILINE" name="constant_REGEX_MULTILINE" class="anchor"></a>
+            <article id="constant_REGEX_MULTILINE" class="constant">
+                <h3 class="">REGEX_MULTILINE</h3>
+                <pre class="signature">REGEX_MULTILINE</pre>
+                <p><em>Parâmetro de expressão regular: múltiplas linhas.</em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_REGEX_IGNORE_WS" name="constant_REGEX_IGNORE_WS" class="anchor"></a>
+            <article id="constant_REGEX_IGNORE_WS" class="constant">
+                <h3 class="">REGEX_IGNORE_WS</h3>
+                <pre class="signature">REGEX_IGNORE_WS</pre>
+                <p><em>Parâmetro de expressão regular: ignorar espaços em branco.</em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_REGEX_CASE_INSENSITIVE" name="constant_REGEX_CASE_INSENSITIVE" class="anchor"></a>
+            <article id="constant_REGEX_CASE_INSENSITIVE" class="constant">
+                <h3 class="">REGEX_CASE_INSENSITIVE</h3>
+                <pre class="signature">REGEX_CASE_INSENSITIVE</pre>
+                <p><em>Parâmetro de expressão regular: ignorar maiúsculas.</em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_REGEX_POSIX" name="constant_REGEX_POSIX" class="anchor"></a>
+            <article id="constant_REGEX_POSIX" class="constant">
+                <h3 class="">REGEX_POSIX</h3>
+                <pre class="signature">REGEX_POSIX</pre>
+                <p><em>Parâmetro de expressão regular: utilizar modo Posix.</em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_REGEX_MODE_JAVA" name="constant_REGEX_MODE_JAVA" class="anchor"></a>
+            <article id="constant_REGEX_MODE_JAVA" class="constant">
+                <h3 class="">REGEX_MODE_JAVA</h3>
+                <pre class="signature">REGEX_MODE_JAVA</pre>
+                <p><em>Parâmetro de expressão regular: utilizar modo Java.</em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_REGEX_MODE_GNU" name="constant_REGEX_MODE_GNU" class="anchor"></a>
+            <article id="constant_REGEX_MODE_GNU" class="constant">
+                <h3 class="">REGEX_MODE_GNU</h3>
+                <pre class="signature">REGEX_MODE_GNU</pre>
+                <p><em>Parâmetro de expressão regular: utilizar modo GNU.</em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_REGEX_MODE_GREP" name="constant_REGEX_MODE_GREP" class="anchor"></a>
+            <article id="constant_REGEX_MODE_GREP" class="constant">
+                <h3 class="">REGEX_MODE_GREP</h3>
+                <pre class="signature">REGEX_MODE_GREP</pre>
+                <p><em>Parâmetro de expressão regular: utilizar modo grep.</em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_REGEX_MODE_EMACS" name="constant_REGEX_MODE_EMACS" class="anchor"></a>
+            <article id="constant_REGEX_MODE_EMACS" class="constant">
+                <h3 class="">REGEX_MODE_EMACS</h3>
+                <pre class="signature">REGEX_MODE_EMACS</pre>
+                <p><em>Parâmetro de expressão regular: utilizar modo Emacs.</em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_REGEX_MODE_RUBY" name="constant_REGEX_MODE_RUBY" class="anchor"></a>
+            <article id="constant_REGEX_MODE_RUBY" class="constant">
+                <h3 class="">REGEX_MODE_RUBY</h3>
+                <pre class="signature">REGEX_MODE_RUBY</pre>
+                <p><em>Parâmetro de expressão regular: utilizar modo Ruby.</em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_REGEX_MODE_PERL" name="constant_REGEX_MODE_PERL" class="anchor"></a>
+            <article id="constant_REGEX_MODE_PERL" class="constant">
+                <h3 class="">REGEX_MODE_PERL</h3>
+                <pre class="signature">REGEX_MODE_PERL</pre>
+                <p><em>Parâmetro de expressão regular: utilizar modo Perl.</em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_REGEX_MODE_POSIXBASIC" name="constant_REGEX_MODE_POSIXBASIC" class="anchor"></a>
+            <article id="constant_REGEX_MODE_POSIXBASIC" class="constant">
+                <h3 class="">REGEX_MODE_POSIXBASIC</h3>
+                <pre class="signature">REGEX_MODE_POSIXBASIC</pre>
+                <p><em>Parâmetro de expressão regular: utilizar modo Posix Basic.</em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_REGEX_MODE_POSIXEXTENDED" name="constant_REGEX_MODE_POSIXEXTENDED" class="anchor"></a>
+            <article id="constant_REGEX_MODE_POSIXEXTENDED" class="constant">
+                <h3 class="">REGEX_MODE_POSIXEXTENDED</h3>
+                <pre class="signature">REGEX_MODE_POSIXEXTENDED</pre>
+                <p><em>Parâmetro de expressão regular: utilizar modo Posix Extended.</em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_TRIM_LEFT" name="constant_TRIM_LEFT" class="anchor"></a>
+            <article id="constant_TRIM_LEFT" class="constant">
+                <h3 class="">TRIM_LEFT</h3>
+                <pre class="signature">TRIM_LEFT</pre>
+                <p><em>Limpar string à esquerda.</em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_TRIM_RIGHT" name="constant_TRIM_RIGHT" class="anchor"></a>
+            <article id="constant_TRIM_RIGHT" class="constant">
+                <h3 class="">TRIM_RIGHT</h3>
+                <pre class="signature">TRIM_RIGHT</pre>
+                <p><em>Limpar string à direita.</em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_TRIM_BOTH" name="constant_TRIM_BOTH" class="anchor"></a>
+            <article id="constant_TRIM_BOTH" class="constant">
+                <h3 class="">TRIM_BOTH</h3>
+                <pre class="signature">TRIM_BOTH</pre>
+                <p><em>Limpar a string à esquerda e direita.</em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                            
+                        
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___construct" name="method___construct" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">__construct()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__construct() </pre>
+                <p><em>Método construtor da classe.</em></p>
+                <p>Define a codificação UTF-8 como padrão para as operações de regex e manipulação de strings para as funções mb_*.</p>
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_binarioParaHexadecimal" name="method_binarioParaHexadecimal" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">binarioParaHexadecimal()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">binarioParaHexadecimal(string  <span class="argument">$string</span>) : string</pre>
+                <p><em>Converte uma string representando um número binário para hexadecimal.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$string </td>
+                                <td><p>Texto representando um número binário (p.ex.: 010000010).</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>Representação hexadecimal do número binário.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_hexadecimalParaBinary" name="method_hexadecimalParaBinary" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">hexadecimalParaBinary()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">hexadecimalParaBinary(string  <span class="argument">$string</span>) : string</pre>
+                <p><em>Converte uma string representando um número hexadecimal para binário.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$string </td>
+                                <td><p>Texto representando um número hexadecimal (p.ex.: 1abf).</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>Representação binária do número hexadecimal.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_caracterAscii" name="method_caracterAscii" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">caracterAscii()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">caracterAscii(integer  <span class="argument">$asciiCode</span>) : string</pre>
+                <p><em>Retorna o caracter correspondente ao valor do código ASCII informado.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$asciiCode </td>
+                                <td><p>Valor do código ASCII do caracter.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>Caracter correspondente ao código.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_asciiCaracter" name="method_asciiCaracter" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">asciiCaracter()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">asciiCaracter(string  <span class="argument">$char</span>) : integer</pre>
+                <p><em>Retorna o código ASCII de um caracter informado.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$char </td>
+                                <td><p>Caracter ASCII.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    integer
+                                            &mdash; <p>Código ASCII do caracter.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_hashSenha" name="method_hashSenha" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">hashSenha()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">hashSenha(string  <span class="argument">$senha</span>, integer  <span class="argument">$custo = 10</span>, integer  <span class="argument">$algoritmo = \PASSWORD_DEFAULT</span>) : string</pre>
+                <p><em>Cria um hash de senha criptograficamente seguro. O hash gerado é automaticamente &quot;salgado&quot;.</em></p>
+                <p>Este método deve ser usado preferencialmente no lugar do função <code>crypt</code>, que não salga o hash automaticamente, e
+portanto pode ser utilizado incorretamente pelo desenvolvedor.</p>
+<p>A função password_hash, apesar de relativamente recente, possui algumas inconsistências na sua declaração
+(como o parâmetro opcional $salt ser marcado como deprecated no PHP 7). Este método visa tornar estas
+inconsistências transparentes para o desenvolvedor.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$senha </td>
+                                <td><p>Senha para a qual se quer gerar o hash.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$custo </td>
+                                <td><p>Custo algorítmico do hash gerado. Quanto maior, melhor a força do hash, porém mais demorada é a
+geração do mesmo. O valor padrão 10 é considerado um bom valor base para o custo com relação ao tempo gasto.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$algoritmo </td>
+                                <td><p>Identificador do algoritmo usado para a geração do hash. Deve ser uma das constantes de
+senha do PHP.</p></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\Numenor\Excecao\Php\StringWrapper\ExcecaoHashInvalido</dt>
+                            <dd><p>se o hash não pôde ser gerado.</p></dd>
+                                                                    </dl>
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>O hash da senha gerado.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_separar" name="method_separar" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">separar()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">separar(string  <span class="argument">$delimitador</span>, string  <span class="argument">$string</span>, integer  <span class="argument">$limite = -1</span>) : array</pre>
+                <p><em>Separa uma string a partir de uma expressão regular delimitadora.</em></p>
+                <p>Este método funciona com strings multibyte.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$delimitador </td>
+                                <td><p>Expressão regular delimitadora. Para fins de uniformização com outras funções de
+expressão regular, a expressão deve ser passada com o delimitador (normalmente, /<regex>/).</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$string </td>
+                                <td><p>Texto a ser separado.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$limite </td>
+                                <td><p>Indica o limite máximo de elementos em que o texto deve ser divido. Se não informado, o padrão
+é -1 (sem limite).</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>Texto dividido.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_unir" name="method_unir" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">unir()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">unir(string  <span class="argument">$unificador</span>, array  <span class="argument">$partes</span>) : string</pre>
+                <p><em>Une uma lista de caracteres utilizando um caracter de união entre cada elemento.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$unificador </td>
+                                <td><p>Texto inserido entre cada um dos elementos da lista de caracteres.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$partes </td>
+                                <td><p>Lista de caracteres.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>Texto resultante.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_substituir" name="method_substituir" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">substituir()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">substituir(string  <span class="argument">$string</span>, string  <span class="argument">$busca</span>, string  <span class="argument">$substituicao</span>) : string</pre>
+                <p><em>Substitui todas as ocorrências de uma string por outra.</em></p>
+                <p>Ao contrário de várias outras funções de string da biblioteca padrão, str_replace funciona com strings multibyte;
+porém, a ordem dos parâmetros é diferente (o texto a ser alterado é o último parâmetro, ao invés do primeiro).</p>
+<p>Este método visa corrigir este problema de padronização dos parâmetros.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$string </td>
+                                <td><p>Texto a ser alterado.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$busca </td>
+                                <td><p>Parte do texto a ser substituída.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$substituicao </td>
+                                <td><p>Texto de substituição.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>Modificadores da expressão regular de busca.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_regexBusca" name="method_regexBusca" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">regexBusca()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">regexBusca(string  <span class="argument">$string</span>, string  <span class="argument">$regex</span>) : boolean</pre>
+                <p><em>Busca por expressão regular dentro de um texto.</em></p>
+                <p>Este método funciona com strings multibyte.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$string </td>
+                                <td><p>Texto onde será feita a busca.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$regex </td>
+                                <td><p>Expressão regular de busca. Para fins de uniformização com outras funções de expressão
+regular, a expressão deve ser passada com o delimitador (normalmente, /<regex>/).</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Indica se a expressão regular foi encontrada dentro do texto.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_regexSubstituir" name="method_regexSubstituir" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">regexSubstituir()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">regexSubstituir(string  <span class="argument">$string</span>, string  <span class="argument">$regex</span>, string  <span class="argument">$substituicao</span>, string  <span class="argument">$opcoes = self::REGEX_POSIX . self::REGEX_MODE_RUBY</span>) : string</pre>
+                <p><em>Substitui as ocorrências de uma string identificada por uma expressão regular por outra.</em></p>
+                <p>Este método funciona com strings multibyte.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$string </td>
+                                <td><p>Texto a ser alterado.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$regex </td>
+                                <td><p>Expressão regular de busca. Para fins de uniformização com outras funções de expressão
+regular, a expressão deve ser passada com o delimitador (normalmente, /<regex>/).</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$substituicao </td>
+                                <td><p>Texto de substituição.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$opcoes </td>
+                                <td><p>Modificadores da expressão regular de busca.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>Texto substituído.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_regexSubstituirCallback" name="method_regexSubstituirCallback" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">regexSubstituirCallback()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">regexSubstituirCallback(string  <span class="argument">$string</span>, string  <span class="argument">$regex</span>, callable  <span class="argument">$callback</span>, string  <span class="argument">$opcoes = self::REGEX_POSIX . self::REGEX_MODE_RUB</span>) : string</pre>
+                <p><em>Substitui as ocorrências de uma string identificada por uma expressão regular utilizando uma função de callback.</em></p>
+                <p>Este método funciona com strings multibyte.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$string </td>
+                                <td><p>Texto a ser alterado</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$regex </td>
+                                <td><p>Expressão regular de busca. Para fins de uniformização com outras funções de
+expressão regular, a expressão deve ser passada com o delimitador (normalmente, /<regex>/).</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>callable</td>
+                                <td>$callback </td>
+                                <td><p>Função de callback que será chamada passando um array dos elementos encontrados dentro
+do texto a ser alterado.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$opcoes </td>
+                                <td><p>Modificadores da expressão regular de busca.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>Texto substituído.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_codificarHtmlEntities" name="method_codificarHtmlEntities" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">codificarHtmlEntities()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">codificarHtmlEntities(string  <span class="argument">$string</span>, integer  <span class="argument">$flags = \ENT_QUOTES | \ENT_HTML5</span>, string  <span class="argument">$encoding = &#039;UTF-8&#039;</span>, boolean  <span class="argument">$doubleEncode = true</span>) : string</pre>
+                <p><em>Codifica todos os caracteres do texto que possuem uma representação como entidade HTML para a entidade
+correspondente.</em></p>
+                <p><code>
+$string = &quot;A 'quote' is <b>bold</b>.&quot;
+// Output: &quot;A &#039;quote&#039; is &lt;b&gt;bold&lt;/b&gt;&quot;
+</code></p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$string </td>
+                                <td><p>Texto a ser codificado.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$flags </td>
+                                <td><p>Máscara de bits das flags indicando como a conversão deve ser efetuada. O padrão ENT_QUOTES |
+ENT_HTML5 é o mais indicado para a maioria dos casos (codifica todos os caracteres, incluindo aspas, e trata o
+código como HTML 5).</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$encoding </td>
+                                <td><p>Codificação do texto usada para fazer a conversão dos caracteres. Dependendo da versão do
+PHP, o valor padrão deste parâmetro é completamente diferente; por isso, foi definido o padrão como UTF-8.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$doubleEncode </td>
+                                <td><p>Indica se entidades HTML pré-existentes no texto devem ser codificadas ou não.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>Texto com os caracteres convertidos para suas representações como entidade HTML.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_decodificarHtmlEntities" name="method_decodificarHtmlEntities" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">decodificarHtmlEntities()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">decodificarHtmlEntities(string  <span class="argument">$string</span>, integer  <span class="argument">$flags = ENT_COMPAT | ENT_HTML5</span>, string  <span class="argument">$codificacao = &#039;UTF-8&#039;</span>) : string</pre>
+                <p><em>Decodifica as representações de entidade HTML presentes no texto para o caracter correspondente.</em></p>
+                <p><code>
+$string = 'I'll &quot;walk&quot; the &lt;b&gt;dog&lt;/b&gt; now'
+// Output: 'I'll &quot;walk&quot; the <b>dog</b> now'
+</code></p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$string </td>
+                                <td><p>Texto a ser codificado.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$flags </td>
+                                <td><p>Máscara de bits das flags indicando como a conversão deve ser efetuada. O padrão ENT_QUOTES |
+ENT_HTML5 é o mais indicado para a maioria dos casos (codifica todos os caracteres, incluindo aspas, e trata o
+código como HTML 5).</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$codificacao </td>
+                                <td><p>Codificação do texto usada para fazer a conversão dos caracteres. Dependendo da versão
+do PHP, o valor padrão deste parâmetro é completamente diferente; por isso, foi definido o padrão como UTF-8.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>Texto com os caracteres representados como entidades HTML convertidos para os próprios caracteres.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_codificarBase64" name="method_codificarBase64" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">codificarBase64()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">codificarBase64(string  <span class="argument">$string</span>) : string</pre>
+                <p><em>Codifica uma string em MIME base64.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$string </td>
+                                <td><p>Texto a ser codificado.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>O texto codificado em base64.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_decodificarBase64" name="method_decodificarBase64" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">decodificarBase64()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">decodificarBase64(string  <span class="argument">$string</span>) : string</pre>
+                <p><em>Decodifica uma string MIME base64.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$string </td>
+                                <td><p>Texto a ser decodificado.</p></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\Numenor\Excecao\Php\StringWrapper\ExcecaoDecodificacaoInvalida</dt>
+                            <dd><p>se ocorrer um erro na decodificação do
+texto.</p></dd>
+                                                                    </dl>
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>O texto decodificado.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_trim" name="method_trim" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">trim()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">trim(string  <span class="argument">$string</span>, string  <span class="argument">$onde = self::TRIM_BOTH</span>, string  <span class="argument">$caracteres = &#039;&#039;</span>) : string</pre>
+                <p><em>Remove caracteres do início e/ou do final da string.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$string </td>
+                                <td><p>Texto a ser tratado.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$onde </td>
+                                <td><p>Indica onde deve ocorrer a remoção dos caracteres (esquerda/início, direita/fim, ou ambos).</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$caracteres </td>
+                                <td><p>Lista de caracteres que devem ser removidos.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>Texto com os caracteres informados removidos do início e/ou do final.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_reduzir" name="method_reduzir" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">reduzir()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">reduzir(string  <span class="argument">$string</span>, integer  <span class="argument">$inicio</span>, integer  <span class="argument">$largura</span>, string  <span class="argument">$marcador = &#039;&#039;</span>) : string</pre>
+                <p><em>Reduz um texto para o tamanho informado, opcionalmente posposto por um texto de marcação.</em></p>
+                <p>O texto reduzido é tratado de forma que ele não termine em espaço em branco, mesmo que isto torne-o menor do que o
+tamanho desejado.
+Este método funciona com strings multibyte.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$string </td>
+                                <td><p>Texto a ser reduzido.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$inicio </td>
+                                <td><p>Posição do texto onde deve começar a redução.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$largura </td>
+                                <td><p>Largura máxima do texto reduzido.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$marcador </td>
+                                <td><p>Texto de marcação a ser inserido após a redução do texto.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>Texto reduzido.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_primeiraLetraMinuscula" name="method_primeiraLetraMinuscula" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">primeiraLetraMinuscula()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">primeiraLetraMinuscula(string  <span class="argument">$string</span>) : string</pre>
+                <p><em>Converte o primeiro caracter do texto informado para minúscula.</em></p>
+                <p>Ao contrário da função lcfirst(), este método funciona com strings multibyte.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$string </td>
+                                <td><p>Texto a ser tratado.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>Texto com o primeiro caracter convertido para minúscula.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_primeiraLetraMaiuscula" name="method_primeiraLetraMaiuscula" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">primeiraLetraMaiuscula()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">primeiraLetraMaiuscula(string  <span class="argument">$string</span>) : string</pre>
+                <p><em>Converte o primeiro caracter do texto informado para maiúscula.</em></p>
+                <p>Ao contrário da função ucfirst, este método funciona com strings multibyte.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$string </td>
+                                <td><p>Texto a ser tratado.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>Texto com o primeiro caracter convertido para minúscula.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_converterMinusculas" name="method_converterMinusculas" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">converterMinusculas()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">converterMinusculas(string  <span class="argument">$string</span>) : string</pre>
+                <p><em>Converte o texto inteiro para minúsculas.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$string </td>
+                                <td><p>Texto a ser tratado.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>Texto convertido para minúsculas.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_converterMaiusculas" name="method_converterMaiusculas" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">converterMaiusculas()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">converterMaiusculas(string  <span class="argument">$string</span>) : string</pre>
+                <p><em>Converte o texto inteiro para maiúsculas.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$string </td>
+                                <td><p>Texto a ser tratado.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>Texto convertido para maiúsculas.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_converterPalavrasMaiusculas" name="method_converterPalavrasMaiusculas" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">converterPalavrasMaiusculas()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">converterPalavrasMaiusculas(string  <span class="argument">$string</span>) : string</pre>
+                <p><em>Transforma o texto convertendo a primeira letra de cada palavra que o compõe para maiúscula, e o restante para
+minúscula.</em></p>
+                <p><code>
+$string = 'mary had a Little lamb and she loved it so'
+// Output: 'Mary Had A Little Lamb And She Loved It So'
+</code></p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$string </td>
+                                <td><p>Texto a ser tratado.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>Texto convertido para maiúsculas.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_quebrarLinha" name="method_quebrarLinha" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">quebrarLinha()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">quebrarLinha(string  <span class="argument">$string</span>, integer  <span class="argument">$largura = 75</span>, string  <span class="argument">$quebra = &quot;\n&quot;</span>, boolean  <span class="argument">$cortar = false</span>) : string</pre>
+                <p><em>Introduz um caracter de quebra na string a cada N caracteres.</em></p>
+                <p>Ao contrário da função wordwrap(), este método funciona com caracteres multibyte. Entretanto, ele não é otimizado, sendo
+desaconselhável utilizá-lo em laços de repetição.
+Implementação adaptada da solução criada pelo usuário Fosfor, em:
+<a href="http://stackoverflow.com/questions/3825226/multi-byte-safe-wordwrap-function-for-utf-8">http://stackoverflow.com/questions/3825226/multi-byte-safe-wordwrap-function-for-utf-8</a></p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$string </td>
+                                <td><p>Texto a ser dividido.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$largura </td>
+                                <td><p>Largura máxima do texto antes da introdução do caracter de quebra.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$quebra </td>
+                                <td><p>Caracter de quebra.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$cortar </td>
+                                <td><p>Indica se a quebra pode ser inserida no meio de uma palavra. Caso este parâmetro seja false, a quebra é feita
+sempre após uma palavra, mesmo que isso faça a largura daquele trecho do texto ser menor que o tamanho máximo.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>Texto dividido.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_removerDelimitadorRegex" name="method_removerDelimitadorRegex" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">removerDelimitadorRegex()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">removerDelimitadorRegex(string  <span class="argument">$regex</span>) : string</pre>
+                <p><em>Remove o primeiro e o último caracter de uma expressão regular.</em></p>
+                <p>As funções de expressão regular da biblioteca <code>mb_*</code> têm uma pegadinha no seu parâmetro $delimiter: embora seja
+esperada uma expressão regular, a mesma deve ser informada sem o delimitador, ao contrário das funções padrão que
+trabalham com expressões regulares (por exemplo, <code>preg_match()</code>). Este método corrige este problema de
+padronização e aceita a expressão regular com o delimitador.</p>
+<p><code>
+$regex = '/^(a|b)<em>?$/';
+// Output: '^(a|b)</em>?$'
+</code></p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$regex </td>
+                                <td><p>Expressão regular.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">StringWrapper.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/Php\StringWrapper.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/Numenor.html">\Numenor</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on August 13th, 2016 at 21:29.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>

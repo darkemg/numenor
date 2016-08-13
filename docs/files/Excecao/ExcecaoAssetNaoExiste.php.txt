@@ -1,0 +1,26 @@
+<?php
+namespace Numenor\Excecao;
+
+use Numenor\Html\Asset;
+
+/**
+ * Exceção levantada pelo sistema um asset é adicionado à controladora sem que exista o arquivo físico referenciado.
+ *
+ * @author Darke M. Goulart <darkemg@users.noreply.github.com>
+ * @package Numenor\Excecao
+ */
+class ExcecaoAssetNaoExiste extends ExcecaoErroUso
+{
+	
+	/**
+	 * Método construtor da classe
+	 * 
+	 * @access public
+	 * @param \Numenor\Html\Asset $asset Asset referenciado que causou o erro.
+	 * @param \Exception $previous Exceção anterior (se a exceção atual tiver sido encadeada). 
+	 */
+	public function __construct(Asset $asset, \Exception $previous = null)
+	{
+		parent::__construct('Asset inexistente; arquivo não encontrado: ' . $asset . '.', static::DEFAULT_CODE, $previous);
+	}
+}

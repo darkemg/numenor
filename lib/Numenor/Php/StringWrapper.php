@@ -39,20 +39,95 @@ use Numenor\Excecao\Php\StringWrapper as ExcecaoString;
 class StringWrapper
 {
 	
+	/**
+	 * Parâmetro de expressão regular: múltiplas linhas.
+	 * 
+	 * @var string
+	 */
 	const REGEX_MULTILINE = 'm';
+	/**
+	 * Parâmetro de expressão regular: ignorar espaços em branco.
+	 *
+	 * @var string
+	 */
 	const REGEX_IGNORE_WS = 'x';
+	/**
+	 * Parâmetro de expressão regular: ignorar maiúsculas.
+	 *
+	 * @var string
+	 */
 	const REGEX_CASE_INSENSITIVE = 'i';
+	/**
+	 * Parâmetro de expressão regular: utilizar modo Posix.
+	 *
+	 * @var string
+	 */
 	const REGEX_POSIX = 'p';
+	/**
+	 * Parâmetro de expressão regular: utilizar modo Java.
+	 *
+	 * @var string
+	 */
 	const REGEX_MODE_JAVA = 'j';
+	/**
+	 * Parâmetro de expressão regular: utilizar modo GNU.
+	 *
+	 * @var string
+	 */
 	const REGEX_MODE_GNU = 'u';
+	/**
+	 * Parâmetro de expressão regular: utilizar modo grep.
+	 *
+	 * @var string
+	 */
 	const REGEX_MODE_GREP = 'g';
+	/**
+	 * Parâmetro de expressão regular: utilizar modo Emacs.
+	 *
+	 * @var string
+	 */
 	const REGEX_MODE_EMACS = 'c';
+	/**
+	 * Parâmetro de expressão regular: utilizar modo Ruby.
+	 *
+	 * @var string
+	 */
 	const REGEX_MODE_RUBY = 'r';
+	/**
+	 * Parâmetro de expressão regular: utilizar modo Perl.
+	 *
+	 * @var string
+	 */
 	const REGEX_MODE_PERL = 'z';
+	/**
+	 * Parâmetro de expressão regular: utilizar modo Posix Basic.
+	 *
+	 * @var string
+	 */
 	const REGEX_MODE_POSIXBASIC = 'b';
+	/**
+	 * Parâmetro de expressão regular: utilizar modo Posix Extended.
+	 *
+	 * @var string
+	 */
 	const REGEX_MODE_POSIXEXTENDED = 'd';
+	/**
+	 * Limpar string à esquerda.
+	 *
+	 * @var string
+	 */
 	const TRIM_LEFT = 'left';
+	/**
+	 * Limpar string à direita.
+	 *
+	 * @var string
+	 */
 	const TRIM_RIGHT = 'right';
+	/**
+	 * Limpar a string à esquerda e direita.
+	 *
+	 * @var string
+	 */
 	const TRIM_BOTH = 'both';
 	
 	/**

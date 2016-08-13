@@ -1,5 +1,6 @@
 # Untracked directories
 .settings
+docs/phpdoc-cache*
 external-tools
 logs
 public

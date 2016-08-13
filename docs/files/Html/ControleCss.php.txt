@@ -1,0 +1,367 @@
+<?php
+
+namespace Numenor\Html;
+
+use MatthiasMullie\Minify\CSS as MinifyCss;
+use Numenor\Excecao\ExcecaoAssetDuplicado;
+use Numenor\Excecao\ExcecaoAssetNaoExiste;
+use Numenor\Php\ArrayWrapper;
+use Numenor\Php\StringWrapper;
+
+/**
+ * Classe de controle para inclusão de arquivos CSS em páginas HTML.
+ *
+ * Arquivos CSS podem ser concatenados, minificados e gzipados para melhorar o desempenho da página onde são carregados.
+ *
+ * @author Darke M. Goulart <darkemg@users.noreply.github.com>
+ * @package Numenor\Html
+ */
+class ControleCss extends Controle
+{
+	
+	/**
+	 * Componente de minificação dos assets CSS.
+	 *
+	 * @access protected
+	 * @var \MatthiasMullie\Minify\CSS
+	 */
+	protected $minificadorCss;
+	/**
+	 * Componente de conversão dos caminhos relativos dos assets CSS.
+	 * 
+	 * @access protected
+	 * @var \Numenor\Html\ConversorCaminho
+	 */
+	protected $conversorCaminho;
+	/**
+	 * Lista de arquivos CSS adicionados para processamento na página.
+	 *
+	 * @access protected
+	 * @var \Numenor\Html\Css[]
+	 */
+	protected $listaCss;
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public function __construct(ArrayWrapper $arrayWrapper, StringWrapper $stringWrapper, string $diretorioOutput, string $urlBase)
+	{
+		parent::__construct($arrayWrapper, $stringWrapper, $diretorioOutput, $urlBase);
+		$this->listaCss = [];
+		$this->listaArquivosIncluir = [];
+	}
+	
+	/**
+	 * Gera a lista de arquivos de assets de inclusão remota.
+	 *
+	 * @access protected
+	 * @param array $listaAssets Lista de assets analisados.
+	 * @return array Lista de arquivos de assets de inclusão remota.
+	 */
+	protected function gerarListaRemoto(array $listaAssets) : array
+	{
+		$lista = [];
+		foreach ($listaAssets as $asset) {
+			if ($asset instanceof CssRemoto) {
+				$lista[] = (string) $asset;
+			}
+		}
+		return $lista;
+	}
+	
+	/**
+	 * Corrige os caminhos relativos contidos em um arquivo CSS que não será processado pelo minificador.
+	 * 
+	 * Ao incluir um asset CSS, é necessário atualizar os caminhos relativos contidos nas instruções url() e @import,
+	 * já que infelizmente não é possível definir uma URL base para os mesmos.
+	 * 
+	 * Esta operação é feita automaticamente pelo minificador quando o arquivo é processado para minificação, mas para
+	 * arquivos concatenados e/ou normais não-remotos, é necessário efetuar esta operação normalmente.
+	 * 
+	 * O código deste método foi retirado da classe do minificador de CSS, de autoria de Matthias Mullie.
+	 * 
+	 * @access protected
+	 * @param string $conteudo O conteúdo do arquivo CSS que deve ser processado.
+	 * @return string Conteúdo do arquivo CSS com os caminhos relativos corrigidos.
+	 * @see \MatthiasMullie\Minify\CSS::move()
+	 */
+	protected function corrigirCaminhoExterno(string $conteudo) : string
+	{
+		/*
+		 * Comentário original de MatthiasMullie:
+		 * 
+		 * Relative path references will usually be enclosed by url(). @import
+		 * is an exception, where url() is not necessary around the path (but is
+		 * allowed).
+		 * This *could* be 1 regular expression, where both regular expressions
+		 * in this array are on different sides of a |. But we're using named
+		 * patterns in both regexes, the same name on both regexes. This is only
+		 * possible with a (?J) modifier, but that only works after a fairly
+		 * recent PCRE version. That's why I'm doing 2 separate regular
+		 * expressions & combining the matches after executing of both.
+		 */
+		$relativeRegexes = array(
+			// url(xxx)
+			'/
+            # open url()
+            url\(
+		
+                \s*
+		
+                # open path enclosure
+                (?P<quotes>["\'])?
+		
+                    # fetch path
+                    (?P<path>
+		
+                        # do not fetch data uris or external sources
+                        (?!(
+                            \s?
+                            ["\']?
+                            (data|https?):
+                        ))
+		
+                        .+?
+                    )
+		
+                # close path enclosure
+                (?(quotes)(?P=quotes))
+		
+                \s*
+		
+            # close url()
+            \)
+		
+            /ix',
+		
+			// @import "xxx"
+			'/
+            # import statement
+            @import
+		
+            # whitespace
+            \s+
+		
+                # we don\'t have to check for @import url(), because the
+                # condition above will already catch these
+		
+                # open path enclosure
+                (?P<quotes>["\'])
+		
+                    # fetch path
+                    (?P<path>
+		
+                        # do not fetch data uris or external sources
+                        (?!(
+                            ["\']?
+                            (data|https?):
+                        ))
+		
+                        .+?
+                    )
+		
+                # close path enclosure
+                (?P=quotes)
+		
+            /ix',
+		);		
+		// find all relative urls in css
+		$matches = array();
+		foreach ($relativeRegexes as $relativeRegex) {
+			if (preg_match_all($relativeRegex, $conteudo, $regexMatches, PREG_SET_ORDER)) {
+				$matches = array_merge($matches, $regexMatches);
+			}
+		}
+		$search = array();
+		$replace = array();
+		// loop all urls
+		foreach ($matches as $match) {
+			// determine if it's a url() or an @import match
+			$type = (strpos($match[0], '@import') === 0 ? 'import' : 'url');
+			// fix relative url
+			$url = $this->conversorCaminho->convert($match['path']);
+			// build replacement
+			$search[] = $match[0];
+			if ($type == 'url') {
+				$replace[] = 'url('.$url.')';
+			} elseif ($type == 'import') {
+				$replace[] = '@import "'.$url.'"';
+			}
+		}
+		// replace urls
+		$content = str_replace($search, $replace, $conteudo);
+		return $content;
+	}
+	
+	/**
+	 * Processa a lista de arquivos CSS incluídos, alterando-os conforme necessário (minificação, concatenação,
+	 * etc.) e gerando os snippets de inclusão dos mesmos.
+	 *
+	 * @access protected
+	 */
+	protected function minificar()
+	{
+		// Reseta a lista de arquivos a serem incluídos
+		$this->listaArquivosIncluir = [];
+		// Adiciona os scripts remotos
+		$listaRemoto = $this->gerarListaRemoto($this->listaCss); 
+		if (count($listaRemoto) > 0) {
+			$this->listaArquivosIncluir = $listaRemoto;
+		}
+		if ($this->comportamentoPadrao === self::COMPORTAMENTO_PADRAO_DEV) {
+			// Se está configurado para ter o comportamento padrão de ambiente de desenvolvimento, todos os arquivos
+			// não-remotos são processados sem concatenação ou compactação
+			$listaConcatCompact = [];
+			$listaConcat = [];
+			$listaCompact = [];
+			$listaNormal = $this->arrayWrapper->mesclar($this->gerarListaNormal($this->listaCss), $this->gerarListaConcatCompact($this->listaCss));
+			$listaNormal = $this->arrayWrapper->mesclar($listaNormal, $this->gerarListaConcat($this->listaCss));
+			$listaNormal = $this->arrayWrapper->mesclar($listaNormal, $this->gerarListaCompact($this->listaCss));
+		} else {
+			// Caso contrário, processa normalmente os assets de acordo com seus tipos
+			$listaConcatCompact = $this->gerarListaConcatCompact($this->listaCss);
+			$listaConcat = $this->gerarListaConcat($this->listaCss);
+			$listaCompact = $this->gerarListaCompact($this->listaCss);
+			$listaNormal = $this->gerarListaNormal($this->listaCss);
+		}
+		// Adiciona os arquivos que devem ser minificados e concatenados em um só arquivo
+		if (count($listaConcatCompact) > 0) {
+			$nomeConcatCompact = $this->gerarNome($listaConcatCompact);
+			$minificadorConcatCompact = clone $this->minificadorCss;
+			$outputConcatCompact = $this->diretorioOutput . $nomeConcatCompact . '.css';
+			if ($this->comportamentoPadrao === self::COMPORTAMENTO_PADRAO_HOMOLOG) {
+				file_exists($outputConcatCompact) ? unlink($outputConcatCompact) : null;
+			}
+			if (!file_exists($outputConcatCompact)) {
+				foreach ($listaConcatCompact as $css) {
+					$minificadorConcatCompact->add($css);
+				}
+				$minificadorConcatCompact->minify($outputConcatCompact);
+			}
+			$this->listaArquivosIncluir[] = '<link rel="stylesheet" href="' . $this->urlBase . $nomeConcatCompact . '.css">' . \PHP_EOL;
+		}
+		unset($minificadorConcatCompact);
+		// Adiciona os arquivos que devem ser concatenados em um só arquivo, sem minificação
+		if (count($listaConcat) > 0) {
+			$nomeConcat = $this->gerarNome($listaConcat);
+			$outputConcat = $this->diretorioOutput . $nomeConcat . '.css';
+			if ($this->comportamentoPadrao === self::COMPORTAMENTO_PADRAO_HOMOLOG) {
+				file_exists($outputConcat) ? unlink($outputConcat) : null;
+			}
+			if (!file_exists($outputConcat)) {
+				foreach ($listaConcat as $css) {
+					// Define a origem dos caminhos relativos
+					$this->conversorCaminho->setOrigem(dirname($css));
+					file_put_contents(
+							$outputConcat, 
+							$this->corrigirCaminhoExterno(file_get_contents($css)) . \PHP_EOL, 
+							\FILE_APPEND);
+				}
+			}
+			$this->listaArquivosIncluir[] = '<link rel="stylesheet" href="' . $this->urlBase . $nomeConcat . '.css">' . \PHP_EOL;
+		}
+		// Adiciona os arquivos que devem ser minificados, sem concatenação
+		if (count($listaCompact) > 0) {
+			foreach ($listaCompact as $css) {
+				$minificadorCompact = clone $this->minificadorCss;
+				$nomeCompact = $this->gerarNome([$css]);
+				$outputCompact = $this->diretorioOutput . $nomeCompact . '.css';
+				if ($this->comportamentoPadrao === self::COMPORTAMENTO_PADRAO_HOMOLOG) {
+					file_exists($outputCompact) ? unlink($outputCompact) : null;
+				}
+				if (!file_exists($outputCompact)) {
+					$minificadorCompact->add($css);
+					$minificadorCompact->minify($outputCompact);
+				}
+				$this->listaArquivosIncluir[] = '<link rel="stylesheet" href="' . $this->urlBase . $nomeCompact . '.css">' . \PHP_EOL;
+				unset($minificadorCompact);
+			}
+		}
+		// Adiciona os arquivos que devem ser processados sem minificação ou concatenação.
+		if (count($listaNormal) > 0) {
+			foreach ($listaNormal as $css) {
+				if ($css instanceof CssRemoto) {
+					$this->listaArquivosIncluir[] = $css->gerarSnippetInclusao();
+				} else {
+					$nomeNormal = $this->gerarNome([$css]);
+					$outputNormal = $this->diretorioOutput . $nomeNormal . '.css';
+					// Define a origem dos caminhos relativos
+					$this->conversorCaminho->setOrigem(dirname($css));
+					if ($this->comportamentoPadrao === self::COMPORTAMENTO_PADRAO_DEV || $this->comportamentoPadrao === self::COMPORTAMENTO_PADRAO_HOMOLOG) {
+						file_exists($outputNormal) ? unlink($outputNormal) : null;
+					}
+					if (!file_exists($outputNormal)) {
+						file_put_contents(
+							$outputNormal, 
+							$this->corrigirCaminhoExterno(file_get_contents($css)) . \PHP_EOL, 
+							\FILE_APPEND);
+					}
+					$this->listaArquivosIncluir[] = '<link rel="stylesheet" href="'. $this->urlBase . $nomeNormal . '.css">' . \PHP_EOL;
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Adiciona um arquivo CSS à lista de arquivos incluídos na página.
+	 *
+	 * @access public
+	 * @param \Numenor\Html\Css $css Novo arquivo incluído na página.
+	 * @return \Numenor\Html\ControleCss Instância do próprio objeto para encadeamento.
+	 * @throws \Numenor\Excecao\ExcecaoAssetDuplicado se o asset informado já foi incluído anteriormente.
+	 * @throws \Numenor\Excecao\ExcecaoAssetNaoExiste se o arquivo do asset informado não existe.
+	 */
+	public function adicionarCss(Css $css) : self
+	{
+		$indice = null;
+		try {
+			// Se o asset já existe, o método ArrayWrapper::encontrarItem retorna o índice do mesmo.
+			$indice = $this->arrayWrapper->encontrarItem($this->listaCss, $css);
+		} catch (\Throwable $e) {
+			// Se o asset não foi encontrado, o método ArrayWrapper::encontrarItem levanta uma exceção.
+			// Nesse caso é necessário ignorá-la.
+		} finally {
+			// Por fim, verifica o valor de retorno da busca pelo asset.
+			// Se ele já existe, levanta-se a exceção
+			if (!is_null($indice)) {
+				throw new ExcecaoAssetDuplicado($css);
+			}
+		}
+		if (!($css instanceof CssRemoto) && !file_exists((string) $css)) {
+			throw new ExcecaoAssetNaoExiste($css);
+		}
+		$this->listaCss[] = $css;
+		return $this;
+	}
+	
+	/**
+	 * Define o minificador utilizado pelo sistema para processar e compactar os arquivos.
+	 *
+	 * @access public
+	 * @param \MatthiasMullie\Minify\CSS $minificador Instância do minificador.
+	 * @return \Numenor\Html\ControleCss Instância do próprio objeto para encadeamento.
+	 */
+	public function setMinificadorCss(MinifyCss $minificador) : self
+	{
+		$this->minificadorCss = $minificador;
+		return $this;
+	}
+	
+	/**
+	 * Define o conversor de caminhos relativos utilizado pelo sistema para modificar os caminhos relativos definidos
+	 * nos arquivos CSS não-minificados.
+	 *  
+	 * @access public
+	 * @param \Numenor\Html\ConversorCaminho $conversor Instância do conversor.
+	 * @return \Numenor\Html\ControleCss Instância do próprio objeto para encadeamento.
+	 */
+	public function setConversorCaminho(ConversorCaminho $conversor) : self
+	{
+		// Configura o destino dos arquivos conversor de caminhos relativos para o diretório de output
+		// A origem deve ser configurada individualmente para cada arquivo processado
+		$conversor->setDestino($this->diretorioOutput);
+		$this->conversorCaminho = $conversor;
+		return $this;
+	}
+}
+

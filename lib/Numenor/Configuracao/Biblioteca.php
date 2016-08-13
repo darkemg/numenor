@@ -1,13 +1,4 @@
 <?php
-/**
- * Classe de boostrap da biblioteca Numenor.
- * 
- * A biblioteca pode ser configurada a partir de um único método estático, ou ter suas dependências injetadas 
- * manualmente.
- * 
- * @author Darke M. Goulart <darkemg@users.noreply.github.com>
- * @package Numenor\Configuracao
- */
 namespace Numenor\Configuracao;
 
 use Numenor\Autenticacao\Checksum;
@@ -18,6 +9,15 @@ use Zend\Config\Exception as ConfigException;
 use Zend\Config\Factory as ConfigFactory;
 use Numenor\Excecao\Numenor\Excecao;
 
+/**
+ * Classe de boostrap da biblioteca Numenor.
+ *
+ * A biblioteca pode ser configurada a partir de um único método estático, ou ter suas dependências injetadas
+ * manualmente.
+ *
+ * @author Darke M. Goulart <darkemg@users.noreply.github.com>
+ * @package Numenor\Configuracao
+ */
 class Biblioteca
 {
 	

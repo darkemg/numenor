@@ -62,11 +62,7 @@ class CacheDisco extends CacheAbstrato
 	private $nivel;
 	
 	/**
-	 * Método construtor da classe.
-	 * 
-	 * @access public
-	 * @param string $namespace Identificador de namespace do cache.
-	 * @param int $duracao Validade do cache, em segundos (0 = cache não expira).
+	 * {@inheritDoc}
 	 * @param string $diretorio Diretório onde os arquivos de cache serão armazenados.
 	 * @param int $nivel Em quantos subníveis de diretórios os arquivos de cache serão divididos (1 = não há subdivisão).
 	 * @param string $modo Modo de acesso do cache ('r' = somente leitura, 'w' = somente escrita, 'rw' = leitura e e

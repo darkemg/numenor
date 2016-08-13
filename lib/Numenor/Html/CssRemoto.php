@@ -16,12 +16,7 @@ class CssRemoto extends Css
 	use Remoto;
 	
 	/**
-	 * Método construtor da classe.
-	 * 
-	 * @access public
-	 * @param string $url URL do arquivo Javascript.
-	 * @param string $integrityCheck Informação para checagem de integridade do asset.
-	 * @param string $crossorigin Identificação do tipo de requisição crossorigin do asset.
+	 * {@inheritDoc}
 	 */
 	public function __construct(string $url, string $integrityCheck = '', string $crossorigin = 'anonymous')
 	{

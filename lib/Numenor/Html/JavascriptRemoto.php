@@ -27,11 +27,7 @@ class JavascriptRemoto extends Javascript
 	protected $fallback;
 	
 	/**
-	 * Método construtor da classe.
-	 * 
-	 * @access public
-	 * @param string $url URL do arquivo Javascript.
-	 * @param string $fallback Snippet de fallback do script remoto.
+	 * {@inheritDoc}
 	 * @param string $integrityCheck Informação para checagem de integridade do script remoto.
 	 * @param string $crossorigin Identificação do tipo de requisição crossorigin do script remoto.
 	 */

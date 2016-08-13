@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>API Documentation</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">API Documentation</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/Numenor.html">\Numenor</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">88</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-751303719"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-751303719" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-660691772"></a>
+                                <a href="../namespaces/Numenor.html" style="margin-left: 30px; padding-left: 0">Numenor</a>
+            </div>
+            <div id="namespace-660691772" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-702991807"></a>
+                                <a href="../namespaces/Numenor.Autenticacao.html" style="margin-left: 30px; padding-left: 0">Autenticacao</a>
+            </div>
+            <div id="namespace-702991807" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Numenor.Autenticacao.Checksum.html">Checksum</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1904178729"></a>
+                                <a href="../namespaces/Numenor.Cache.html" style="margin-left: 30px; padding-left: 0">Cache</a>
+            </div>
+            <div id="namespace-1904178729" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Numenor.Cache.CacheAbstrato.html">CacheAbstrato</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Cache.CacheDisco.html">CacheDisco</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Cache.CacheMemoria.html">CacheMemoria</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1566556015"></a>
+                                <a href="../namespaces/Numenor.Configuracao.html" style="margin-left: 30px; padding-left: 0">Configuracao</a>
+            </div>
+            <div id="namespace-1566556015" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Numenor.Configuracao.Biblioteca.html">Biblioteca</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-834231247"></a>
+                                <a href="../namespaces/Numenor.Debug.html" style="margin-left: 30px; padding-left: 0">Debug</a>
+            </div>
+            <div id="namespace-834231247" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Numenor.Debug.CronometroExecucao.html">CronometroExecucao</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Debug.Formatacao.html">Formatacao</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Debug.Output.html">Output</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-323149786"></a>
+                                <a href="../namespaces/Numenor.Excecao.html" style="margin-left: 30px; padding-left: 0">Excecao</a>
+            </div>
+            <div id="namespace-323149786" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-61301725"></a>
+                                <a href="../namespaces/Numenor.Excecao.Php.html" style="margin-left: 30px; padding-left: 0">Php</a>
+            </div>
+            <div id="namespace-61301725" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1235205536"></a>
+                                <a href="../namespaces/Numenor.Excecao.Php.ArrayWrapper.html" style="margin-left: 30px; padding-left: 0">ArrayWrapper</a>
+            </div>
+            <div id="namespace-1235205536" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoArray.html">ExcecaoArray</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoArrayCombineTamanhosIncompativeis.html">ExcecaoArrayCombineTamanhosIncompativeis</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoArrayFillIndiceInvalido.html">ExcecaoArrayFillIndiceInvalido</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoArrayFillTamanhoInvalido.html">ExcecaoArrayFillTamanhoInvalido</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoArrayFilterFlagInvalida.html">ExcecaoArrayFilterFlagInvalida</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoArrayFlipTipoInvalido.html">ExcecaoArrayFlipTipoInvalido</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoArrayPadTamanhoInvalido.html">ExcecaoArrayPadTamanhoInvalido</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoChaveInexistente.html">ExcecaoChaveInexistente</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoChaveInvalida.html">ExcecaoChaveInvalida</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoItemNaoEncontrado.html">ExcecaoItemNaoEncontrado</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoOrdemInvalida.html">ExcecaoOrdemInvalida</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.ArrayWrapper.ExcecaoTipoOrdemInvalida.html">ExcecaoTipoOrdemInvalida</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-313333219"></a>
+                                <a href="../namespaces/Numenor.Excecao.Php.StringWrapper.html" style="margin-left: 30px; padding-left: 0">StringWrapper</a>
+            </div>
+            <div id="namespace-313333219" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.StringWrapper.ExcecaoDecodificacaoInvalida.html">ExcecaoDecodificacaoInvalida</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.Php.StringWrapper.ExcecaoHashInvalido.html">ExcecaoHashInvalido</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoAbstrata.html">ExcecaoAbstrata</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoAlgoritmoHashInvalido.html">ExcecaoAlgoritmoHashInvalido</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoArquivoConfiguracaoInvalido.html">ExcecaoArquivoConfiguracaoInvalido</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoAssetDuplicado.html">ExcecaoAssetDuplicado</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoAssetNaoExiste.html">ExcecaoAssetNaoExiste</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoCacheDiscoDirEscrita.html">ExcecaoCacheDiscoDirEscrita</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoCacheDiscoDirNaoDefinido.html">ExcecaoCacheDiscoDirNaoDefinido</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoChecksumChaveInvalida.html">ExcecaoChecksumChaveInvalida</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoChecksumSemChave.html">ExcecaoChecksumSemChave</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoErroLogico.html">ExcecaoErroLogico</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoErroSistema.html">ExcecaoErroSistema</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Excecao.ExcecaoErroUso.html">ExcecaoErroUso</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1608145743"></a>
+                                <a href="../namespaces/Numenor.Html.html" style="margin-left: 30px; padding-left: 0">Html</a>
+            </div>
+            <div id="namespace-1608145743" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                            <li class="trait"><a href="../classes/Numenor.Html.Remoto.html">Remoto</a></li>
+                                                                            <li class="class"><a href="../classes/Numenor.Html.Asset.html">Asset</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Html.Controle.html">Controle</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Html.ControleCss.html">ControleCss</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Html.ControleJavascript.html">ControleJavascript</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Html.ConversorCaminho.html">ConversorCaminho</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Html.Css.html">Css</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Html.CssRemoto.html">CssRemoto</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Html.Javascript.html">Javascript</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Html.JavascriptRemoto.html">JavascriptRemoto</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2128796879"></a>
+                                <a href="../namespaces/Numenor.Php.html" style="margin-left: 30px; padding-left: 0">Php</a>
+            </div>
+            <div id="namespace-2128796879" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Numenor.Php.ArrayWrapper.html">ArrayWrapper</a></li>
+                                                    <li class="class"><a href="../classes/Numenor.Php.StringWrapper.html">StringWrapper</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/Numenor.Autenticacao.html">\Numenor\Autenticacao</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\Numenor\Autenticacao</small>Checksum</h1>
+                    <p><em>Classe para geração de checksums para valores arbitrários.</em></p>
+                    <p>Um checksum (&quot;soma de verificação&quot;) é um código gerado para testar a integridade dos dados transmitidos por um canal
+qualquer de comunicação.</p>
+<p>Na web, é especialmente importante que valores enviados e recebidos através do browser pelos métodos GET, POST,
+COOKIE, etc. sejam corretamente validados pelo servidor antes de serem operados, tendo em vista que os mesmos podem
+facilmente ser manipulados e informações vazadas para terceiros que não deveriam ter acesso a essas informações (por
+exemplo, um usuário ser capaz de visualizar os dados relativos a qualquer usuário simplesmente modificando o
+parâmetro userId enviado via GET).</p>
+<p>O valor de checksum gerado por esta classe NÃO é criptograficamente seguro, uma vez que a função password_hash() do
+PHP trunca os valores de $password maiores do que 72 caracteres (tornando impossível o uso deste método de geração de
+hash para valores arbitrários). No entanto, ele é adequado para a assinatura de parâmetros enviados e recebidos em
+uma aplicação normal; o salt para o hash é gerado através da função openssl_random_pseudo_bytes(), que é menos
+previsível do que uniqid(), rand(), microtime() e outros métodos usuais de geração de salt.</p>
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/Numenor.Autenticacao.Checksum.html#method___construct" class="">__construct()</a><br />
+                                                                    <a href="../classes/Numenor.Autenticacao.Checksum.html#method_setChavePadrao" class="">setChavePadrao()</a><br />
+                                                                    <a href="../classes/Numenor.Autenticacao.Checksum.html#method_gerarChecksum" class="">gerarChecksum()</a><br />
+                                                                    <a href="../classes/Numenor.Autenticacao.Checksum.html#method_gerarChecksumLista" class="">gerarChecksumLista()</a><br />
+                                                                    <a href="../classes/Numenor.Autenticacao.Checksum.html#method_validarChecksum" class="">validarChecksum()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No public properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/Numenor.Autenticacao.Checksum.html#constant_SEPARADOR_SALT_HASH" class="">SEPARADOR_SALT_HASH</a><br />
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <em>No protected methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/Numenor.Autenticacao.Checksum.html#property_chavePadrao" class="">$chavePadrao</a><br />
+                                                                    <a href="../classes/Numenor.Autenticacao.Checksum.html#property_algoritmo" class="">$algoritmo</a><br />
+                                                                    <a href="../classes/Numenor.Autenticacao.Checksum.html#property_tamanhoSalt" class="">$tamanhoSalt</a><br />
+                                                                    <a href="../classes/Numenor.Autenticacao.Checksum.html#property_cryptoStrong" class="">$cryptoStrong</a><br />
+                                                                    <a href="../classes/Numenor.Autenticacao.Checksum.html#property_chave" class="">$chave</a><br />
+                                                                    <a href="../classes/Numenor.Autenticacao.Checksum.html#property_arrayWrapper" class="">$arrayWrapper</a><br />
+                                                                    <a href="../classes/Numenor.Autenticacao.Checksum.html#property_stringWrapper" class="">$stringWrapper</a><br />
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <em>No private methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No private properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/Autenticacao.Checksum.html"><div class="path-wrapper">Autenticacao\Checksum.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Numenor\Autenticacao</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                    <div class="namespace-wrapper">\Numenor\Autenticacao\Checksum</div>
+                            </dd>
+
+                        
+                        
+                        
+                        
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr>
+                            <th>
+                                author
+                            </th>
+                            <td>
+                                                                    <p>Darke M. Goulart <a href="mailto:darkemg@users.noreply.github.com">darkemg@users.noreply.github.com</a></p>
+                                                            </td>
+                        </tr>
+                                        </table>
+                </aside>
+            </div>
+
+                                    <a id="constants" name="constants"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Constants</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_SEPARADOR_SALT_HASH" name="constant_SEPARADOR_SALT_HASH" class="anchor"></a>
+            <article id="constant_SEPARADOR_SALT_HASH" class="constant">
+                <h3 class="">SEPARADOR_SALT_HASH</h3>
+                <pre class="signature">SEPARADOR_SALT_HASH</pre>
+                <p><em>Separador utilizado para separar o salt do hash gerado.</em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                            
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_chavePadrao" name="property_chavePadrao" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$chavePadrao</h3>
+                <pre class="signature">$chavePadrao : string</pre>
+                <p><em>Chave padrão utilizada na aplicação para geração e validação dos checksums.</em></p>
+                <p>Este valor pode ser sobrescrito individualmente em cada instância da classe, mas permite que a mesma chave seja
+utilizada em toda a aplicação, caso isso seja mais conveniente.</p>
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_algoritmo" name="property_algoritmo" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$algoritmo</h3>
+                <pre class="signature">$algoritmo : string</pre>
+                <p><em>Identificador do algoritmo de hash utilizado para gerar os checksums da classe. Deve ser um dos valores aceitos
+pela função hash(), e retornados pela função hash_algos().</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_tamanhoSalt" name="property_tamanhoSalt" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$tamanhoSalt</h3>
+                <pre class="signature">$tamanhoSalt : string</pre>
+                <p><em>Tamanho do salt gerado para o hash; deve ser um número inteiro positivo. Quanto maior o número, mais forte será o
+salt.</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_cryptoStrong" name="property_cryptoStrong" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$cryptoStrong</h3>
+                <pre class="signature">$cryptoStrong : boolean</pre>
+                <p><em>Indica se o salt gerado pela função openssl_random_pseudo_bytes() deve ser criptograficamente seguro.</em></p>
+                
+
+                                <h4>Type</h4>
+                boolean
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_chave" name="property_chave" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$chave</h3>
+                <pre class="signature">$chave : string</pre>
+                <p><em>Chave utilizada juntamente com o salt para gerar e validar o checksum gerado.</em></p>
+                <p>Esta chave deve ser a mesma tanto para a geração quanto para a verificação do checksum.</p>
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_arrayWrapper" name="property_arrayWrapper" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$arrayWrapper</h3>
+                <pre class="signature">$arrayWrapper : \Numenor\Php\ArrayWrapper</pre>
+                <p><em>Instância do objeto de encapsulamento das operações de array.</em></p>
+                
+
+                                <h4>Type</h4>
+                <a href="../classes/Numenor.Php.ArrayWrapper.html">\Numenor\Php\ArrayWrapper</a>
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_stringWrapper" name="property_stringWrapper" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$stringWrapper</h3>
+                <pre class="signature">$stringWrapper : \Numenor\Php\StringWrapper</pre>
+                <p><em>Instância do objeto de encapsulamento das operações de string.</em></p>
+                
+
+                                <h4>Type</h4>
+                <a href="../classes/Numenor.Php.StringWrapper.html">\Numenor\Php\StringWrapper</a>
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                            
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___construct" name="method___construct" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">__construct()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__construct(\Numenor\Php\ArrayWrapper  <span class="argument">$arrayWrapper</span>, \Numenor\Php\StringWrapper  <span class="argument">$stringWrapper</span>, string  <span class="argument">$chave = &#039;&#039;</span>, string  <span class="argument">$algoritmo = &#039;sha512&#039;</span>) </pre>
+                <p><em>Método construtor da classe.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td><a href="../classes/Numenor.Php.ArrayWrapper.html">\Numenor\Php\ArrayWrapper</a></td>
+                                <td>$arrayWrapper </td>
+                                <td><p>Instância do objeto de encapsulamento das operações de array.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td><a href="../classes/Numenor.Php.StringWrapper.html">\Numenor\Php\StringWrapper</a></td>
+                                <td>$stringWrapper </td>
+                                <td><p>Instância do objeto de encapsulamento das operações de string.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$chave </td>
+                                <td><p>Chave utilizada na geração do checksum. Caso não seja informado, a chave padrão definida
+será utilizada.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$algoritmo </td>
+                                <td><p>Identificador do algoritmo usado para gerar o checksum.</p></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\Numenor\Excecao\ExcecaoAlgoritmoHashInvalido</dt>
+                            <dd><p>se o algoritmo de hash informado é inválido ou não está
+instalado no servidor.</p></dd>
+                                                                    </dl>
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setChavePadrao" name="method_setChavePadrao" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setChavePadrao()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setChavePadrao(string  <span class="argument">$chave</span>) </pre>
+                <p><em>Define a chave utilizada na geração do checksum.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$chave </td>
+                                <td><p>Chave definida para utilização na geração dos checksums. Note que é possível alterar a chave
+uma vez definida (para permitir que chaves diferentes sejam utilizadas na geração  de checksums diferentes), mas
+não é possível definir uma chave vazia.</p></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\Numenor\Excecao\ExcecaoChecksumChaveInvalida</dt>
+                            <dd><p>se a chave informada é nula.</p></dd>
+                                                                    </dl>
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            static
+                        </th>
+                        <td>
+                                                                                            
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_gerarChecksum" name="method_gerarChecksum" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">gerarChecksum()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">gerarChecksum(mixed  <span class="argument">$valor</span>, boolean  <span class="argument">$encoded = false</span>) : string</pre>
+                <p><em>Gera um checksum para o valor informado, opcionalmente encodado em base64 para transmissão via canais que aceitem
+apenas texto ASCII.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$valor </td>
+                                <td><p>Valor para o qual o checksum deve ser gerado.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$encoded </td>
+                                <td><p>Indica se o checksum gerado deve ser encodado com base64.</p></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\Numenor\Excecao\ExcecaoChecksumSemChave</dt>
+                            <dd><p>se a chave definida para utilização na geração de checksums não
+foi definida.</p></dd>
+                                                                    </dl>
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>O checksum gerado, no formato salt + separador + hash.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_gerarChecksumLista" name="method_gerarChecksumLista" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">gerarChecksumLista()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">gerarChecksumLista(\stdClass  <span class="argument">$listaValores</span>, boolean  <span class="argument">$encoded = false</span>) : \stdClass</pre>
+                <p><em>Gera um checksum para a lista de valores informados (como uma coleção de pares nome =&gt; valor), opcionalmente
+encodados em base64 para transmissão via canais que aceitem apenas texto ASCII.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\stdClass</td>
+                                <td>$listaValores </td>
+                                <td><p>Lista de valores para os quais os checksums devem ser gerados.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$encoded </td>
+                                <td><p>Indica se os checksums gerados devem ser encodados com base64.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \stdClass
+                                            &mdash; <p>Uma cópia da lista de valores originais, acrescentada dos checksums (identificados como
+atributos nome + 'Checksum').</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_validarChecksum" name="method_validarChecksum" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">validarChecksum()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">validarChecksum(mixed  <span class="argument">$valor</span>, string  <span class="argument">$checksum</span>) : boolean</pre>
+                <p><em>Valida um valor contra o checksum informado para o mesmo.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$valor </td>
+                                <td><p>Valor a ser conferido.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$checksum </td>
+                                <td><p>Checksum informado para o valor.</p></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\Numenor\Excecao\ExcecaoChecksumSemChave</dt>
+                            <dd><p>se a chave definida para utilização na geração de checksums não
+foi definida.</p></dd>
+                                                                    </dl>
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>O checksum é válido para o valor informado?</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">Checksum.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/Autenticacao\Checksum.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/Numenor.html">\Numenor</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on August 13th, 2016 at 21:29.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>
